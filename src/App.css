@@ -1,0 +1,31 @@
+/* 闪卡 3D 翻转 */
+.flashcard {
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.flashcard.is-flipped {
+  transform: rotateY(180deg);
+}
+.flashcard-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flashcard-back {
+  transform: rotateY(180deg);
+  position: absolute;
+  inset: 0;
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 题目区滚动条微调 */
+.flashcard-face p::-webkit-scrollbar {
+  width: 4px;
+}
+.flashcard-face p::-webkit-scrollbar-thumb {
+  background: rgba(20, 60, 45, 0.2);
+  border-radius: 4px;
+}
