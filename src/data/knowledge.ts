@@ -10,12 +10,12 @@ export interface KnowledgeChapter {
   items: KnowItem[]
 }
 
-// 投资规划 · 金融工具 12 章节知识点（同步自 Notion 主页面，同步时间 2026-09-08）
+// 投资规划 · 金融工具 12 章节知识点（同步自 Notion 主页面，同步时间 2026-09-10）
 export const knowledgeChapters: KnowledgeChapter[] = [
   {
     title: "金融工具概述",
     items: [
-      { type: "callout", text: "教材：《理财规划基础》第四章 金融基础\n学习日期：2026-07-02 | 与宝一起学", depth: 0 },
+      { type: "callout", text: "教材：《理财规划基础》第四章 金融基础", depth: 0 },
       { type: "sub_header", text: "一、定义", depth: 0 },
       { type: "text", text: "金融工具是金融市场交易的对象。", depth: 0 },
       { type: "bulleted_list", text: "对发行者（借钱的人）→ 债务", depth: 0 },

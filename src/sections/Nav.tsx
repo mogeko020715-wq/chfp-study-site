@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router'
+import { Moon, Sun } from 'lucide-react'
+import { useTheme } from '@/hooks/useTheme'
 
 const links = [
   { to: '/', label: '学习框架' },
@@ -9,6 +11,7 @@ const links = [
 
 export default function Nav({ masteredCount }: { masteredCount: number }) {
   const [scrolled, setScrolled] = useState(false)
+  const { theme, toggle } = useTheme()
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
     onScroll()
@@ -42,9 +45,19 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
             </NavLink>
           ))}
         </nav>
-        <span className="text-sm text-neutral-500">
-          已掌握 <span className="font-medium text-neutral-900">{masteredCount}</span>
-        </span>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={toggle}
+            aria-label={theme === 'dark' ? '切换到日间模式' : '切换到夜间模式'}
+            className="flex h-7 w-7 items-center justify-center rounded-full text-neutral-500 transition-colors hover:text-neutral-900"
+          >
+            {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          </button>
+          <span className="text-sm text-neutral-500">
+            已掌握 <span className="font-medium text-neutral-900">{masteredCount}</span>
+          </span>
+        </div>
       </div>
     </header>
   )
