@@ -5,7 +5,8 @@ import { inspectAttr } from 'kimi-plugin-inspect-react'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/',
+  // 开发环境用 / 便于本地预览；生产构建固定为 GitHub Pages 子路径
+  base: process.env.NODE_ENV === 'production' ? '/chfp-study-site/' : '/',
   build: {
     assetsDir: '',
   },
