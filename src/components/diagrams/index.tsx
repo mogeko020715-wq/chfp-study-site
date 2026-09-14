@@ -7,6 +7,7 @@ import StepFlowDiagram from './StepFlowDiagram'
 import CanCantDiagram from './CanCantDiagram'
 import TreeDiagram from './TreeDiagram'
 import QuizDiagram from './QuizDiagram'
+import TradeoffDiagram from './TradeoffDiagram'
 
 /**
  * 知识点图解注册表：按「章节 + 知识点标题」匹配，命中即在知识点页展示图解并折叠原文。
@@ -215,6 +216,399 @@ export function diagramFor(chapterTitle: string, pointTitle: string): ReactNode 
         ]}
         answer={1}
         explanation="答案 B。A 错在「1 年以上」（应 ≤1 年）；C 错在拆借只发生在银行之间；D 错在货币基金不能买股票和可转债。"
+      />
+    )
+  }
+
+  /* ================= 金融工具概述（补充） ================= */
+
+  if (chapterTitle === '金融工具概述' && pointTitle.includes('四大特征')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 四大特征，口诀「还、流、险、收」"
+        items={[
+          { name: '偿还期', desc: '偿还本金前经历的时间', note: '时间维度 · 我多久能拿回本金？' },
+          { name: '流动性', desc: '迅速变现而不致损失', note: '灵活维度 · 急用能马上卖吗？' },
+          { name: '风险性', desc: '本金和收益遭受损失的可能性', note: '安全维度 · 会不会亏？' },
+          { name: '收益性', desc: '为持有者带来收入', note: '回报维度 · 能赚多少？' },
+        ]}
+        bottom="易错：四大特征是「还流险收」，没有便捷性、没有保本性！"
+      />
+    )
+  }
+
+  if (chapterTitle === '金融工具概述' && pointTitle.includes('关系理解')) {
+    return (
+      <TradeoffDiagram
+        caption="图解 · 高收益、低风险、高流动 —— 不可兼得"
+        corners={['高收益', '低风险', '高流动性']}
+        center="最多取其二"
+        pairs={[
+          { pick: ['低风险', '高流动性'], give: '高收益', example: '货币基金、活期存款' },
+          { pick: ['高收益', '低风险'], give: '高流动性', example: '长期定期存款' },
+          { pick: ['高收益', '高流动性'], give: '低风险', example: '股票' },
+        ]}
+      />
+    )
+  }
+
+  /* ================= 债券市场 ================= */
+
+  if (chapterTitle === '债券市场' && pointTitle.includes('政府债券')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 政府债券三兄弟"
+        items={[
+          { name: '国债', desc: '中央政府发行，1 年以上', note: '金边债券：无信用风险，收益率 = 无风险利率基准' },
+          { name: '国库券', desc: '1 年以内', note: '⚠️ 属货币市场工具，不在债券市场' },
+          { name: '地方政府债', desc: '用于地方建设', note: '期限多样，有税收优惠' },
+        ]}
+        bottom="核心考点：国债 = 金边债券（Gilt-edged），风险最低。"
+      />
+    )
+  }
+
+  if (chapterTitle === '债券市场' && pointTitle.includes('金融债券')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 金融债券：都是金融机构发的，信用各不相同"
+        items={[
+          { name: '政策性金融债', desc: '国开行、农发行、进出口银行', note: '国家信用背书 = 准国债' },
+          { name: '商业银行债', desc: '商业银行', note: '补充资本金或中长期资金' },
+          { name: '非银行金融机构债', desc: '券商、保险、信托', note: '资质参差，看具体机构' },
+        ]}
+        bottom="风险排序：国债 < 政策性金融债 < 商业银行债 < 非银行金融机构债。"
+      />
+    )
+  }
+
+  if (chapterTitle === '债券市场' && pointTitle.includes('公司债券')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 公司债券四品种"
+        items={[
+          { name: '普通公司债', desc: '到期还本付息', note: '最标准，无附加权利' },
+          { name: '可转换债券', desc: '可转为发行公司的股票', note: '债转股：向下保底、向上有弹性' },
+          { name: '分离交易可转债', desc: '债券和认股权证分开交易', note: '权证可单独买卖' },
+          { name: '可交换债券', desc: '可交换为「其他公司」的股票', note: '⚠️ 不是发行人自己的股票！' },
+        ]}
+        bottom="核心考点：可转换 vs 可交换 = 转自己的股 vs 转别人的股；评级低于 BBB = 垃圾债券。"
+      />
+    )
+  }
+
+  if (chapterTitle === '债券市场' && pointTitle.includes('国际债券')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · 外国债券 vs 欧洲债券（按发行地点分）"
+        sides={[
+          {
+            name: '外国债券',
+            tagline: '在 A 国发行、以 A 国货币计价',
+            rows: [{ label: '例', value: '扬基（美/美元）、武士（日/日元）、熊猫（中/人民币）' }],
+          },
+          {
+            name: '欧洲债券',
+            tagline: '在 A 国发行、以 B 国货币计价',
+            rows: [{ label: '特点', value: '发行地与计价货币不同，与「欧洲」无关' }],
+          },
+        ]}
+        bottom="按发行主体再分：主权国家债（发展中国家政府外债）、超国家机构债（世界银行、IMF）。"
+      />
+    )
+  }
+
+  if (chapterTitle === '债券市场' && pointTitle.includes('考试重点速记')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 债券市场六大考点"
+        items={[
+          { name: '风险最低', desc: '国债（金边债券）' },
+          { name: '无风险利率基准', desc: '国债收益率' },
+          { name: '准国债', desc: '政策性金融债（国开行等）' },
+          { name: '可转债 vs 可交换债', desc: '转自己的股 vs 转别人的股' },
+          { name: '欧洲债券特点', desc: '发行地与计价货币不同' },
+          { name: '熊猫债券', desc: '外国主体在中国发行的人民币债' },
+        ]}
+      />
+    )
+  }
+
+  /* ================= 外汇市场 ================= */
+
+  if (chapterTitle === '外汇市场' && pointTitle.includes('即期交易')) {
+    return (
+      <StepFlowDiagram
+        caption="图解 · 即期交易：成交后两个营业日内交割（T+2）"
+        steps={[
+          { title: '成交（T 日）', desc: '双方按即期汇率（Spot Rate）约定买卖外汇。' },
+          { title: 'T+1', desc: '期间最常见的日常外汇交易形式，无额外操作。' },
+          { title: 'T+2 交割', desc: '两个营业日内完成实际资金交割。' },
+        ]}
+        bottom="关键词：即时交割、即期汇率、最常见。"
+      />
+    )
+  }
+
+  if (chapterTitle === '外汇市场' && pointTitle.includes('远期交易')) {
+    return (
+      <StepFlowDiagram
+        caption="图解 · 远期交易：现在锁定未来的汇率"
+        steps={[
+          { title: '现在签约', desc: '场外（OTC）一对一协商，约定未来某日期、按预先约定的汇率交割。' },
+          { title: '持有到期', desc: '非标准化合约，条款灵活定制；期间不结算。' },
+          { title: '到期必须交割', desc: '不可反向平仓，按签约汇率履约——无论市场汇率怎么变。' },
+        ]}
+        bottom="主要功能：套期保值——企业锁定成本，规避汇率波动风险。"
+      />
+    )
+  }
+
+  if (chapterTitle === '外汇市场' && pointTitle.includes('期货交易')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · 外汇期货 vs 外汇远期"
+        sides={[
+          {
+            name: '外汇期货',
+            tagline: '交易所内标准化',
+            rows: [
+              { label: '结算', value: '每日结算（Mark-to-Market）' },
+              { label: '了结', value: '可反向平仓，极少实物交割' },
+              { label: '保障', value: '保证金制度' },
+            ],
+          },
+          {
+            name: '外汇远期',
+            tagline: '场外一对一协商',
+            rows: [
+              { label: '结算', value: '到期一次性结算' },
+              { label: '了结', value: '到期必须交割' },
+              { label: '保障', value: '无（靠对手方信用）' },
+            ],
+          },
+        ]}
+        bottom="别称必考：外汇期货 = 外汇保证金交易 = 合约现货外汇交易 = 按金交易 = 虚盘交易（注意：合约现货 ≠ 合约期货！）"
+      />
+    )
+  }
+
+  if (chapterTitle === '外汇市场' && pointTitle.includes('期权交易')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · 看涨 vs 看跌：花钱买「选择权」"
+        sides={[
+          {
+            name: '看涨期权 Call',
+            tagline: '有权以约定价格买入',
+            rows: [{ label: '什么时候买', value: '预期汇率上涨时' }],
+          },
+          {
+            name: '看跌期权 Put',
+            tagline: '有权以约定价格卖出',
+            rows: [{ label: '什么时候买', value: '预期汇率下跌时' }],
+          },
+        ]}
+        bottom="权利义务不对称：买方有权利无义务（最大损失=期权费），卖方有义务无权利；欧式只能到期日行权，美式到期前任何时间可行权。"
+      />
+    )
+  }
+
+  if (chapterTitle === '外汇市场' && pointTitle.includes('四大工具对比总结')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 四大外汇工具一句话区分"
+        items={[
+          { name: '即期', desc: '银行间市场，T+2 必须交割', note: '功能：实际结算' },
+          { name: '远期', desc: '场外 OTC，非标准化', note: '功能：套期保值（到期必须交割）' },
+          { name: '期货', desc: '交易所标准化合约', note: '功能：投机/套保（可平仓了结）' },
+          { name: '期权', desc: '交易所/OTC，可标准化', note: '功能：风险管理（权利而非义务）' },
+        ]}
+        bottom="关键理解：即期/远期/期货/期权是通用金融工具，外汇只是应用场景之一。"
+      />
+    )
+  }
+
+  /* ================= 基金与证券投资基金 ================= */
+
+  if (chapterTitle === '基金与证券投资基金' && pointTitle.includes('基本概念')) {
+    return (
+      <StepFlowDiagram
+        caption="图解 · 基金 = 凑份子 + 请专业的人打理"
+        steps={[
+          { title: '集合理财', desc: '发售基金份额，把众多投资者的资金集中起来——散户资金汇成大河。' },
+          { title: '分工管理', desc: '基金托管人（银行）管钱，基金管理人（基金公司）投资股票、债券等。' },
+          { title: '按份分配', desc: '投资收益按投资者的份额比例分配——赚了一起分，亏了一起扛。' },
+        ]}
+        bottom="四大特点：集合理财专业管理 · 组合投资分散风险 · 利益共享风险共担 · 严格监管信息透明。"
+      />
+    )
+  }
+
+  if (chapterTitle === '基金与证券投资基金' && pointTitle.includes('分类')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 按投资对象分四类，风险从高到低"
+        items={[
+          { name: '股票型基金', desc: '80% 以上投股票', note: '高风险高收益' },
+          { name: '债券型基金', desc: '80% 以上投债券', note: '中低风险稳定收益' },
+          { name: '混合型基金', desc: '股债现金灵活配', note: '中等风险，比例最灵活' },
+          { name: '货币市场基金', desc: '短期货币工具', note: '低风险，流动性好' },
+        ]}
+        bottom="⚠️ 股票型基金不是只买股票——是 80% 以上买股票，剩下可配债券/现金。"
+      />
+    )
+  }
+
+  if (chapterTitle === '基金与证券投资基金' && pointTitle.includes('当事人')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 基金四方当事人，各管一摊"
+        items={[
+          { name: '份额持有人', desc: '投资者——出钱的人' },
+          { name: '基金管理人', desc: '基金公司——管钱投资的人' },
+          { name: '基金托管人', desc: '商业银行——保管资金的人' },
+          { name: '基金销售机构', desc: '银行/券商/平台——卖基金的人' },
+        ]}
+        bottom="连接已学知识：基金托管人通常是商业银行 ↔ 商业银行的基金托管业务。"
+      />
+    )
+  }
+
+  if (chapterTitle === '基金与证券投资基金' && pointTitle.includes('收益与费用')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · 钱从哪来（收益），花到哪去（费用）"
+        sides={[
+          {
+            name: '收益来源',
+            tagline: '基金帮你赚的钱',
+            rows: [
+              { label: '利息', value: '债券利息、存款利息' },
+              { label: '股息', value: '股票分红' },
+              { label: '差价', value: '低买高卖的资本利得' },
+            ],
+          },
+          {
+            name: '主要费用',
+            tagline: '养基金花的钱',
+            rows: [
+              { label: '买入', value: '认购费 / 申购费' },
+              { label: '卖出', value: '赎回费' },
+              { label: '持有', value: '管理费 + 托管费（按年收）' },
+            ],
+          },
+        ]}
+        bottom="记忆钩子：买时申购费、卖时赎回费、年年管理托管费。"
+      />
+    )
+  }
+
+  if (chapterTitle === '基金与证券投资基金' && pointTitle.includes('易错点')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 基金四大易错点"
+        items={[
+          { name: '股票型基金 ≠ 全股票', desc: '是 80% 以上投股票，其余可配债券/现金' },
+          { name: '混合型基金最灵活', desc: '基金经理根据市场调整股债比例' },
+          { name: '货币基金 ≠ 银行存款', desc: '不保本，但风险极低、流动性接近活期' },
+          { name: '净值 ≠ 价格', desc: '净值是每份真实价值，申购赎回按净值计算' },
+        ]}
+      />
+    )
+  }
+
+  /* ================= 金融衍生品 ================= */
+
+  if (chapterTitle === '金融衍生品' && pointTitle.includes('基本概念')) {
+    return (
+      <MatchFlowDiagram
+        caption="图解 · 衍生品的价值「衍生」自基础资产"
+        left={{ name: '基础资产', desc: '股票 / 债券 / 外汇 / 利率 / 商品 / 指数' }}
+        right={{ name: '四大衍生工具', desc: '远期 / 期货 / 期权 / 互换' }}
+        center="金融衍生品"
+        leftLabel="价值之源"
+        rightLabel="具体形态"
+        bottom="四大特性：派生性（价值来自基础资产）、杠杆性（保证金撬动大额）、高风险性（放大盈亏）、双重功能（套保 + 投机）。"
+      />
+    )
+  }
+
+  if (chapterTitle === '金融衍生品' && pointTitle.includes('远期合约')) {
+    return (
+      <StepFlowDiagram
+        caption="图解 · 远期合约的生命周期"
+        steps={[
+          { title: '场外签约', desc: '一对一协商，非标准化合约，约定未来某日期按预定价格买卖。' },
+          { title: '持有期间', desc: '无每日结算，盈亏到期才一次性算清。' },
+          { title: '到期交割', desc: '双方必须履约——没有交易所担保，对手方违约就是信用风险。' },
+        ]}
+        bottom="关键词：OTC、非标准化、到期必须交割、无每日结算、有信用风险。"
+      />
+    )
+  }
+
+  if (chapterTitle === '金融衍生品' && pointTitle.includes('期货合约')) {
+    return (
+      <StepFlowDiagram
+        caption="图解 · 期货合约的一天"
+        steps={[
+          { title: '交保证金开仓', desc: '只交合约金额的一小部分（如 10%）——杠杆由此而来。' },
+          { title: '每日结算', desc: 'Mark-to-Market：每天收盘按结算价算盈亏，亏多了要追加保证金。' },
+          { title: '反向平仓了结', desc: '做一笔反方向交易平仓，绝大多数合约不走到实物交割。' },
+        ]}
+        bottom="关键词：交易所标准化、保证金、每日结算、可平仓。"
+      />
+    )
+  }
+
+  if (chapterTitle === '金融衍生品' && pointTitle.includes('期权')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · 看涨 Call vs 看跌 Put"
+        sides={[
+          {
+            name: '看涨期权 Call',
+            tagline: '有权按执行价格买入',
+            rows: [{ label: '用在', value: '预期基础资产价格上涨' }],
+          },
+          {
+            name: '看跌期权 Put',
+            tagline: '有权按执行价格卖出',
+            rows: [{ label: '用在', value: '预期基础资产价格下跌' }],
+          },
+        ]}
+        bottom="买方风险有限（最大损失=期权费），卖方风险可能无限；欧式只能到期日行权，美式到期前任何时间可行权。"
+      />
+    )
+  }
+
+  if (chapterTitle === '金融衍生品' && pointTitle.includes('互换')) {
+    return (
+      <MatchFlowDiagram
+        caption="图解 · 互换 = 交换一系列现金流"
+        left={{ name: '甲方', desc: '手里是固定利率，想要浮动' }}
+        right={{ name: '乙方', desc: '手里是浮动利率，想要固定' }}
+        center="利率互换"
+        leftLabel="付出固定"
+        rightLabel="付出浮动"
+        bottom="不是交换资产，是交换现金流（货币互换除外——本金也换）；OTC、非标准化、期限较长。常见：利率互换、货币互换、商品互换。"
+      />
+    )
+  }
+
+  if (chapterTitle === '金融衍生品' && pointTitle.includes('易错点')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 衍生品五大易错点"
+        items={[
+          { name: '远期 ≠ 期货', desc: '远期场外非标准化、到期必须交割；期货交易所标准化、可平仓' },
+          { name: '期权买方风险有限', desc: '最大损失就是期权费；卖方风险可能无限' },
+          { name: '结算方式不同', desc: '期货每日结算 ≠ 远期到期结算' },
+          { name: '互换不交换资产', desc: '交换的是「现金流」，本金通常不动（货币互换除外）' },
+          { name: '杠杆程度排序', desc: '期货 > 期权 > 远期 > 互换' },
+        ]}
+        bottom="💡 本质：远期/期货锁定价格，期权锁定选择权，互换锁定交换条件——都是「现在约定未来按什么条件交易」。"
       />
     )
   }
