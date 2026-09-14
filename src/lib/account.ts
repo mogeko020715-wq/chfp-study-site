@@ -102,6 +102,8 @@ export function deleteAccount(name: string) {
   delete accounts[name]
   writeAccounts(accounts)
   localStorage.removeItem(masteredKeyFor(name))
+  localStorage.removeItem(`chfp-cardstate-v1:${name}`)
+  localStorage.removeItem(`chfp-study-days:${name}`)
   if (getSession() === name) {
     localStorage.removeItem(SESSION_KEY)
   }

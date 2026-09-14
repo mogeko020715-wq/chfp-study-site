@@ -613,5 +613,368 @@ export function diagramFor(chapterTitle: string, pointTitle: string): ReactNode 
     )
   }
 
+  /* ================= 贵金属市场 ================= */
+
+  if (chapterTitle === '贵金属市场' && pointTitle.includes('贵金属概述')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 贵金属的三大投资属性"
+        items={[
+          { name: '商品属性', desc: '工业用途 + 珠宝首饰，是白银的主要属性（工业占比约 50%）' },
+          { name: '货币属性', desc: '历史上长期作为货币，至今仍是各国央行储备资产' },
+          { name: '金融属性', desc: '避险工具、通胀对冲、资产配置——考试最常考的一层' },
+        ]}
+        bottom="四大贵金属：黄金、白银、铂金、钯金。"
+      />
+    )
+  }
+
+  if (chapterTitle === '贵金属市场' && pointTitle.includes('黄金市场')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 黄金投资的四种方式与五大价格因素"
+        items={[
+          { name: '实物黄金', desc: '金条、金币、金饰——长期保值，适合实物持有偏好', note: '实物' },
+          { name: '纸黄金', desc: '账面买卖、无实物交割——短期交易、操作便捷', note: '账面' },
+          { name: '黄金 ETF', desc: '交易所交易基金——机构与散户都适用', note: '场内' },
+          { name: '黄金期货', desc: '杠杆交易、双向操作——专业投资者', note: '杠杆' },
+        ]}
+        bottom="价格五大因素：① 美元指数（负相关，美元强 → 黄金弱）② 实际利率（名义利率-通胀率，升 → 黄金弱）③ 通胀预期（升 → 黄金涨）④ 地缘政治（危机 → 避险 → 涨）⑤ 央行购金（需求增加）。"
+      />
+    )
+  }
+
+  if (chapterTitle === '贵金属市场' && pointTitle.includes('白银市场')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · 白银 vs 黄金：不是「小黄金」"
+        sides={[
+          {
+            name: '白银',
+            tagline: '贵金属属性 + 工业属性 双重属性',
+            rows: [
+              { label: '工业占比', value: '约 50%（光伏、电子、医疗）' },
+              { label: '价格弹性', value: '波动更大，弹性高' },
+              { label: '避险强度', value: '弱于黄金' },
+            ],
+          },
+          {
+            name: '黄金',
+            tagline: '以货币与金融属性为主',
+            rows: [
+              { label: '工业占比', value: '很低，需求以投资与储备为主' },
+              { label: '价格弹性', value: '相对平稳' },
+              { label: '避险强度', value: '全球公认避险资产' },
+            ],
+          },
+        ]}
+        bottom="易错点：白银不能简单视为「小黄金」——工业属性强，波动远大于黄金。"
+      />
+    )
+  }
+
+  if (chapterTitle === '贵金属市场' && pointTitle.includes('投资组合')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 贵金属在组合中的三大作用"
+        items={[
+          { name: '避险功能', desc: '股市大跌时，黄金往往上涨，组合里的「稳定器」' },
+          { name: '通胀对冲', desc: '长期通胀环境下保值，实际利率走低时尤其受益' },
+          { name: '分散风险', desc: '与股票、债券相关性低，降低组合整体波动' },
+        ]}
+        bottom="配置建议：贵金属占家庭金融资产 5%-15%，以黄金为主、白银为辅。"
+      />
+    )
+  }
+
+  if (chapterTitle === '贵金属市场' && pointTitle.includes('易错点提醒')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 贵金属三大易错点"
+        items={[
+          { name: '纸黄金 ≠ 实物黄金', desc: '纸黄金是账面资产，不能提取实物——遇到实物兑付题要警惕' },
+          { name: '负相关不是铁律', desc: '黄金与美元长期负相关，但危机时美元、黄金可能同涨' },
+          { name: '不生利息', desc: '贵金属本身不产生利息/股息，持有成本（保管、机会成本）要考虑' },
+        ]}
+      />
+    )
+  }
+
+  /* ================= 商业银行 ================= */
+
+  if (chapterTitle === '商业银行' && pointTitle.includes('性质与特征')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 商业银行的三大核心特征"
+        items={[
+          { name: '营利性', desc: '以营利为目的——区别于政策性银行' },
+          { name: '信用中介', desc: '一边吸收存款、一边发放贷款，连接资金盈余方与短缺方' },
+          { name: '信用创造', desc: '存贷循环可以派生存款、放大货币供给——银行独有功能' },
+        ]}
+        bottom="考试关键词：「信用创造」是商业银行区别于其他金融机构的核心。"
+      />
+    )
+  }
+
+  if (chapterTitle === '商业银行' && pointTitle.includes('三大业务')) {
+    return (
+      <MatchFlowDiagram
+        caption="图解 · 三大业务看「资金流向」"
+        left={{ name: '负债业务（资金来源）', desc: '存款 70%+、同业拆借、向央行借款、发行金融债券' }}
+        right={{ name: '资产业务（资金运用）', desc: '贷款（最核心）、证券投资、现金资产' }}
+        center="商业银行"
+        leftLabel="钱进来"
+        rightLabel="钱出去"
+        bottom="中间业务（表外）：支付结算、代理、银行卡、担保承诺、理财——只提供服务、不碰资金，赚手续费。中间业务 ⊂ 表外业务。"
+      />
+    )
+  }
+
+  if (chapterTitle === '商业银行' && pointTitle.includes('经营原则')) {
+    return (
+      <StepFlowDiagram
+        caption="图解 · 三性原则的优先顺序"
+        steps={[
+          { title: '安全性（前提）', desc: '先控制风险、保障资金安全——银行是高杠杆经营，安全是底线。' },
+          { title: '流动性（条件）', desc: '随时满足客户提款和贷款需求，资产要能较快变现。' },
+          { title: '效益性（目标）', desc: '在前两者的约束下追求利润最大化。' },
+        ]}
+        bottom="三者存在矛盾：想多赚钱 → 要放贷/投资高风险资产 → 安全和流动性下降。考试记：安全是前提、流动是条件、效益是目标。"
+      />
+    )
+  }
+
+  if (chapterTitle === '商业银行' && pointTitle.includes('存款保险制度')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 存款保险三要点"
+        items={[
+          { name: '投保机构', desc: '商业银行、农村合作银行、农村信用合作社' },
+          { name: '最高偿付限额', desc: '人民币 50 万元/人', note: '必考数字' },
+          { name: '谁交保费', desc: '由投保机构缴纳，储户不承担' },
+        ]}
+        bottom="易错点：50 万是「同一存款人在同一家银行」的本息合计，不是每家银行各 50 万。"
+      />
+    )
+  }
+
+  /* ================= 证券公司 ================= */
+
+  if (chapterTitle === '证券公司' && pointTitle.includes('什么是证券公司')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 什么是证券公司"
+        items={[
+          { name: '设立门槛', desc: '必须经证监会批准，依《公司法》《证券法》设立' },
+          { name: '业务范围', desc: '专门围绕证券（股票、债券、基金等）展开' },
+          { name: '市场角色', desc: '连接投资者与证券市场的重要桥梁' },
+        ]}
+        bottom="一句话记忆：商业银行管钱，证券公司管证券。"
+      />
+    )
+  }
+
+  if (chapterTitle === '证券公司' && pointTitle.includes('六大核心业务')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 六大核心业务：钱从哪来、为谁服务"
+        items={[
+          { name: '证券经纪', desc: '代客买卖证券，赚佣金', note: '普通投资者' },
+          { name: '投资咨询', desc: '投资建议、研报分析', note: '机构/高净值' },
+          { name: '承销与保荐', desc: '帮企业 IPO、发债，包销证券', note: '发行人' },
+          { name: '证券自营', desc: '用自有资金投资证券，自担风险', note: '券商自己' },
+          { name: '资产管理', desc: '代客理财，赚管理费+业绩提成', note: '机构/个人' },
+          { name: '融资融券', desc: '借钱买股（融资）、借股卖出（融券）', note: '合格投资者' },
+        ]}
+        bottom="易混淆三连：经纪=中介赚佣金、自营=自己炒股、资管=帮客户炒。"
+      />
+    )
+  }
+
+  if (chapterTitle === '证券公司' && pointTitle.includes('商业银行')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · 证券公司 vs 商业银行"
+        sides={[
+          {
+            name: '证券公司',
+            tagline: '管证券',
+            rows: [
+              { label: '核心业务', value: '证券发行、交易、承销' },
+              { label: '盈利方式', value: '佣金、承销费、投资收益' },
+              { label: '风险特征', value: '与市场波动强相关' },
+              { label: '监管主体', value: '证监会' },
+              { label: '客户资金', value: '第三方存管（银行托管）' },
+            ],
+          },
+          {
+            name: '商业银行',
+            tagline: '管钱',
+            rows: [
+              { label: '核心业务', value: '存贷款、支付结算' },
+              { label: '盈利方式', value: '存贷利差、手续费' },
+              { label: '风险特征', value: '信用风险为主' },
+              { label: '监管主体', value: '金融监管总局' },
+              { label: '客户资金', value: '直接吸收存款' },
+            ],
+          },
+        ]}
+        bottom="关键区别：商业银行可以创造信用（存贷循环），证券公司不能。"
+      />
+    )
+  }
+
+  if (chapterTitle === '证券公司' && pointTitle.includes('本节要点速记')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 本节要点速记"
+        items={[
+          { name: '三驾马车', desc: '经纪、承销、资管——券商最核心的三大业务' },
+          { name: '自营 vs 代客', desc: '自营是自己炒，资管是帮客户炒' },
+          { name: '融资融券', desc: '杠杆工具，风险放大器' },
+          { name: '与银行核心区别', desc: '不吸收存款，不创造信用' },
+        ]}
+      />
+    )
+  }
+
+  /* ================= 证券公司补充内容 ================= */
+
+  if (chapterTitle === '证券公司补充内容' && pointTitle.includes('资产管理业务')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 资管业务三种形式"
+        items={[
+          { name: '集合资产管理', desc: '多个客户的钱统一托管、统一投资', note: '门槛低·普通投资者' },
+          { name: '专项资产管理', desc: '为特定目标设立专门账户', note: '特定需求机构/个人' },
+          { name: '定向资产管理', desc: '一对一服务，定制化投资', note: '大客户·机构投资者' },
+        ]}
+        bottom="记忆口诀：多对一（集合）→ 特定目标（专项）→ 一对一（定向）。"
+      />
+    )
+  }
+
+  if (chapterTitle === '证券公司补充内容' && pointTitle.includes('国际业务')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · QDII vs RQFII：方向相反"
+        sides={[
+          {
+            name: 'QDII 合格境内机构投资者',
+            tagline: '境内 → 境外',
+            rows: [
+              { label: '资金方向', value: '境内募集资金，境外投资' },
+              { label: '作用', value: '让国内投资者间接参与海外市场' },
+            ],
+          },
+          {
+            name: 'RQFII 人民币合格境外机构投资者',
+            tagline: '境外 → 境内（用人民币）',
+            rows: [
+              { label: '资金方向', value: '境外机构用人民币投资境内市场' },
+              { label: '与 QFII 区别', value: 'RQFII 用人民币，QFII 用外币' },
+            ],
+          },
+        ]}
+        bottom="易错点：QDII 是境内→境外，不是境外→境内；QFII 投资顾问只出谋划策、不直接管理资金；境外经纪业务主要在香港。"
+      />
+    )
+  }
+
+  /* ================= 保险公司 ================= */
+
+  if (chapterTitle === '保险公司' && pointTitle.includes('保险公司基础')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 保险公司的四大核心特征"
+        items={[
+          { name: '经营对象：风险', desc: '经营的是无形、不确定的风险，先收保费、后可能赔付' },
+          { name: '负债性', desc: '负债先于资产确定——准备金管理至关重要' },
+          { name: '长期性', desc: '寿险合同动辄数十年，负债久期长' },
+          { name: '社会性', desc: '兼具经济补偿 + 社会管理功能' },
+        ]}
+      />
+    )
+  }
+
+  if (chapterTitle === '保险公司' && pointTitle.includes('保险分类体系')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 保险四大分类维度（必考）"
+        items={[
+          { name: '按保险标的', desc: '财产保险（保物：房屋、车辆、货物）vs 人身保险（保人：生命、健康、意外）' },
+          { name: '按实施方式', desc: '强制保险（法律规定必须买，如交强险）vs 自愿保险' },
+          { name: '按承保方式', desc: '原保险（投保人与保险人直接签约）vs 再保险（保险公司把风险转给其他保险公司）' },
+          { name: '按赔付方式', desc: '定额给付（约定金额一次性给付，如寿险）vs 损失补偿（按实际损失赔，不超保额，如财产险）' },
+        ]}
+        bottom="交叉记忆：财产险多为损失补偿，人身险多为定额给付——两条线别混淆。"
+      />
+    )
+  }
+
+  if (chapterTitle === '保险公司' && pointTitle.includes('三大支柱')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 人身保险三大支柱"
+        items={[
+          { name: '人寿保险', desc: '保生存/死亡，定额给付', note: '定期寿险·终身寿险·两全·年金' },
+          { name: '健康保险', desc: '保疾病/医疗费用，定额或报销', note: '重疾险·医疗险·护理险' },
+          { name: '意外伤害保险', desc: '保意外导致的伤残/死亡，定额给付', note: '综合意外险·交通意外险' },
+        ]}
+        bottom="口诀：寿（命）、健（康）、意（外）——「人身上三件事」。"
+      />
+    )
+  }
+
+  if (chapterTitle === '保险公司' && pointTitle.includes('保险中介')) {
+    return (
+      <ComparisonDiagram
+        caption="图解 · 代理人 vs 经纪人：代表谁？"
+        sides={[
+          {
+            name: '保险代理人',
+            tagline: '代表保险公司（卖方）',
+            rows: [{ label: '做什么', value: '为保险公司销售保险产品' }],
+          },
+          {
+            name: '保险经纪人',
+            tagline: '代表投保人（买方）——容易混淆！',
+            rows: [{ label: '做什么', value: '站在客户立场，帮客户挑选保险' }],
+          },
+        ]}
+        bottom="公估人：中立第三方，负责查勘、定损、理赔——既不卖方也不买方。"
+      />
+    )
+  }
+
+  if (chapterTitle === '保险公司' && pointTitle.includes('资金运用')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 保险资金五大运用渠道（风险由低到高）"
+        items={[
+          { name: '银行存款', desc: '最安全，收益低', note: '低风险' },
+          { name: '债券', desc: '国债/金融债为主，较稳健', note: '中低风险' },
+          { name: '基础设施债权', desc: '期限长，收益稳', note: '中低风险' },
+          { name: '不动产', desc: '长期持有，流动性差', note: '中风险' },
+          { name: '股票', desc: '比例受限，波动大', note: '中高风险' },
+        ]}
+        bottom="监管红线：权益类资产（股票+基金）比例有上限，防止保险公司过度冒险——保险资金以「稳」为先。"
+      />
+    )
+  }
+
+  if (chapterTitle === '保险公司' && pointTitle.includes('易错点提醒')) {
+    return (
+      <ToolGridDiagram
+        caption="图解 · 保险三大易错点"
+        items={[
+          { name: '再保险 ≠ 重复保险', desc: '再保险：A 保险公司把风险分给 B 保险公司；重复保险：同一投保人向多家买同一保险' },
+          { name: '定额给付 vs 损失补偿', desc: '人身险多为定额给付（买 100 万赔 100 万）；财产险多为损失补偿（按实际损失赔，不超保额）' },
+          { name: '代理人 vs 经纪人', desc: '代理人代表保险公司（卖方），经纪人代表投保人（买方）' },
+        ]}
+      />
+    )
+  }
+
   return null
 }
