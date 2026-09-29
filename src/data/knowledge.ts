@@ -10,7 +10,7 @@ export interface KnowledgeChapter {
   items: KnowItem[]
 }
 
-// 投资规划 · 金融工具 12 章节知识点（同步自 Notion 主页面，同步时间 2026-09-10）
+// 投资规划 · 金融工具 12 章节知识点（同步自 Notion 主页面，同步时间 2026-09-14）
 export const knowledgeChapters: KnowledgeChapter[] = [
   {
     title: "金融工具概述",
@@ -242,7 +242,7 @@ export const knowledgeChapters: KnowledgeChapter[] = [
   {
     title: "股票市场学习",
     items: [
-      { type: "text", text: "一、股票的分类", depth: 0 },
+      { type: "sub_header", text: "一、股票的分类", depth: 0 },
       { type: "text", text: "按上市地点和投资者分类（P94）", depth: 0 },
       { type: "table", text: "", depth: 0 },
       { type: "table_row", text: "", depth: 1, cells: ["类型", "面值货币", "认购货币", "上市地点"] },
@@ -263,7 +263,7 @@ export const knowledgeChapters: KnowledgeChapter[] = [
       { type: "table_row", text: "", depth: 1, cells: ["中性策略", "构建市场中性组合，不受大盘影响", "追求绝对收益"] },
       { type: "table_row", text: "", depth: 1, cells: ["CTA策略", "基于期货期权走势预判，做多/做空/多空结合", "管理期货"] },
       { type: "text", text: "CTA策略又称管理期货策略，是基于期货期权等投资标的潜在走势的预判，通过做多、做空或多空等多种方式投资操作，以期获得较高收益的投资策略。", depth: 0 },
-      { type: "text", text: "二、证券投资基金（P95-P96）", depth: 0 },
+      { type: "sub_header", text: "二、证券投资基金（P95-P96）", depth: 0 },
       { type: "text", text: "按投资对象分类", depth: 0 },
       { type: "table", text: "", depth: 0 },
       { type: "table_row", text: "", depth: 1, cells: ["类型", "主要投资对象", "特点"] },
@@ -274,7 +274,7 @@ export const knowledgeChapters: KnowledgeChapter[] = [
       { type: "text", text: "⚠️ 混合型基金的关键：股票、债券、基金投资的比例均不超过80%！", depth: 0 },
       { type: "text", text: "证券投资基金的投资对象", depth: 0 },
       { type: "text", text: "主要是股票（P95）", depth: 0 },
-      { type: "text", text: "三、贵金属与股票市场（P110-P111）", depth: 0 },
+      { type: "sub_header", text: "三、贵金属与股票市场（P110-P111）", depth: 0 },
       { type: "text", text: "国务院批准的三家贵金属交易所", depth: 0 },
       { type: "table", text: "", depth: 0 },
       { type: "table_row", text: "", depth: 1, cells: ["交易所", "主要产品"] },
@@ -285,7 +285,7 @@ export const knowledgeChapters: KnowledgeChapter[] = [
       { type: "bulleted_list", text: "个人凭证式黄金", depth: 0 },
       { type: "bulleted_list", text: "按银行报价在账面上买卖\"虚拟\"黄金", depth: 0 },
       { type: "bulleted_list", text: "不是实物黄金，不涉及实物交割", depth: 0 },
-      { type: "text", text: "四、股票市场核心要点总结", depth: 0 },
+      { type: "sub_header", text: "四、股票市场核心要点总结", depth: 0 },
       { type: "text", text: "股票 vs 债券 对比", depth: 0 },
       { type: "table", text: "", depth: 0 },
       { type: "table_row", text: "", depth: 1, cells: ["维度", "股票", "债券"] },
@@ -295,7 +295,7 @@ export const knowledgeChapters: KnowledgeChapter[] = [
       { type: "table_row", text: "", depth: 1, cells: ["期限", "无到期日", "有到期日"] },
       { type: "table_row", text: "", depth: 1, cells: ["清偿顺序", "最后", "优先于股票"] },
       { type: "text", text: "CHFP检测 · 共10题", depth: 0 },
-      { type: "text", text: "📝 快速检测", depth: 0 },
+      { type: "sub_header", text: "📝 快速检测", depth: 0 },
       { type: "text", text: "债券市场（5题）", depth: 0 },
       { type: "text", text: "1. 熊猫债券属于欧洲债券还是外国债券？", depth: 0 },
       { type: "text", text: "2. 金融工具四大特征是什么？", depth: 0 },
