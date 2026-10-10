@@ -16,7 +16,18 @@ import { Button } from '@/components/ui/button'
 import { Check, ChevronLeft, ChevronRight, Shuffle, Star } from 'lucide-react'
 
 const ALL = '全部'
-const groups = ['概述', '投资需求分析', '债券', '股票']
+/** 汇总题库出现过的章节桶，「基础资产」是大类不单独作 chip */
+const BUCKET = '基础资产'
+const PREFERRED = ['概述', '投资需求分析', '债券', '股票']
+const groups: string[] = (() => {
+  const seen: string[] = [...PREFERRED]
+  for (const q of questions) {
+    for (const g of [q.chapter, q.theme]) {
+      if (g && g !== BUCKET && !seen.includes(g)) seen.push(g)
+    }
+  }
+  return seen
+})()
 const tagOptions = [ALL, ...groups]
 
 type Mode = 'seq' | 'rand' | 'due' | 'wrong' | 'star'
