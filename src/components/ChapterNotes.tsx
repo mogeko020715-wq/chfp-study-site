@@ -136,4 +136,7 @@ export const chapterFlashGroup: Record<string, string> = {
   金融工具概述: '概述',
   债券市场: '债券',
   股票市场学习: '股票',
+  外汇市场: '外汇',
+  金融衍生品: '期货和衍生品',
+  贵金属市场: '黄金',
 }
