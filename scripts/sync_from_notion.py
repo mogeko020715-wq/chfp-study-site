@@ -115,12 +115,14 @@ def sync_questions() -> dict:
         stem = rich_text(props.get("题干", {}).get("title"))
         if not stem.strip():
             continue
-        rows.append({
+            rows.append({
             "stem": stem,
             "answer": rich_text(props.get("知识点/答案", {}).get("rich_text")),
             "chapter": (props.get("章节", {}).get("select") or {}).get("name", ""),
             "theme": (props.get("主题", {}).get("select") or {}).get("name", ""),
             "tags": [o["name"] for o in props.get("tags", {}).get("multi_select", [])],
+            # 该 Notion 习题库当前全部为投资规划板块；接入其他板块时从此区分
+            "module": "投资规划",
         })
 
     ch_order = {"概述": 0, "投资需求分析": 1, "基础资产": 2, "": 3}
@@ -135,6 +137,7 @@ def sync_questions() -> dict:
         "  date: string",
         "  chapter: string",
         "  theme: string",
+        "  module: string",
         "}",
         "",
         "export const questions: Question[] = [",
@@ -149,6 +152,7 @@ def sync_questions() -> dict:
         lines.append(f"    date: {js(date)},")
         lines.append(f"    chapter: {js(x['chapter'])},")
         lines.append(f"    theme: {js(x['theme'])},")
+        lines.append(f"    module: {js(x['module'])},")
         lines.append("  },")
     lines.append("]")
     lines.append("")

@@ -5,6 +5,7 @@ export interface Question {
   date: string
   chapter: string
   theme: string
+  module: string
 }
 
 export const questions: Question[] = [
@@ -15,6 +16,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "世界上的资产管理业务包括：",
@@ -23,6 +25,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "什么的正确制定是投资规划最终取得成功的前提：",
@@ -31,6 +34,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "制定投资规划最重要也最基本的信息是：",
@@ -39,6 +43,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "在投资评价指标阶段，具体的评价指标有投资风险和收益，这两者是指：",
@@ -47,6 +52,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "实现其他财务目标的重要手段是：",
@@ -55,6 +61,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "当投资期限较短，主要的金融工具应是：",
@@ -63,6 +70,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "当投资者将货币资金直接投入投资项目or购买现有企业形成实物资产，这属于：",
@@ -71,6 +79,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "当投资额度放大：",
@@ -79,6 +88,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "我国向公众提供投资管理服务的公司有哪两类：",
@@ -87,6 +97,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资与消费的关系：",
@@ -95,6 +106,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资成本主要有哪三类：",
@@ -103,6 +115,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资的约束条件有：",
@@ -111,6 +124,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资者从购买金融资产到兑现日之间的时间长度：",
@@ -119,6 +133,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资规划和投资的关系：",
@@ -127,6 +142,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资规划的流程：",
@@ -135,6 +151,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资规划目标原则包括：",
@@ -143,6 +160,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "按照全球通行的划分方法，一般将金融业务分为：",
@@ -151,6 +169,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "有哪些举措是【直接投资】：",
@@ -159,6 +178,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "正确的投资观念",
@@ -167,6 +187,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "生活化【投资行为】举例：",
@@ -175,6 +196,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "直接投资与间接投资的比较：",
@@ -183,6 +205,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "证券业务涉及的业务范围：",
@@ -191,6 +214,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "资产管理工具包括：",
@@ -199,6 +223,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "概述",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "A喜欢频繁进行投资交易，理财规划师警告频繁交易会侵蚀投资收益。因此他决定：",
@@ -207,6 +232,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "关于资产配置：",
@@ -215,6 +241,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "在区分短期、中期、长期投资目标的基础上，应该结合客户的具体情况对客户具体的投资目标按照重要程度和紧迫程度进行重新排列，从而在投资规划中确定实现投资目标的步骤，反映了：",
@@ -223,6 +250,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "在对宏观经济形势进行分析和预测时，理财规划师需要注意的有：",
@@ -231,6 +259,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "在进行投资需求分析时，需要确保了解到：",
@@ -239,6 +268,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "在通过客户的现有投资组合进行分析，什么是理财规划师不需要明确的：",
@@ -247,6 +277,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "客户的投资目标必须具有：",
@@ -255,6 +286,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "客户的经常性收入包括：",
@@ -263,6 +295,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "对于长期投资目标，应在资产配置上侧重于长期增值潜力大的投资工具，例如：",
@@ -271,6 +304,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "帮助客户明确哪些目标更为正确的问题包括：",
@@ -279,6 +313,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "常见的根据年龄阶段定制的投资目标有：",
@@ -287,6 +322,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "当提供理财服务，提供具体的投资建议之前，不仅要对客户财务状况等个人信息做分析，还要考虑：",
@@ -295,6 +331,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资理财规划的第一步是了解客户的基础信息并作出分析，这些分析包括：",
@@ -303,6 +340,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资目标按照实现时间可以分为哪几类：",
@@ -311,6 +349,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "投资目标：",
@@ -319,6 +358,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "有哪些信息需要理财规划师在预测客户家庭预期收入时掌握：",
@@ -327,6 +367,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "有哪些客户基本信息需要用来编制基本的财务表格：",
@@ -335,6 +376,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "理财风格主要根据主管风险偏好和程度分为五种类型：",
@@ -343,6 +385,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "用来预测家庭预期收入的信息有：",
@@ -351,6 +394,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "若资产配置方案为：成长性资产35%｜定息资产65%，则该客户投资偏好分类是：",
@@ -359,6 +403,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "若资产配置方案为：成长性资产80～100%｜定息资产0～20%，则该客户投资偏好分类是：",
@@ -367,6 +412,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "进行投资规划时，理财规划师需要的表格：",
@@ -375,6 +421,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "金融工具转变为现金而不遭受损失的能力叫：",
@@ -383,6 +430,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "投资需求分析",
     theme: "",
+    module: "投资规划",
   },
   {
     stem: "与股票相比，债券的特征通常不包括：",
@@ -391,6 +439,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "久期在投资中的应用包括：",
@@ -399,6 +448,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "代表发行人借入并且承诺于未来某一特定日期偿付给债券持有人的金额是指：",
@@ -407,6 +457,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "债券价格/债券基本要素由哪些多种原因共同决定：",
@@ -415,6 +466,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "债券作为有价证券，从投资者角度具有哪些特征：",
@@ -423,6 +475,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "债券发行的目的有：",
@@ -431,6 +484,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "债券可按照发行主体的不同分为：",
@@ -439,6 +493,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "债券投资者面临债券风险有：",
@@ -447,6 +502,7 @@ export const questions: Question[] = [
     date: "Sep 4",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "债券按照生命周期长短分类可分为：",
@@ -455,6 +511,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "债券的基本要素：",
@@ -463,6 +520,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "债券的定义：",
@@ -471,6 +529,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "免疫：",
@@ -479,6 +538,7 @@ export const questions: Question[] = [
     date: "Sep 4",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "关于债券的利率风险，有：",
@@ -487,6 +547,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "关于债券票面利率：",
@@ -495,6 +556,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "关于可转债：",
@@ -503,6 +565,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "决定国债发行条件的关键是：",
@@ -511,6 +574,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "准备发行政策性金融债券的银行应根据实际需要，按照规定的要求和程序向哪个机构报送本单位发行政策性",
@@ -519,6 +583,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "凸性",
@@ -527,6 +592,7 @@ export const questions: Question[] = [
     date: "Sep 3",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "发行金融债券的主体有：",
@@ -535,6 +601,7 @@ export const questions: Question[] = [
     date: "Sep 4",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "可赎回债券的发行者有权在债券到期前“提前偿还”全部或者部分债券。从投资者的角度看，下列属于提前偿还条款的有利之处有：",
@@ -543,6 +610,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "国债按照债券形态分类可分为，该分类方式也是我国国债的特定分类方法：",
@@ -551,6 +619,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "国债的发行按是否有金融中介机构参与出售的标准来看，有直接发行与间接发行之分",
@@ -559,6 +628,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "国际债券的分类：",
@@ -567,6 +637,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "在债券投资过程中，一定要注意债券的信用级别。关于目前在债券评级中常见的4C标准，具体上是指：",
@@ -575,6 +646,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "在债券评级中，常用的4C标准具体包括：",
@@ -583,6 +655,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "在我国，准备发行金融债券的各银行与非银行金融机构根据实际需要，按照规定的要求和程序向中国人民银行总行报送本单位发行金融债券的计划：",
@@ -591,6 +664,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "属于我国债券流通市场的是：",
@@ -599,6 +673,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "投资者投资于债券的收益来自：",
@@ -607,6 +682,7 @@ export const questions: Question[] = [
     date: "Sep 4",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "指以发行者的不动产或有价证券作为抵押品而发行的债券：",
@@ -615,6 +691,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "指银行及非银行金融机构依照法定程序发行的并约定在一定期限内还本付息的有价证券：",
@@ -623,6 +700,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "按是否有抵押，债券可以分为：",
@@ -631,6 +709,7 @@ export const questions: Question[] = [
     date: "Sep 4",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "按是否有金融中介机构参与出售的标准来看，国债的发行可分为：",
@@ -639,6 +718,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "有关债券的角色：",
@@ -647,6 +727,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "某些突发事件的发生对债券价值的影响，如灾难、公司重组、市场游戏规则的变化、政府的政策变动、等等，这属于哪类风险：",
@@ -655,6 +736,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "根据《证券法》规定，公开发行公司债券，应当符合的条件有：",
@@ -663,6 +745,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "通过无纸化方式发行和交易，记名，可挂失，投资者可以在购买后随时买入或卖出，其变现更为灵活，但交易价格由市场决定，投资者可能会遇到价格损失：",
@@ -671,6 +754,7 @@ export const questions: Question[] = [
     date: "Sep 7",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "金融租凭公司从事【】，是指金融租凭公司投资于可以在待定时间内取得固定收益并预先知道取得收益数量和时间的证券：",
@@ -679,6 +763,7 @@ export const questions: Question[] = [
     date: "Sep 4",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "银行与非银行金融机构为了筹措资金，按照有关法律和发行程序，利用自身信誉向社会公开发行的债券叫：",
@@ -687,6 +772,7 @@ export const questions: Question[] = [
     date: "Sep 4",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "零息债券的久期等于：",
@@ -695,6 +781,7 @@ export const questions: Question[] = [
     date: "Sep 4",
     chapter: "基础资产",
     theme: "债券",
+    module: "投资规划",
   },
   {
     stem: "A股：",
@@ -703,6 +790,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "B股：",
@@ -711,6 +799,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "N股：",
@@ -719,6 +808,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "ST股：",
@@ -727,6 +817,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "上市公司的股票交易被实行特别处理期间，其股票交易应遵循的规则有：",
@@ -735,6 +826,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "上市公司获得有关部门批准后，以证券市场上的全体投资者为发售对象，再次发行股票筹资叫：",
@@ -743,6 +835,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "上海股票市场于1993年6月1日增设了上证指数分类",
@@ -751,6 +844,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "不可偿还性的特征：",
@@ -759,6 +853,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "世界主要指数：",
@@ -767,6 +862,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "于股市变动的市场因素中，哪个因素是最主要的，最重要的因素，对企业营运及股价的影响极大：",
@@ -775,6 +871,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "交易所股票交易的价格涨跌幅限制比例是多少：",
@@ -783,6 +880,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "从编制方法上，股票价格指数分为简单算术股价指数和：",
@@ -791,6 +889,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "以何种水平为标准，无价格涨跌幅限制股票在盘中交易时上涨100%或下跌50%以上的，属于异常波动：",
@@ -799,6 +898,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "优先股的主要特征：",
@@ -807,6 +907,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "优先股的收回方式有哪几种：",
@@ -815,6 +916,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "优先股种类：",
@@ -823,6 +925,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "优先股股票相较于普通股票的“优先权”体现在：",
@@ -831,6 +934,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "依据修订《证券法》，我国公司首次公开发行新股，应当符合的条件有：",
@@ -839,6 +943,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "假设市场期望收益率为10%，无风险利率为4%，某股票贝塔值为1.5，如果这只股票收益率达到15%，则该股票超额收益即阿尔法值为：",
@@ -847,6 +952,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "停牌和摘牌：",
@@ -855,6 +961,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "关于我国沪、深两地证券交易所竞价方式的说法：",
@@ -863,6 +970,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "关于无记名股票的特点；",
@@ -871,6 +979,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "关于无面额股票：",
@@ -879,6 +988,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "关于现金股利与股票股利对公司财务影响的不同",
@@ -887,6 +997,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "创业板：",
@@ -895,6 +1006,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "反映沪深两个市场整体走势的“晴雨表”：",
@@ -903,6 +1015,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "哪种股票的回报率与经济周期具有很强的正相关性，像港口、航空、房地产行业等股票：",
@@ -911,6 +1024,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "在国外股票市场上，投资者把那些在其所属行业内占支配性地位、业绩优良、成交活跃、股利优厚的大公司称为：",
@@ -919,6 +1033,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "在对股票进行基本面分析的时候，分析宏观经济面对股票的影响，需要重点关注哪些因素：",
@@ -927,6 +1042,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "场外市场：",
@@ -935,6 +1051,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "套利定价理论模型是以收益率形成过程的哪种模型为基础：",
@@ -943,6 +1060,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "如何判断上市公司的行业地位：",
@@ -951,6 +1069,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "威廉指标：",
@@ -959,6 +1078,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "对股票价值进行评估是指利用各种方法评估股票的内在价值。这些方法可以分为两类：",
@@ -967,6 +1087,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "导致摘牌的原因：",
@@ -975,6 +1096,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "常用的技术指标分析：",
@@ -983,6 +1105,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "开通沪港通的意义：",
@@ -991,6 +1114,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "我国《公司法》规定公司不得收购本公司股份，以下情形除外：",
@@ -999,6 +1123,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "我国《公司法》规定，以募集方式设立股份有限公司的，发起人认购的股份不得少于公司股份总额：",
@@ -1007,6 +1132,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "我国股票发行制度：",
@@ -1015,6 +1141,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "我国股票市场常用的主要指数：",
@@ -1023,6 +1150,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "我国那些交易所属于二级市场：",
@@ -1031,6 +1159,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "扩张政策一般会促使股价：",
@@ -1039,6 +1168,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "技术分析的主要理论：",
@@ -1047,6 +1177,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "技术指标分析定义：",
@@ -1055,6 +1186,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "投资者对买卖指令进入交易所主机后，撮合系统将按何种原则进行自动撮合：",
@@ -1063,6 +1195,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "投资者投资股票获得盈利的主要途径是：",
@@ -1071,6 +1204,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "按照受经济周期影响的不同程度，股票分为：",
@@ -1079,6 +1213,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "按照行业所处生命周期的阶段不同，可以将行业分为：",
@@ -1087,6 +1222,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "据中国证监会目前的有关规定，上市公司向股东配股必须符合的基本条件包括：",
@@ -1095,6 +1231,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "普通股的特点：",
@@ -1103,6 +1240,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "某沪市上市公司分配方案为每10股3股，派2元现金，同时每10股配2股，配股价为5元/股，该股股权登记日收盘价为12元/股，则该股除权参考价为：",
@@ -1111,6 +1249,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "根据发行股票公司性质的不同，境内股票市场可以分为四大市场：",
@@ -1119,6 +1258,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "根据我国公司法的有关规定，股份有限公司申请其股票上市的条件有：",
@@ -1127,6 +1267,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "根据证券交易所的规则，每个交易日有几个时间段为集合竞价时间？",
@@ -1135,6 +1276,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "沪深300指数的基日点位是：",
@@ -1143,6 +1285,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "沪港通包括：",
@@ -1151,6 +1294,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "沪港通是指：",
@@ -1159,6 +1303,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "深圳证券交易所股价指数有综合指数系列，成分指数系列和，深圳基金指数三大类。其中综合指数系列中包括：",
@@ -1167,6 +1312,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "深证综合指数：",
@@ -1175,6 +1321,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "现金流量表主要三大内容",
@@ -1183,6 +1330,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "相对价值评估模型：",
@@ -1191,6 +1339,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "累计优先股",
@@ -1199,6 +1348,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "经济衰退阶段，若客户想持有较多防御型股票，则应选择类型如：",
@@ -1207,6 +1357,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股东权作为一种综合权利：",
@@ -1215,6 +1366,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股份有限公司：",
@@ -1223,6 +1375,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股利贴现模型包括：",
@@ -1231,6 +1384,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票作为一种无偿还期限的有价证券，是股份有限公司于筹集资本时，向出资人公开发行的，代表持有人（股东）对公司的：",
@@ -1239,6 +1393,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票停牌的原因：",
@@ -1247,6 +1402,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票前缀：",
@@ -1255,6 +1411,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票发行的主要目的：",
@@ -1263,6 +1420,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票基本面分析层次包括：",
@@ -1271,6 +1429,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票持有人虽然不能直接从股份公司退股，但可以在股票市场上很方便地卖出股票来变现，在收回投资的同时，将股票所代表的股东身份及其各种权益让渡给受让者，这对应着股票的属性：",
@@ -1279,6 +1438,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票按照股东权利分为：",
@@ -1287,6 +1447,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票按照风险和收益标准分为：",
@@ -1295,6 +1456,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票根据什么分成有面额股票和无面额股票：",
@@ -1303,6 +1465,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票涨跌幅价格的计算公式为：",
@@ -1311,6 +1474,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票的实际期望收益率同理论期望收益率之间的差，称为阿尔法系数，记为a。例如，如果预期市场收益率为16%。某种股票的beta值为1.5，短期国库券利率为7%。依据证券市场线可以得出这只股票的理论期望收益率为：",
@@ -1319,6 +1483,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票的法律性质：",
@@ -1327,6 +1492,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票的特征包括：",
@@ -1335,6 +1501,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "股票股利：",
@@ -1343,6 +1510,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "记名股票的特点",
@@ -1351,6 +1519,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "证券投资的系统性风险构成主要包括：",
@@ -1359,6 +1528,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "证券投资风险分为两种：",
@@ -1367,6 +1537,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "证券收益的影响因素可归类为：",
@@ -1375,6 +1546,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "资本利得的概念：",
@@ -1383,6 +1555,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "资金筹集者，按照一定的法律规定和发行程序通过发行股票来筹集资金，投资者通过认购股票成为公司股东，该类股票交易市场称：",
@@ -1391,6 +1564,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "道·琼斯股票指数作为世界上历史最悠久的股票指数，是1884年采用哪种计算公式编织成的：",
@@ -1399,6 +1573,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "道氏理论的5个主要理论",
@@ -1407,6 +1582,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "道氏理论：",
@@ -1415,6 +1591,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "金融服务机构编制的，通过对股票市场上一些有代表性的公司发行的股票交易价格进行平均计算和动态对比后的数据，作为对股市动态的综合反映是：",
@@ -1423,6 +1600,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "非系统性风险举例：",
@@ -1431,6 +1609,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "风险性：",
@@ -1439,6 +1618,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "香港恒生指数特点：",
@@ -1447,6 +1627,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "股票",
+    module: "投资规划",
   },
   {
     stem: "一种货币成为外汇的条件：",
@@ -1455,6 +1636,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "不可以作为外汇支付凭证的例子：",
@@ -1463,6 +1645,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "世界七大黄金交易中心",
@@ -1471,6 +1654,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "黄金",
+    module: "投资规划",
   },
   {
     stem: "个人结构性存款",
@@ -1479,6 +1663,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "中国银行的个人外汇期权包括哪两种产品：",
@@ -1487,6 +1672,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "为控制期货交易的特殊风险，交易所实行强行平仓额度，当投资者出现何种情况时，会出现强制平仓：",
@@ -1495,6 +1681,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "买入股票认购期权：收益无限，损失有限。那最大损失的额度是？",
@@ -1503,6 +1690,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "作为金融工具创新，股票指数期货交易的意义：",
@@ -1511,6 +1699,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "其它交割条款：",
@@ -1519,6 +1708,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "即期汇率：",
@@ -1527,6 +1717,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "哪种风险是因价格变化使期货合约的价值发生变化的风险，也是期货交易中最常见、最需要重视的一种风险：",
@@ -1535,6 +1726,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "商品期货历史悠久，种类繁多，主要包括：",
@@ -1543,6 +1735,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "国内第一家也是目前唯一一家专门从事金融期货、期权等衍生品交易和结算的公司制交易所是：",
@@ -1551,6 +1744,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "在我国境内，并非所有外币都可以进行储蓄存款：",
@@ -1559,6 +1753,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "在进行期货交易时，交易者只有交付了保证金后才能参与期货合约的买卖，这个比例通常：",
@@ -1567,6 +1762,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "在选择外汇理财产品时，主要应考虑的因素有：",
@@ -1575,6 +1771,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "外币储蓄存款",
@@ -1583,6 +1780,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "外汇交易的特点：",
@@ -1591,6 +1789,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "外汇动态含义：",
@@ -1599,6 +1798,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "外汇协定存款中，基本要求是：",
@@ -1607,6 +1807,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "外汇市场上外汇交易方式包括：",
@@ -1615,6 +1816,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "外汇期货交易的主要特点：",
@@ -1623,6 +1825,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "套利保值",
@@ -1631,6 +1834,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "套汇：",
@@ -1639,6 +1843,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "实物期货主要有：",
@@ -1647,6 +1852,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "实物黄金投资的特点：",
@@ -1655,6 +1861,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "黄金",
+    module: "投资规划",
   },
   {
     stem: "实盘外汇交易的方式：",
@@ -1663,6 +1870,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "属于上海期货交易所交易品种：",
@@ -1671,6 +1879,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "属于大连商品交易所交易品种：",
@@ -1679,6 +1888,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "属于股指期货的交易流程的是：",
@@ -1687,6 +1897,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "属于郑州商品交易所的交易品种有：",
@@ -1695,6 +1906,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "影响商品期货合约月份的确定因素：",
@@ -1703,6 +1915,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "我国期货交易场所有：",
@@ -1711,6 +1924,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "我国的商品期货交易所有：",
@@ -1719,6 +1933,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "我国第一只股指期权：",
@@ -1727,6 +1942,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "投资者入市的目的、心态和投资者本身等因素不同，导致具体操作方式不同，具体有哪些方面：",
@@ -1735,6 +1951,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "按外汇市场的外部形态可将外汇市场分为：",
@@ -1743,6 +1960,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "按照交割日是否固定，远期外汇交易分为：",
@@ -1751,6 +1969,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "按照交易范围进行分类，外汇市场分为：",
@@ -1759,6 +1978,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "按照外汇所受管制程度进行分类，外汇市场可分为：",
@@ -1767,6 +1987,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "按照进行兑换时的受限制程度，外汇分为",
@@ -1775,6 +1996,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "掉期外汇交易一般可以分成：",
@@ -1783,6 +2005,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "掉期外汇交易：",
@@ -1791,6 +2014,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "掉期外汇交易：",
@@ -1799,6 +2023,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "无形外汇市场的特点：",
@@ -1807,6 +2032,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "替代品的质量等级和品种一般也由期货交易所规定，交货人用交易所认可的替代品代替标准品进行实物交割，收货人这方：",
@@ -1815,6 +2041,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "有限自由兑换外汇：",
@@ -1823,6 +2050,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "期权交易的基本应用：",
@@ -1831,6 +2059,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期现套利是指利用期货市场和现货市场之间不合理价差，通过在两个市场上进行_交易。待价差趋于合理而获利的交易",
@@ -1839,6 +2068,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货交易中，绝大多数成交的合约是通过哪种形式结清的：",
@@ -1847,6 +2077,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货交易制度：",
@@ -1855,6 +2086,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货交易和远期交易的区别：",
@@ -1863,6 +2095,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货交易涉及的交易制度：",
@@ -1871,6 +2104,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货交易的最终目的是：",
@@ -1879,6 +2113,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货交易账户计算中四项最基本的内容：",
@@ -1887,6 +2122,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货合约的要素：",
@@ -1895,6 +2131,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货市场风险指因价格变化使持有的期期货合约价值发生变化的风险，是期货交易中最常见、最需要重视的一种风险，导致期货交易的市场因素可分为：",
@@ -1903,6 +2140,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货投机是指交易者通过预测期货合约未来价格变化，以在期货市场上获取_为目的的期货交易行为：",
@@ -1911,6 +2149,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货持仓限额制度：",
@@ -1919,6 +2158,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "期货：",
@@ -1927,6 +2167,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "根据来源和用途，外汇分为：",
@@ -1935,6 +2176,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "涨跌停板制度：",
@@ -1943,6 +2185,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "清算机构清算价：",
@@ -1951,6 +2194,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "甲种外币存款按存款期限划分种类包括：",
@@ -1959,6 +2203,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "甲种外币存款期划分为：",
@@ -1967,6 +2212,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "目前我国银行间，最常见的即期外汇交易方式：",
@@ -1975,6 +2221,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "确认期货合约交易单位的大小主要考虑：",
@@ -1983,6 +2230,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "结构性外汇存款是深受投资者青睐的外汇理财产品，目前我国银行推出的主要种类有：",
@@ -1991,6 +2239,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "结构性存款风险都有哪些：",
@@ -1999,6 +2248,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "股指期货投资的风险，从投资者面临的财务风险划分可分为：",
@@ -2007,6 +2257,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "股指期货的一般风险：",
@@ -2015,6 +2266,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "自2008年颁布的修订后《外汇管理条例》所称用于国际清偿的支付手段和资产的外汇包括下列以外币资产：",
@@ -2023,6 +2275,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "自由外汇市场：",
@@ -2031,6 +2284,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "记账/清算/双边外汇：",
@@ -2039,6 +2293,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "远期外汇交易：",
@@ -2047,6 +2302,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "远期汇率和即期汇率的差额（远期汇水）可以用：",
@@ -2055,6 +2311,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "外汇",
+    module: "投资规划",
   },
   {
     stem: "金融期权：",
@@ -2063,6 +2320,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "金融期货中，除了少数合约特殊规定，绝大多数的合约的交割月份定为：",
@@ -2071,6 +2329,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "金融期货都包括：",
@@ -2079,6 +2338,7 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
   {
     stem: "预期后市标的物价格上涨，期望获得权利金，投资者适宜选择：",
@@ -2087,5 +2347,6 @@ export const questions: Question[] = [
     date: "",
     chapter: "基础资产",
     theme: "期货和衍生品",
+    module: "投资规划",
   },
 ]

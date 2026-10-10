@@ -4,6 +4,7 @@ import { knowledgeChapters } from '@/data/knowledge'
 import { renderNoteItems, splitIntoPoints, chapterFlashGroup } from '@/components/ChapterNotes'
 import { diagramFor } from '@/components/diagrams'
 import FlashcardEmbed from '@/components/FlashcardEmbed'
+import RelatedPractice from '@/components/RelatedPractice'
 import Nav from '@/sections/Nav'
 import Footer from '@/sections/Footer'
 import { useMastered } from '@/hooks/useMastered'
@@ -100,6 +101,7 @@ export default function PointPage() {
         </div>
 
         {group && <FlashcardEmbed group={group} />}
+        <RelatedPractice pointTitle={point.title} />
       </main>
       <Footer />
     </div>

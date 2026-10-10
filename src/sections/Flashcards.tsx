@@ -30,12 +30,13 @@ const groups: string[] = (() => {
 })()
 const tagOptions = [ALL, ...groups]
 
-type Mode = 'seq' | 'rand' | 'due' | 'wrong' | 'star'
+type Mode = 'seq' | 'rand' | 'due' | 'wrong' | 'star' | 'unmastered'
 const MODES: { key: Mode; label: string; hint: string }[] = [
   { key: 'seq', label: '顺序', hint: '从头到尾过一遍' },
   { key: 'rand', label: '随机', hint: '打破位置记忆' },
   { key: 'due', label: '待复习', hint: '今天该复习的卡' },
   { key: 'wrong', label: '错题', hint: '只刷答错过的' },
+  { key: 'unmastered', label: '未掌握', hint: '排除已掌握的卡' },
   { key: 'star', label: '收藏', hint: '手动标星的卡' },
 ]
 
@@ -86,10 +87,12 @@ export default function Flashcards() {
         return base.filter((i) => (cardState[i]?.lapses ?? 0) > 0).sort((a, b) => (cardState[b]?.lapses ?? 0) - (cardState[a]?.lapses ?? 0))
       case 'star':
         return base.filter((i) => cardState[i]?.starred)
+      case 'unmastered':
+        return base.filter((i) => !mastered.has(i))
       default:
         return base
     }
-  }, [order, filter, mode, cardState, today])
+  }, [order, filter, mode, cardState, today, mastered])
 
   const cur = list.length > 0 ? list[Math.min(pos, list.length - 1)] : -1
   const q = cur >= 0 ? questions[cur] : null
@@ -366,7 +369,9 @@ export default function Flashcards() {
               ? '还没有错题——答错的卡会自动进入错题本'
               : mode === 'star'
                 ? '还没有收藏的卡——点卡片下方的星标收藏'
-                : '该筛选条件下暂无卡片'}
+                : mode === 'unmastered'
+                  ? '该筛选下全部卡都已掌握 🎉'
+                  : '该筛选条件下暂无卡片'}
         </p>
       )}
     </section>

@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router'
 import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react'
 import { modules, totalQuestions, type CourseModule } from '@/data/course'
 import { knowledgeChapters } from '@/data/knowledge'
-import { chapterPages } from '@/components/ChapterNotes'
+import { chapterPages, chapterFlashGroup } from '@/components/ChapterNotes'
 import Nav from '@/sections/Nav'
 import Footer from '@/sections/Footer'
 import { useMastered } from '@/hooks/useMastered'
@@ -33,7 +33,18 @@ function ModuleHeader({ m }: { m: CourseModule }) {
 }
 
 function ChapterList() {
-  const { count } = useMastered(questions.length)
+  const { mastered } = useMastered(questions.length)
+
+  /** 章节 → 关联闪卡的掌握进度（无映射的章节返回 null） */
+  const groupStat = (title: string): { done: number; total: number } | null => {
+    const g = chapterFlashGroup[title]
+    if (!g) return null
+    const idxs = questions
+      .map((q, i) => (q.chapter === g || q.theme === g ? i : -1))
+      .filter((i) => i >= 0)
+    return { done: idxs.filter((i) => mastered.has(i)).length, total: idxs.length }
+  }
+
   return (
     <>
       <div className="mt-10 flex items-center justify-between">
@@ -42,7 +53,7 @@ function ChapterList() {
           to="/flashcards"
           className="inline-flex items-center gap-1 text-sm text-neutral-500 hover:text-neutral-900"
         >
-          本章闪卡已掌握 {count} / {questions.length}
+          本章闪卡已掌握 {mastered.size} / {questions.length}
           <ArrowRight className="h-3.5 w-3.5" />
         </Link>
       </div>
@@ -67,6 +78,21 @@ function ChapterList() {
                   {chapterPages[c.title] ?? ''} · {c.items.length} 条笔记
                 </span>
               </span>
+              {(() => {
+                const st = groupStat(c.title)
+                if (!st) return null
+                const pct = st.total > 0 ? Math.round((st.done / st.total) * 100) : 0
+                return (
+                  <span className="hidden w-28 shrink-0 sm:block" title={`关联闪卡已掌握 ${st.done}/${st.total}`}>
+                    <span className="block text-right text-xs text-neutral-500">
+                      {st.done}/{st.total}
+                    </span>
+                    <span className="mt-1 block h-1 overflow-hidden rounded-full bg-neutral-100">
+                      <span className="block h-full rounded-full bg-neutral-800" style={{ width: `${pct}%` }} />
+                    </span>
+                  </span>
+                )
+              })()}
               <ArrowRight className="h-4 w-4 shrink-0 text-neutral-300 transition-colors group-hover:text-neutral-900" />
             </Link>
           </li>
