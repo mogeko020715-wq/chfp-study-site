@@ -3,6 +3,8 @@ import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react'
 import { modules, totalQuestions, type CourseModule } from '@/data/course'
 import { knowledgeChapters } from '@/data/knowledge'
 import { chapterPages, chapterFlashGroup } from '@/components/ChapterNotes'
+import { guideFor } from '@/data/guides'
+import ModuleGuideView from '@/components/ModuleGuide'
 import Nav from '@/sections/Nav'
 import Footer from '@/sections/Footer'
 import { useMastered } from '@/hooks/useMastered'
@@ -106,6 +108,7 @@ export default function ModulePage() {
   const { name = '' } = useParams()
   const m = modules.find((x) => x.name === name)
   const { count } = useMastered(questions.length)
+  const guide = m ? guideFor(m.name) : undefined
 
   return (
     <div className="min-h-screen bg-white text-neutral-900 antialiased">
@@ -124,17 +127,24 @@ export default function ModulePage() {
             <div className="mt-6">
               <ModuleHeader m={m} />
             </div>
-            {m.name === MODULE_WITH_CONTENT ? (
-              <ChapterList />
-            ) : (
-              <div className="mt-10 rounded-xl border border-dashed border-neutral-300 p-10 text-center">
-                <BookOpen className="mx-auto h-6 w-6 text-neutral-400" />
-                <p className="mt-3 text-neutral-600">该板块笔记尚未同步到本站</p>
-                <p className="mt-1 text-sm text-neutral-500">
-                  当前仅「{MODULE_WITH_CONTENT}」板块收录了章节笔记与闪卡，其余板块内容正在整理中。
-                </p>
-              </div>
-            )}
+
+            {/* 导学：大白话定位 + 知识框架 + 学习路径 + 核心概念 */}
+            {guide && <ModuleGuideView guide={guide} />}
+
+            {/* 深入层：已有笔记的板块显示章节列表，其余给软提示而不是死墙 */}
+            <div id="chapters" className="scroll-mt-20">
+              {m.name === MODULE_WITH_CONTENT ? (
+                <ChapterList />
+              ) : (
+                <div className="mt-12 rounded-xl border border-dashed border-neutral-300 p-8 text-center">
+                  <BookOpen className="mx-auto h-6 w-6 text-neutral-400" />
+                  <p className="mt-3 text-neutral-600">该板块详细笔记与题库尚未同步</p>
+                  <p className="mx-auto mt-1 max-w-md text-sm leading-relaxed text-neutral-500">
+                    先把上面的导学框架消化掉——有地图就不怕路远。笔记整理好后会出现在这里。
+                  </p>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <p className="mt-10 text-neutral-600">未找到该板块，请从首页进入。</p>

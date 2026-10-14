@@ -4,6 +4,7 @@ import { useMastered } from '@/hooks/useMastered'
 import Nav from '@/sections/Nav'
 import Hero from '@/sections/Hero'
 import Framework from '@/sections/Framework'
+import Storyline from '@/sections/Storyline'
 import Footer from '@/sections/Footer'
 
 export default function Home() {
@@ -14,6 +15,7 @@ export default function Home() {
       <Nav masteredCount={count} />
       <main>
         <Hero />
+        <Storyline />
         <Framework />
       </main>
       <Footer />
