@@ -221,3 +221,23 @@
 .dark .hover\:border-neutral-500:hover {
   border-color: rgb(115 115 115);
 }
+/* ===== 首页公告栏横滑动画 ===== */
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.news-ticker-track {
+  animation: ticker-scroll 36s linear infinite;
+}
+.news-ticker:hover .news-ticker-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .news-ticker-track {
+    animation: none;
+  }
+}

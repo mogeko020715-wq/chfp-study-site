@@ -5,6 +5,7 @@ import Nav from '@/sections/Nav'
 import Hero from '@/sections/Hero'
 import Framework from '@/sections/Framework'
 import Storyline from '@/sections/Storyline'
+import NewsTicker from '@/components/NewsTicker'
 import Footer from '@/sections/Footer'
 
 export default function Home() {
@@ -14,6 +15,9 @@ export default function Home() {
     <div className="min-h-screen bg-white text-neutral-900 antialiased">
       <Nav masteredCount={count} />
       <main>
+        <div className="pt-12">
+          <NewsTicker />
+        </div>
         <Hero />
         <Storyline />
         <Framework />
