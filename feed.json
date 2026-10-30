@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": 1,
-    "updatedAt": "2026-10-29T23:36:40+08:00",
+    "updatedAt": "2026-10-30T20:32:41+08:00",
     "nextWeekly": "2026-11-01",
     "nextQuarterly": "2026-12-31"
   },
@@ -207,6 +207,76 @@
       "points": [],
       "importance": 3,
       "dataDate": "2026-10-29",
+      "auto": true,
+      "intraday": false
+    },
+    {
+      "id": "d20261030-mkt-index",
+      "date": "2026-10-30",
+      "title": "A股收盘：上证指数报 3599.02 点（-1.44%）",
+      "summary": "上证指数收报 3599.02 点，下跌 1.44%。市场全貌与板块排行见下方条目与周报。",
+      "source": "腾讯财经行情",
+      "category": "大类资产",
+      "modules": [
+        "投资规划"
+      ],
+      "points": [
+        "股票市场 · 指数与市场结构"
+      ],
+      "importance": 2,
+      "dataDate": "2026-10-30",
+      "auto": true,
+      "intraday": false
+    },
+    {
+      "id": "d20261030-mkt-gold",
+      "date": "2026-10-30",
+      "title": "黄金ETF收报 8.115 元（-1.33%）",
+      "summary": "华安黄金ETF（跟踪国内金价）收报 8.115 元，下跌 1.33%。金价驱动因素复盘：美元指数、实际利率与避险需求。",
+      "source": "腾讯财经行情",
+      "category": "大类资产",
+      "modules": [
+        "投资规划"
+      ],
+      "points": [
+        "贵金属市场 · 影响黄金价格的因素"
+      ],
+      "importance": 3,
+      "dataDate": "2026-10-30",
+      "auto": true,
+      "intraday": false
+    },
+    {
+      "id": "d20261030-mkt-fx",
+      "date": "2026-10-30",
+      "title": "在岸人民币收报 6.6525（-0.27%）",
+      "summary": "美元/在岸人民币收报 6.6525。汇率变动通过外贸企业汇兑损益与跨境资金流动影响市场，标价方法（直接/间接）是外汇章常考点。",
+      "source": "腾讯财经行情",
+      "category": "大类资产",
+      "modules": [
+        "理财规划基础",
+        "投资规划"
+      ],
+      "points": [
+        "经济环境 · 利率与汇率的传导",
+        "外汇市场 · 汇率标价方法"
+      ],
+      "importance": 2,
+      "dataDate": "2026-10-30",
+      "auto": true,
+      "intraday": false
+    },
+    {
+      "id": "d20261030-mkt-board-up",
+      "date": "2026-10-30",
+      "title": "今日领涨板块：通信设备（+7.36%）、数字媒体（+7.16%）、影视院线（+6.57%）",
+      "summary": "申万二级行业涨幅前三。通信设备 +7.36%；数字媒体 +7.16%；影视院线 +6.57%。完整涨跌榜见周报。",
+      "source": "腾讯财经行情",
+      "category": "板块行业",
+      "modules": [],
+      "points": [],
+      "importance": 3,
+      "dataDate": "2026-10-30",
       "auto": true,
       "intraday": false
     }
