@@ -8,6 +8,7 @@ import AccountDialog from '@/components/AccountDialog'
 const links = [
   { to: '/', label: '学习框架' },
   { to: '/news', label: '行业资讯' },
+  { to: '/analysis', label: '数据复盘' },
   { to: '/flashcards', label: '闪卡记忆' },
   { to: '/quiz', label: '自测刷题' },
 ]

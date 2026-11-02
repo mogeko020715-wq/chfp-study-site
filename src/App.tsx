@@ -6,6 +6,7 @@ import PointPage from './pages/Point'
 import FlashcardsPage from './pages/FlashcardsPage'
 import QuizPage from './pages/QuizPage'
 import NewsPage from './pages/News'
+import AnalysisPage from './pages/Analysis'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <Route path="/flashcards" element={<FlashcardsPage />} />
       <Route path="/quiz" element={<QuizPage />} />
       <Route path="/news" element={<NewsPage />} />
+      <Route path="/analysis" element={<AnalysisPage />} />
     </Routes>
   )
 }
