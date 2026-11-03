@@ -43,11 +43,23 @@ export interface FeedQuarterly {
   sample?: boolean
 }
 
+export interface FeedPractice {
+  id: string
+  date: string
+  dataDate?: string
+  point: string
+  question: string
+  options: string[]
+  answer: string
+  explain: string
+}
+
 export interface Feed {
   meta: { version: number; updatedAt: string; nextWeekly?: string; nextQuarterly?: string }
   daily: FeedDaily[]
   weekly: FeedWeekly[]
   quarterly: FeedQuarterly[]
+  practice?: FeedPractice[]
 }
 
 export function useFeed() {
@@ -66,6 +78,28 @@ export function useFeed() {
   }, [])
 
   return { feed, error }
+}
+
+/** 闪卡筛选分组（与 Flashcards 页的 chips 同源：题库的 chapter/theme 去重） */
+import { questions } from '@/data/questions'
+
+export const flashcardGroups: string[] = (() => {
+  const seen: string[] = ['概述', '投资需求分析', '债券', '股票']
+  for (const q of questions) {
+    for (const g of [q.chapter, q.theme]) {
+      if (g && g !== '基础资产' && !seen.includes(g)) seen.push(g)
+    }
+  }
+  return seen
+})()
+
+/** 知识点文案 → 闪卡筛选分组（如「外汇市场 · 汇率标价方法」→ 外汇） */
+export function flashGroupForPoint(point: string): string | null {
+  // 「综合」过宽，不做跳转目标
+  for (const g of flashcardGroups) {
+    if (g !== '综合' && point.includes(g)) return g
+  }
+  return null
 }
 
 /** 取最近一个日期、importance=3 的条目用于首页公告栏 */

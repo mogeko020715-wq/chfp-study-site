@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useSearchParams } from 'react-router'
 import { questions } from '@/data/questions'
 import { useMastered } from '@/hooks/useMastered'
 import { useCardStore } from '@/hooks/useCardStore'
@@ -54,7 +55,11 @@ function matchGroup(q: (typeof questions)[number], g: string) {
 export default function Flashcards() {
   const { mastered, toggle } = useMastered(questions.length)
   const { state: cardState, replace } = useCardStore()
-  const [filter, setFilter] = useState(ALL)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const urlFilter = searchParams.get('f')
+  const [filter, setFilter] = useState(() =>
+    urlFilter && tagOptions.includes(urlFilter) ? urlFilter : ALL,
+  )
   const [mode, setMode] = useState<Mode>('seq')
   const [order, setOrder] = useState<number[]>(() => questions.map((_, i) => i))
   const [pos, setPos] = useState(0)
@@ -131,6 +136,7 @@ export default function Flashcards() {
     setFilter(t)
     setPos(0)
     setFlipped(false)
+    if (searchParams.get('f')) setSearchParams({}, { replace: true })
   }
 
   const grade = useCallback(
@@ -207,6 +213,13 @@ export default function Flashcards() {
           今日已复习 {studiedToday} · 连续 {streak} 天 · 待复习 {due} 张
         </span>
       </div>
+
+      {/* 从资讯跳转的提示条 */}
+      {urlFilter && filter === urlFilter && (
+        <p className="mt-4 rounded-lg bg-neutral-50 px-4 py-2 text-sm text-neutral-600">
+          📰 从资讯跳转：已为你筛选「{urlFilter}」相关卡片
+        </p>
+      )}
 
       {/* 章节筛选 */}
       <div className="mt-3 flex flex-wrap items-center gap-2">

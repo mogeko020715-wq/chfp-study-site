@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { ArrowLeft, BookOpenCheck, ExternalLink, Newspaper, AlertTriangle } from 'lucide-react'
-import { useFeed, type FeedDaily, type FeedWeekly, type FeedQuarterly } from '@/data/feed'
+import { useFeed, flashGroupForPoint, type FeedDaily, type FeedWeekly, type FeedQuarterly, type FeedPractice } from '@/data/feed'
 import Nav from '@/sections/Nav'
 import Footer from '@/sections/Footer'
 import { useMastered } from '@/hooks/useMastered'
@@ -51,6 +51,23 @@ function DailyCard({ d }: { d: FeedDaily }) {
       {d.points.length > 0 && (
         <p className="mt-2 text-xs leading-relaxed text-neutral-400">📌 {d.points.join('；')}</p>
       )}
+      {(() => {
+        const gs = [...new Set(d.points.map(flashGroupForPoint).filter(Boolean))] as string[]
+        if (gs.length === 0) return null
+        return (
+          <p className="mt-2 flex flex-wrap gap-2">
+            {gs.map((g) => (
+              <Link
+                key={g}
+                to={`/flashcards?f=${encodeURIComponent(g)}`}
+                className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-white px-2.5 py-0.5 text-xs text-neutral-600 transition-colors hover:border-neutral-400 hover:text-neutral-900"
+              >
+                🃏 相关闪卡 · {g}
+              </Link>
+            ))}
+          </p>
+        )
+      })()}
       <p className="mt-2 text-xs text-neutral-400">
         来源：{d.source}
         {d.dataDate && ` · 数据日 ${d.dataDate}`}
@@ -66,6 +83,43 @@ function DailyCard({ d }: { d: FeedDaily }) {
         )}
       </p>
     </article>
+  )
+}
+
+function PracticeCard({ p }: { p: FeedPractice }) {
+  const gs = flashGroupForPoint(p.point)
+  return (
+    <div className="rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3">
+      <p className="text-xs text-neutral-400">实战题 · {p.point}</p>
+      <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-neutral-800">{p.question}</p>
+      <ul className="mt-2 space-y-1">
+        {p.options.map((o) => (
+          <li key={o} className="text-sm text-neutral-600">
+            {o}
+          </li>
+        ))}
+      </ul>
+      <details className="mt-2">
+        <summary className="text-caption cursor-pointer list-none hover:text-neutral-900 [&::-webkit-details-marker]:hidden">
+          查看答案与解析 →
+        </summary>
+        <p className="mt-2 text-sm leading-relaxed text-neutral-700">
+          <span className="font-medium text-neutral-900">答案：{p.answer}</span>
+          <br />
+          {p.explain}
+        </p>
+      </details>
+      {gs && (
+        <p className="mt-2">
+          <Link
+            to={`/flashcards?f=${encodeURIComponent(gs)}`}
+            className="inline-flex items-center gap-1 rounded-full border border-neutral-200 bg-white px-2.5 py-0.5 text-xs text-neutral-600 transition-colors hover:border-neutral-400 hover:text-neutral-900"
+          >
+            🃏 相关闪卡 · {gs}
+          </Link>
+        </p>
+      )}
+    </div>
   )
 }
 
@@ -281,16 +335,27 @@ export default function NewsPage() {
               {dailyByDate.length === 0 && (
                 <p className="py-10 text-center text-neutral-500">今日暂无更新</p>
               )}
-              {dailyByDate.map(([date, items]) => (
-                <section key={date}>
-                  <h2 className="text-caption mt-6 font-mono first:mt-0">{date}</h2>
-                  <div className="mt-2 space-y-3">
-                    {items.map((d) => (
-                      <DailyCard key={d.id} d={d} />
-                    ))}
-                  </div>
-                </section>
-              ))}
+              {dailyByDate.map(([date, items]) => {
+                const practice = (feed?.practice ?? []).filter((p) => p.date === date)
+                return (
+                  <section key={date}>
+                    <h2 className="text-caption mt-6 font-mono first:mt-0">{date}</h2>
+                    <div className="mt-2 space-y-3">
+                      {items.map((d) => (
+                        <DailyCard key={d.id} d={d} />
+                      ))}
+                    </div>
+                    {practice.length > 0 && (
+                      <div className="mt-3 space-y-2">
+                        <p className="text-sm text-neutral-500">✏️ 今日实战 · 用真实行情练手（{practice.length} 题）</p>
+                        {practice.map((p) => (
+                          <PracticeCard key={p.id} p={p} />
+                        ))}
+                      </div>
+                    )}
+                  </section>
+                )
+              })}
             </>
           )}
 
@@ -322,7 +387,7 @@ export default function NewsPage() {
         </div>
 
         <p className="mt-10 text-center text-sm text-neutral-400">
-          💡 这条资讯让你想到哪个考点？后续将支持从资讯一键跳到对应闪卡。
+          💡 资讯卡片上的「🃏 相关闪卡」可直接跳到对应考点的闪卡筛选；每个交易日还会生成 2-3 道用真实行情的实战题。
         </p>
       </main>
       <Footer />
