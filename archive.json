@@ -1,9 +1,117 @@
 {
   "meta": {
     "version": 1,
-    "updatedAt": "2026-11-06T18:20:59+08:00"
+    "updatedAt": "2026-11-06T18:25:52+08:00"
   },
   "records": [
+    {
+      "date": "2026-10-20",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3735.37,
+        "pct": 0.12
+      },
+      "gold": {
+        "close": 8.457,
+        "pct": -1.12
+      },
+      "fx": {
+        "close": 6.6779,
+        "pct": -0.04
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-10-21",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3713.03,
+        "pct": -0.6
+      },
+      "gold": {
+        "close": 8.412,
+        "pct": -0.53
+      },
+      "fx": {
+        "close": 6.6758,
+        "pct": -0.03
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-10-22",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3658.03,
+        "pct": -1.48
+      },
+      "gold": {
+        "close": 8.36,
+        "pct": -0.62
+      },
+      "fx": {
+        "close": 6.6753,
+        "pct": -0.01
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-10-23",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3690.48,
+        "pct": 0.89
+      },
+      "gold": {
+        "close": 8.199,
+        "pct": -1.93
+      },
+      "fx": {
+        "close": 6.6702,
+        "pct": -0.08
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-10-26",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3697.52,
+        "pct": 0.19
+      },
+      "gold": {
+        "close": 8.185,
+        "pct": -0.17
+      },
+      "fx": {
+        "close": 6.6695,
+        "pct": -0.01
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-10-27",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3648.3,
+        "pct": -1.33
+      },
+      "gold": {
+        "close": 8.167,
+        "pct": -0.22
+      },
+      "fx": {
+        "close": 6.667,
+        "pct": -0.04
+      },
+      "backfilled": true
+    },
     {
       "date": "2026-10-28",
       "boardsUp": [
@@ -129,6 +237,24 @@
         "close": 6.6723,
         "pct": 0.09
       }
+    },
+    {
+      "date": "2026-11-05",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3689.91,
+        "pct": 0.1
+      },
+      "gold": {
+        "close": 8.42,
+        "pct": 2.32
+      },
+      "fx": {
+        "close": 6.668,
+        "pct": -0.06
+      },
+      "backfilled": true
     },
     {
       "date": "2026-11-06",
