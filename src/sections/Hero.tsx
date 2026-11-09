@@ -19,6 +19,9 @@ export default function Hero() {
           <Button variant="outline" asChild>
             <Link to="/quiz">自测刷题</Link>
           </Button>
+          <Button variant="outline" asChild>
+            <Link to="/concepts">逛逛概念图鉴</Link>
+          </Button>
         </div>
         <p className="mt-8 text-sm text-neutral-500">
           {modules.length} 大课程板块 · {knowledgeChapters.length} 个章节笔记 · 闪卡收录 {questions.length} 题 ·

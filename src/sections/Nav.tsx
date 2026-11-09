@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router'
-import { Moon, Sun, UserRound } from 'lucide-react'
+import { Menu, Moon, Sun, UserRound, X } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { useAccount } from '@/hooks/useAccount'
 import AccountDialog from '@/components/AccountDialog'
@@ -15,13 +15,13 @@ const links = [
 ]
 
 export default function Nav({ masteredCount }: { masteredCount: number }) {
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 12)
+  const [menuOpen, setMenuOpen] = useState(false)
   const { theme, toggle } = useTheme()
   const { user } = useAccount()
   const [dialog, setDialog] = useState<'login' | 'manage' | null>(null)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
-    onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -72,8 +72,36 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
           <span className="text-sm text-neutral-500">
             已掌握 <span className="font-medium text-neutral-900">{masteredCount}</span>
           </span>
+          <button
+            type="button"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label={menuOpen ? '关闭菜单' : '打开菜单'}
+            aria-expanded={menuOpen}
+            className="flex h-7 w-7 items-center justify-center rounded-full text-neutral-500 transition-colors hover:text-neutral-900 sm:hidden"
+          >
+            {menuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+          </button>
         </div>
       </div>
+      {menuOpen && (
+        <nav className="border-t border-neutral-200 bg-white px-4 py-2 sm:hidden">
+          {links.map((l) => (
+            <NavLink
+              key={l.to}
+              to={l.to}
+              end={l.to === '/'}
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `block rounded-lg px-3 py-2.5 text-sm transition-colors ${
+                  isActive ? 'bg-neutral-100 font-medium text-neutral-900' : 'text-neutral-600'
+                }`
+              }
+            >
+              {l.label}
+            </NavLink>
+          ))}
+        </nav>
+      )}
       {dialog && <AccountDialog mode={dialog} onClose={() => setDialog(null)} />}
     </header>
   )

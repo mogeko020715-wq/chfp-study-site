@@ -1,26 +1,30 @@
+import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router'
-import Home from './pages/Home'
-import ModulePage from './pages/Module'
-import ChapterPage from './pages/Chapter'
-import PointPage from './pages/Point'
-import FlashcardsPage from './pages/FlashcardsPage'
-import QuizPage from './pages/QuizPage'
-import NewsPage from './pages/News'
-import AnalysisPage from './pages/Analysis'
-import ConceptsPage from './pages/Concepts'
+
+const Home = lazy(() => import('./pages/Home'))
+const ModulePage = lazy(() => import('./pages/Module'))
+const ChapterPage = lazy(() => import('./pages/Chapter'))
+const PointPage = lazy(() => import('./pages/Point'))
+const ConceptsPage = lazy(() => import('./pages/Concepts'))
+const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'))
+const QuizPage = lazy(() => import('./pages/QuizPage'))
+const NewsPage = lazy(() => import('./pages/News'))
+const AnalysisPage = lazy(() => import('./pages/Analysis'))
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/module/:name" element={<ModulePage />} />
-      <Route path="/module/:name/chapter/:title" element={<ChapterPage />} />
-      <Route path="/module/:name/chapter/:title/point/:idx" element={<PointPage />} />
-      <Route path="/concepts" element={<ConceptsPage />} />
-      <Route path="/flashcards" element={<FlashcardsPage />} />
-      <Route path="/quiz" element={<QuizPage />} />
-      <Route path="/news" element={<NewsPage />} />
-      <Route path="/analysis" element={<AnalysisPage />} />
-    </Routes>
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/module/:name" element={<ModulePage />} />
+        <Route path="/module/:name/chapter/:title" element={<ChapterPage />} />
+        <Route path="/module/:name/chapter/:title/point/:idx" element={<PointPage />} />
+        <Route path="/concepts" element={<ConceptsPage />} />
+        <Route path="/flashcards" element={<FlashcardsPage />} />
+        <Route path="/quiz" element={<QuizPage />} />
+        <Route path="/news" element={<NewsPage />} />
+        <Route path="/analysis" element={<AnalysisPage />} />
+      </Routes>
+    </Suspense>
   )
 }
