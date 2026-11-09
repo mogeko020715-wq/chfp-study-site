@@ -9,6 +9,7 @@ const links = [
   { to: '/', label: '学习框架' },
   { to: '/news', label: '行业资讯' },
   { to: '/analysis', label: '数据复盘' },
+  { to: '/concepts', label: '概念图鉴' },
   { to: '/flashcards', label: '闪卡记忆' },
   { to: '/quiz', label: '自测刷题' },
 ]

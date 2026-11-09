@@ -221,6 +221,61 @@
 .dark .hover\:border-neutral-500:hover {
   border-color: rgb(115 115 115);
 }
+/* ===== 概念图鉴卡片（VibeHub 式） ===== */
+/* 悬停上浮 + 阴影加深；边框变色走 Tailwind 的 hover:border-neutral-400（已适配夜间） */
+.concept-card {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.concept-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* 考生原话：左侧大引号 */
+.concept-quote {
+  position: relative;
+  padding-left: 1.25rem;
+}
+.concept-quote::before {
+  content: '\201C';
+  position: absolute;
+  left: 0;
+  top: -2px;
+  font-size: 1.375rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: rgb(163 163 163); /* neutral-400 */
+}
+
+/* 演示区平时略淡，悬停卡片时完全清晰 */
+.concept-card .concept-demo-body {
+  opacity: 0.8;
+  transition: opacity 0.25s ease;
+}
+.concept-card:hover .concept-demo-body {
+  opacity: 1;
+}
+
+/* 卡片滚出视口时暂停内部动画 */
+.demo-paused *,
+.demo-paused *::before,
+.demo-paused *::after {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .concept-card,
+  .concept-card .concept-demo-body {
+    transition: none;
+  }
+  .concept-card:hover {
+    transform: none;
+  }
+}
+
 /* ===== 首页公告栏横滑动画 ===== */
 @keyframes ticker-scroll {
   from {
