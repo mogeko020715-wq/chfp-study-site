@@ -490,6 +490,151 @@ function AgentBrokerDemo() {
   )
 }
 
+/* 直接 vs 间接标价：同一波数字变动，两种读法 */
+function FxQuotationDemo() {
+  const [mode, setMode] = useState<'direct' | 'indirect'>('direct')
+  const yesterday = 6.65
+  const [today, setToday] = useState(6.8)
+  const up = today > yesterday + 1e-9
+  const flat = Math.abs(today - yesterday) < 1e-9
+  // 直接标价：数字升 = 人民币贬值；间接标价：数字升 = 升值
+  const depreciate = up ? mode === 'direct' : mode === 'indirect'
+  const shown = mode === 'direct' ? today.toFixed(2) : (1 / today).toFixed(4)
+  const shownY = mode === 'direct' ? yesterday.toFixed(2) : (1 / yesterday).toFixed(4)
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {([
+          ['direct', '直接标价法'],
+          ['indirect', '间接标价法'],
+        ] as const).map(([k, label]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setMode(k)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              mode === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <label className="block">
+        <span className={labelCls}>
+          {mode === 'direct' ? '1 美元 ＝ X 人民币' : '1 人民币 ＝ X 美元'}：昨日 {shownY} → 今日 {shown}
+        </span>
+        <input
+          type="range"
+          min={6.2}
+          max={7.4}
+          step={0.05}
+          value={today}
+          onChange={(e) => setToday(+e.target.value)}
+          className={sliderCls}
+        />
+      </label>
+      <p className="text-center text-sm">
+        {flat ? (
+          <span className="text-neutral-500">数字没变，币值也没变——拖一下滑块试试</span>
+        ) : (
+          <>
+            <span className="text-neutral-500">数字{up ? '变大' : '变小'}，人民币在</span>{' '}
+            <span className={`font-semibold ${depreciate ? 'text-rose-600' : 'text-emerald-700'}`}>
+              {depreciate ? '贬值 ↘' : '升值 ↗'}
+            </span>
+          </>
+        )}
+      </p>
+      <p className="text-center text-xs text-neutral-400">
+        {mode === 'direct' ? '直接标价：数字升 = 本币贬（美元更贵了）' : '间接标价：同样一波变动，读法整个反过来'}
+      </p>
+    </div>
+  )
+}
+
+/* 封闭式 vs 开放式：市价与净值的偏离 */
+function ClosedOpenFundDemo() {
+  const [kind, setKind] = useState<'closed' | 'open'>('closed')
+  const nav = 1.0
+  const [price, setPrice] = useState(0.9)
+  const open = kind === 'open'
+  const shownPrice = open ? nav : price
+  const disc = (shownPrice / nav - 1) * 100
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {([
+          ['open', '开放式'],
+          ['closed', '封闭式'],
+        ] as const).map(([k, label]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setKind(k)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              kind === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 text-xs">
+          <span className="w-8 text-neutral-500">净值</span>
+          <div className="h-4 flex-1 overflow-hidden rounded bg-neutral-100">
+            <div className="h-full w-2/3 rounded bg-neutral-400" />
+          </div>
+          <span className="w-12 text-right font-medium text-neutral-900">1.00</span>
+        </div>
+        <div className="flex items-center gap-2 text-xs">
+          <span className="w-8 text-neutral-500">市价</span>
+          <div className="relative h-4 flex-1 rounded bg-neutral-100">
+            <div
+              className={`absolute top-0 h-full rounded transition-all duration-300 ${disc < -0.05 ? 'bg-amber-500' : 'bg-neutral-900'}`}
+              style={{ width: `${(shownPrice / 1.5) * 100}%` }}
+            />
+            <div className="absolute top-[-3px] h-[22px] w-px bg-neutral-400" style={{ left: '66.7%' }} />
+          </div>
+          <span className="w-12 text-right font-medium text-neutral-900">{shownPrice.toFixed(2)}</span>
+        </div>
+      </div>
+      {!open && (
+        <label className="block">
+          <span className={labelCls}>二级市场成交价 {price.toFixed(2)} 元</span>
+          <input
+            type="range"
+            min={0.8}
+            max={1.2}
+            step={0.01}
+            value={price}
+            onChange={(e) => setPrice(+e.target.value)}
+            className={sliderCls}
+          />
+        </label>
+      )}
+      <p className="text-center text-sm">
+        {open ? (
+          <span className="text-neutral-500">按净值申购赎回，市价 = 净值，不存在折价</span>
+        ) : (
+          <>
+            <span className="text-neutral-500">当前</span>{' '}
+            <span className={`font-semibold ${disc < -0.05 ? 'text-amber-700' : disc > 0.05 ? 'text-rose-600' : 'text-neutral-900'}`}>
+              {disc < -0.05 ? `折价 ${Math.abs(disc).toFixed(1)}%` : disc > 0.05 ? `溢价 ${disc.toFixed(1)}%` : '平价'}
+            </span>
+            <span className="ml-1 text-xs text-neutral-400">（折价率 = 市价 ÷ 净值 − 1）</span>
+          </>
+        )}
+      </p>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -503,4 +648,6 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   convertible: ConvertibleDemo,
   forwardFutures: ForwardFuturesDemo,
   agentBroker: AgentBrokerDemo,
+  fxQuotation: FxQuotationDemo,
+  closedOpenFund: ClosedOpenFundDemo,
 }

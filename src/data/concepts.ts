@@ -11,6 +11,8 @@ export type DemoKind =
   | 'convertible'
   | 'forwardFutures'
   | 'agentBroker'
+  | 'fxQuotation'
+  | 'closedOpenFund'
 
 export interface Concept {
   id: string
@@ -30,7 +32,7 @@ export interface Concept {
   match: string[]
 }
 
-export const conceptCategories = ['基础概念', '债券', '股票', '基金', '衍生品', '银行', '保险']
+export const conceptCategories = ['基础概念', '债券', '股票', '基金', '外汇', '衍生品', '银行', '保险']
 
 export const concepts: Concept[] = [
   {
@@ -113,6 +115,30 @@ export const concepts: Concept[] = [
     demo: 'fund80',
     flashFilter: '证券投资基金',
     match: ['证券投资基金'],
+  },
+  {
+    id: 'closed-vs-open-fund',
+    name: '封闭式 vs 开放式基金',
+    en: 'Closed-end vs Open-end',
+    cat: '基金',
+    quote: '同一只基金，净值 1 块钱，为什么市场上 9 毛就能买到？',
+    answer: '那是封闭式基金：到期前不能找基金公司赎回，只能在二级市场转手，价格由供求决定，经常低于净值——这就是「封基折价」。',
+    point: '折价率 = 市价 ÷ 净值 − 1；折价不是「捡便宜」，要等基金到期或转型时才收敛回净值。',
+    demo: 'closedOpenFund',
+    flashFilter: '证券投资基金',
+    match: ['证券投资基金', '公募基金'],
+  },
+  {
+    id: 'fx-quotation',
+    name: '直接标价 vs 间接标价',
+    en: 'Direct vs Indirect Quote',
+    cat: '外汇',
+    quote: '美元人民币从 6.65 涨到 6.80，人民币到底是升值还是贬值？',
+    answer: '先看你用哪种标价法。直接标价法（1 美元 = X 人民币）下，数字变大 = 1 美元能换更多人民币 = 人民币贬值；间接标价法正好相反。',
+    point: '先判断标价法，再谈币值方向——直接标价法下「数字升 = 本币贬」是最常见的坑。',
+    demo: 'fxQuotation',
+    flashFilter: '外汇',
+    match: ['外汇'],
   },
   {
     id: 'forward-vs-futures',
