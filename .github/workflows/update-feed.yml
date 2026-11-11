@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Probe data sources
+        run: python scripts/update_feed.py --probe
       - name: Update daily feed
         run: python scripts/update_feed.py
       - name: Update weekly digest (Sundays)

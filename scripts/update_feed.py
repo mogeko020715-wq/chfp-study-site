@@ -284,7 +284,26 @@ def run_weekly(feed: dict, now: datetime) -> bool:
     return True
 
 
+def run_probe() -> None:
+    """只探测数据源连通性，不写文件。"""
+    checks = {
+        "eastmoney-index": lambda: em_quote("1.000001"),
+        "eastmoney-gold": lambda: em_quote("1.518880"),
+        "eastmoney-sectors": em_top_sectors,
+        "tencent-fx": tencent_fx,
+    }
+    for name, fn in checks.items():
+        try:
+            r = fn()
+            print(f"[probe] {name}: OK {r if name != 'eastmoney-sectors' else r[:1]}")
+        except Exception as e:  # noqa: BLE001
+            print(f"[probe] {name}: FAIL {e}")
+
+
 def main() -> None:
+    if "--probe" in sys.argv:
+        run_probe()
+        return
     feed = json.loads(FEED_PATH.read_text(encoding="utf-8"))
     now = datetime.now(CST)
     changed = run_weekly(feed, now) if "--weekly" in sys.argv else run_daily(feed, now)
