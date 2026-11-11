@@ -12,11 +12,12 @@ import {
   studyDaysKeyFor,
   todayStr,
   touchStudyDay,
+  type CardRecord,
   type Grade,
 } from '@/lib/cardState'
 import { getSession } from '@/lib/account'
 import { Button } from '@/components/ui/button'
-import { Check, ChevronLeft, ChevronRight, Shuffle, Star } from 'lucide-react'
+import { Check, ChevronLeft, ChevronRight, Shuffle, Star, Undo2 } from 'lucide-react'
 
 const ALL = '全部'
 /** 汇总题库出现过的章节桶，「基础资产」是大类不单独作 chip */
@@ -73,6 +74,12 @@ export default function Flashcards() {
   const [pos, setPos] = useState(0)
   const [flipped, setFlipped] = useState(false)
   const [feedback, setFeedback] = useState<string | null>(null)
+  const [undo, setUndo] = useState<{
+    idx: number
+    prev?: CardRecord
+    masteredPrev: boolean
+    pos: number
+  } | null>(null)
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const today = todayStr()
@@ -135,6 +142,7 @@ export default function Flashcards() {
     setPos(0)
     setFlipped(false)
     setFeedback(null)
+    setUndo(null)
     clearTimer()
     if (searchParams.get('m')) setSearchParams({}, { replace: true })
     if (m === 'rand') setOrder([...order].sort(() => Math.random() - 0.5))
@@ -145,12 +153,14 @@ export default function Flashcards() {
     setFilter(t)
     setPos(0)
     setFlipped(false)
+    setUndo(null)
     if (searchParams.get('f') || searchParams.get('m')) setSearchParams({}, { replace: true })
   }
 
   const grade = useCallback(
     (g: Grade) => {
       if (cur < 0 || !flipped || feedback) return
+      setUndo({ idx: cur, prev: cardState[cur], masteredPrev: mastered.has(cur), pos })
       const { next, nextDate, mastered: nowMastered, unmastered } = recordGrade(cardState, cur, g, today)
       replace(next)
       touchStudyDay(studyDaysKeyFor(getSession()), today)
@@ -166,8 +176,23 @@ export default function Flashcards() {
         advanceTimer.current = null
       }, 800)
     },
-    [cur, flipped, feedback, cardState, replace, toggle, today, list.length],
+    [cur, flipped, feedback, cardState, replace, toggle, today, list.length, mastered, pos],
   )
+
+  /** 撤销上一次评分：还原 SRS 记录、掌握标记，并跳回那张卡 */
+  const undoLast = () => {
+    if (!undo) return
+    const next = { ...cardState }
+    if (undo.prev) next[undo.idx] = undo.prev
+    else delete next[undo.idx]
+    replace(next)
+    toggle(undo.idx, undo.masteredPrev)
+    clearTimer()
+    setFeedback(null)
+    setPos(undo.pos)
+    setFlipped(true)
+    setUndo(null)
+  }
 
   // 键盘快捷键：空格翻面、←/→ 切卡、1-4 评分
   useEffect(() => {
@@ -209,6 +234,7 @@ export default function Flashcards() {
             key={m.key}
             onClick={() => switchMode(m.key)}
             title={m.hint}
+            aria-pressed={mode === m.key}
             className={`rounded-full border px-3 py-1 text-sm transition-colors ${
               mode === m.key
                 ? 'border-neutral-900 bg-neutral-900 text-white'
@@ -230,14 +256,15 @@ export default function Flashcards() {
         </p>
       )}
 
-      {/* 章节筛选 */}
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <span className="text-sm text-neutral-400">章节</span>
+      {/* 章节筛选：移动端横向滚动，桌面换行 */}
+      <div className="mt-3 flex flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+        <span className="shrink-0 text-sm text-neutral-400">章节</span>
         {tagOptions.map((t) => (
           <button
             key={t}
             onClick={() => switchFilter(t)}
-            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+            aria-pressed={filter === t}
+            className={`shrink-0 rounded-full border px-3 py-1 text-sm transition-colors ${
               filter === t
                 ? 'border-neutral-900 bg-neutral-900 text-white'
                 : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
@@ -246,7 +273,7 @@ export default function Flashcards() {
             {t === ALL ? '全部' : t}
           </button>
         ))}
-        <span className="ml-auto text-sm text-neutral-500">
+        <span className="ml-auto shrink-0 pl-2 text-sm text-neutral-500">
           共 {list.length} 张 · 已掌握 {list.filter((i) => mastered.has(i)).length}
         </span>
       </div>
@@ -258,6 +285,7 @@ export default function Flashcards() {
               onClick={() => setFlipped((f) => !f)}
               className={`flashcard relative block h-80 w-full text-left sm:h-72 ${flipped ? 'is-flipped' : ''}`}
               aria-label="点击翻面"
+              aria-pressed={flipped}
             >
               {/* 正面 */}
               <div className="flashcard-face card flex flex-col p-6">
@@ -371,6 +399,16 @@ export default function Flashcards() {
                 title="随机洗牌"
               >
                 <Shuffle className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={undoLast}
+                disabled={!undo}
+                aria-label="撤销上次评分"
+                title="撤销上次评分"
+              >
+                <Undo2 className="h-4 w-4" />
               </Button>
               <Button
                 variant={rec?.starred ? 'default' : 'outline'}

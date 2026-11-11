@@ -1,15 +1,18 @@
+import { lazy, Suspense } from 'react'
 import { Link } from 'react-router'
 import { modules, totalQuestions } from '@/data/course'
 import { knowledgeChapters } from '@/data/knowledge'
-import { questions } from '@/data/questions'
+import { QUESTION_COUNT } from '@/data/questionMeta'
 import { useCardStore } from '@/hooks/useCardStore'
 import { useMastered } from '@/hooks/useMastered'
-import StudyCockpit from '@/components/StudyCockpit'
 import { Button } from '@/components/ui/button'
+
+// 驾驶舱依赖题库数据，按需加载，首页首屏不再背题库
+const StudyCockpit = lazy(() => import('@/components/StudyCockpit'))
 
 export default function Hero() {
   const { state } = useCardStore()
-  const { count } = useMastered(questions.length)
+  const { count } = useMastered()
   // 有任何学习记录即视为老用户：展示驾驶舱；否则保留新用户引导
   const hasProgress = Object.keys(state).length > 0 || count > 0
 
@@ -21,7 +24,9 @@ export default function Hero() {
           六大课程板块搭骨架，章节笔记填血肉，闪卡与自测巩固记忆。内容同步自 Notion 学习库，打开即学。
         </p>
         {hasProgress ? (
-          <StudyCockpit />
+          <Suspense fallback={null}>
+            <StudyCockpit />
+          </Suspense>
         ) : (
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild>
@@ -36,7 +41,7 @@ export default function Hero() {
           </div>
         )}
         <p className="mt-8 text-sm text-neutral-500">
-          {modules.length} 大课程板块 · {knowledgeChapters.length} 个章节笔记 · 闪卡收录 {questions.length} 题 ·
+          {modules.length} 大课程板块 · {knowledgeChapters.length} 个章节笔记 · 闪卡收录 {QUESTION_COUNT} 题 ·
           全科目配套习题 {totalQuestions.toLocaleString()} 道
         </p>
       </div>

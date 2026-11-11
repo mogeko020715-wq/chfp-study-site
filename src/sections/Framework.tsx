@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 import { modules, totalQuestions } from '@/data/course'
 import { knowledgeChapters } from '@/data/knowledge'
 import { guideFor } from '@/data/guides'
-import { questions } from '@/data/questions'
+import { QUESTION_COUNT } from '@/data/questionMeta'
 import { ArrowRight } from 'lucide-react'
 
 const CONTENT_MODULE = '投资规划'
@@ -38,7 +38,7 @@ export default function Framework() {
               <p className="mt-2 text-sm text-neutral-400">
                 {m.chapters.length > 0 ? `${m.chapters.length} 章 · ` : ''}
                 {m.questions} 题 · 权重 {pct}%
-                {hasContent && ` · 已收录 ${knowledgeChapters.length} 章笔记 / ${questions.length} 张闪卡`}
+                {hasContent && ` · 已收录 ${knowledgeChapters.length} 章笔记 / ${QUESTION_COUNT} 张闪卡`}
               </p>
               <div className="mt-3 h-1 overflow-hidden rounded-full bg-neutral-100">
                 <div className="h-full rounded-full bg-neutral-800" style={{ width: `${pct}%` }} />

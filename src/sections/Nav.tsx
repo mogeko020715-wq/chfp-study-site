@@ -25,6 +25,15 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+  // Esc 关闭移动端菜单
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [menuOpen])
 
   return (
     <header
@@ -84,7 +93,13 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
         </div>
       </div>
       {menuOpen && (
-        <nav className="border-t border-neutral-200 bg-white px-4 py-2 sm:hidden">
+        <>
+          <div
+            className="fixed inset-0 top-12 z-40 bg-black/30 sm:hidden"
+            onClick={() => setMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <nav className="relative border-t border-neutral-200 bg-white px-4 py-2 sm:hidden">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -101,6 +116,7 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
             </NavLink>
           ))}
         </nav>
+        </>
       )}
       {dialog && <AccountDialog mode={dialog} onClose={() => setDialog(null)} />}
     </header>

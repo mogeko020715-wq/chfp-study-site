@@ -5,7 +5,6 @@ import { useFeed, flashGroupForPoint, type FeedDaily, type FeedWeekly, type Feed
 import Nav from '@/sections/Nav'
 import Footer from '@/sections/Footer'
 import { useMastered } from '@/hooks/useMastered'
-import { questions } from '@/data/questions'
 
 type Tab = 'daily' | 'weekly' | 'quarterly'
 
@@ -273,7 +272,7 @@ function QuarterlyCard({ q }: { q: FeedQuarterly }) {
 
 export default function NewsPage() {
   const { feed, error } = useFeed()
-  const { count } = useMastered(questions.length)
+  const { count } = useMastered()
   const [tab, setTab] = useState<Tab>('daily')
 
   const [staleDays, setStaleDays] = useState(0)

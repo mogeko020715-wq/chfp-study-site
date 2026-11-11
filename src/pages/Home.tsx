@@ -1,5 +1,3 @@
-import '../App.css'
-import { questions } from '@/data/questions'
 import { useMastered } from '@/hooks/useMastered'
 import Nav from '@/sections/Nav'
 import Hero from '@/sections/Hero'
@@ -9,7 +7,7 @@ import NewsTicker from '@/components/NewsTicker'
 import Footer from '@/sections/Footer'
 
 export default function Home() {
-  const { count } = useMastered(questions.length)
+  const { count } = useMastered()
 
   return (
     <div className="min-h-screen bg-white text-neutral-900 antialiased">

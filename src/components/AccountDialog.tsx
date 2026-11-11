@@ -54,7 +54,12 @@ export default function AccountDialog({ mode: initialMode, onClose }: Props) {
   }
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-[60] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="account-dialog-title"
+    >
       <div className="absolute inset-0 bg-black/50" onClick={onClose} />
       <div className="card relative w-full max-w-sm bg-white p-6">
         <button
@@ -68,7 +73,7 @@ export default function AccountDialog({ mode: initialMode, onClose }: Props) {
 
         {mode === 'manage' && user ? (
           <div>
-            <h2 className="text-title flex items-center gap-2 text-xl">
+            <h2 id="account-dialog-title" className="text-title flex items-center gap-2 text-xl">
               <User className="h-5 w-5" />
               {user}
             </h2>
@@ -95,8 +100,8 @@ export default function AccountDialog({ mode: initialMode, onClose }: Props) {
                   }
                 }}
               >
-                <input type="password" placeholder="原密码" value={oldPwd} onChange={(e) => setOldPwd(e.target.value)} className={inputCls} />
-                <input type="password" placeholder="新密码（至少 4 位）" value={newPwd} onChange={(e) => setNewPwd(e.target.value)} className={inputCls} />
+                <input type="password" placeholder="原密码" value={oldPwd} onChange={(e) => setOldPwd(e.target.value)} className={inputCls} autoComplete="current-password" />
+                <input type="password" placeholder="新密码（至少 4 位）" value={newPwd} onChange={(e) => setNewPwd(e.target.value)} className={inputCls} autoComplete="new-password" />
                 <button type="submit" className={btnPrimary}>
                   更新密码
                 </button>
@@ -144,7 +149,7 @@ export default function AccountDialog({ mode: initialMode, onClose }: Props) {
           </div>
         ) : (
           <div>
-            <h2 className="text-title text-xl">{mode === 'login' ? '登录' : '注册账号'}</h2>
+            <h2 id="account-dialog-title" className="text-title text-xl">{mode === 'login' ? '登录' : '注册账号'}</h2>
             <p className="text-caption mt-1">本地账号，数据仅保存在本机浏览器，用于隔离学习进度</p>
             <form
               className="mt-4 space-y-2"
@@ -155,10 +160,10 @@ export default function AccountDialog({ mode: initialMode, onClose }: Props) {
                 if (ok) onClose()
               }}
             >
-              <input placeholder="用户名（2-20 个字符）" value={name} onChange={(e) => setName(e.target.value)} className={inputCls} autoFocus />
-              <input type="password" placeholder="密码（至少 4 位）" value={pwd} onChange={(e) => setPwd(e.target.value)} className={inputCls} />
+              <input placeholder="用户名（2-20 个字符）" value={name} onChange={(e) => setName(e.target.value)} className={inputCls} autoFocus autoComplete="username" />
+              <input type="password" placeholder="密码（至少 4 位）" value={pwd} onChange={(e) => setPwd(e.target.value)} className={inputCls} autoComplete={mode === 'login' ? 'current-password' : 'new-password'} />
               {mode === 'register' && (
-                <input type="password" placeholder="再输入一次密码" value={pwd2} onChange={(e) => setPwd2(e.target.value)} className={inputCls} />
+                <input type="password" placeholder="再输入一次密码" value={pwd2} onChange={(e) => setPwd2(e.target.value)} className={inputCls} autoComplete="new-password" />
               )}
               {error && <p className="text-sm text-red-600">{error}</p>}
               {message && <p className="text-sm text-neutral-600">{message}</p>}

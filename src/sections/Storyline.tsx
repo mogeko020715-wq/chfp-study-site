@@ -20,7 +20,10 @@ export default function Storyline() {
             {i < curriculumStoryline.length - 1 && (
               <span className="absolute left-[19px] top-11 h-[calc(100%-3rem)] w-px bg-neutral-200" />
             )}
-            <span className="z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-white text-lg">
+            <span
+              aria-hidden="true"
+              className="z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-white text-lg"
+            >
               {s.icon}
             </span>
             <div className="min-w-0 pt-1.5">
@@ -36,7 +39,7 @@ export default function Storyline() {
 
       <div className="card hover-lift mt-8 flex items-center justify-between gap-3 bg-neutral-50 px-5 py-4">
         <p className="text-sm text-neutral-600">
-          💡 复习时建议跟着这条线走：先框架、再笔记、后刷题。每个板块页顶部都有同款导学。
+          <span aria-hidden="true">💡 </span>复习时建议跟着这条线走：先框架、再笔记、后刷题。每个板块页顶部都有同款导学。
         </p>
         <Link
           to="/module/投资规划"

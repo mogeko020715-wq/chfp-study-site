@@ -5,7 +5,6 @@ import Nav from '@/sections/Nav'
 import Footer from '@/sections/Footer'
 import { conceptCategories, concepts, type Concept } from '@/data/concepts'
 import { demoComponents } from '@/components/concepts/demos'
-import { questions } from '@/data/questions'
 import { useMastered } from '@/hooks/useMastered'
 
 const FAV_KEY = 'chfp-concept-favs'
@@ -123,7 +122,7 @@ function ConceptCard({
 }
 
 export default function ConceptsPage() {
-  const { count } = useMastered(questions.length)
+  const { count } = useMastered()
   const [searchParams] = useSearchParams()
   const target = searchParams.get('c')
   const [cat, setCat] = useState<string>('全部')
@@ -183,6 +182,7 @@ export default function ConceptsPage() {
               <button
                 key={t}
                 type="button"
+                aria-pressed={cat === t}
                 onClick={() => setCat(t)}
                 className={`rounded-full border px-3 py-1 text-sm transition-colors ${
                   cat === t

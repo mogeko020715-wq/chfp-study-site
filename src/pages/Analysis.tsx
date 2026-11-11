@@ -6,7 +6,6 @@ import { useArchive } from '@/data/archive'
 import Nav from '@/sections/Nav'
 import Footer from '@/sections/Footer'
 import { useMastered } from '@/hooks/useMastered'
-import { questions } from '@/data/questions'
 
 /** A股配色习惯：涨红跌绿 */
 function PctText({ pct }: { pct: number }) {
@@ -32,7 +31,7 @@ function TickCell({ tick }: { tick?: { close: number; pct: number } }) {
 export default function AnalysisPage() {
   const { feed, error: feedErr } = useFeed()
   const { archive, error: arcErr } = useArchive()
-  const { count } = useMastered(questions.length)
+  const { count } = useMastered()
 
   const records = archive?.records ?? []
   const latest = [...records].reverse()

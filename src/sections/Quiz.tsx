@@ -120,6 +120,7 @@ export default function Quiz() {
               key={m.key}
               type="button"
               title={m.hint}
+              aria-pressed={mode === m.key}
               onClick={() => {
                 setMode(m.key)
                 restartWith(m.key, chapter)
@@ -130,17 +131,18 @@ export default function Quiz() {
             </button>
           ))}
         </div>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="text-sm text-neutral-400">章节</span>
+        <div className="mt-3 flex flex-nowrap items-center gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+          <span className="shrink-0 text-sm text-neutral-400">章节</span>
           {[ALL, ...flashcardGroups].map((g) => (
             <button
               key={g}
               type="button"
+              aria-pressed={chapter === g}
               onClick={() => {
                 setChapter(g)
                 restartWith(mode, g)
               }}
-              className={chipCls(chapter === g)}
+              className={`${chipCls(chapter === g)} shrink-0`}
             >
               {g}
             </button>

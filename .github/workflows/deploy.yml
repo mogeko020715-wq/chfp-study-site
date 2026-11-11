@@ -25,8 +25,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      # SPA 兜底：任意子路径都回退到 index.html
-      - run: cp dist/index.html dist/404.html
+      # 预渲染静态路由：子路径直接返回 200；动态路由（/module/xxx）仍走 404.html 兜底
+      - run: |
+          for r in news analysis concepts flashcards quiz; do
+            mkdir -p "dist/$r"
+            cp dist/index.html "dist/$r/index.html"
+          done
+          cp dist/index.html dist/404.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
