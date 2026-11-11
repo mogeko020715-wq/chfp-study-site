@@ -57,11 +57,17 @@ export default function Flashcards() {
   const { state: cardState, replace } = useCardStore()
   const [searchParams, setSearchParams] = useSearchParams()
   const urlFilter = searchParams.get('f')
+  const urlMode = searchParams.get('m')
   const [filter, setFilter] = useState(() =>
     urlFilter && tagOptions.includes(urlFilter) ? urlFilter : ALL,
   )
-  const [mode, setMode] = useState<Mode>('seq')
-  const [order, setOrder] = useState<number[]>(() => questions.map((_, i) => i))
+  const [mode, setMode] = useState<Mode>(() =>
+    MODES.some((m) => m.key === urlMode) ? (urlMode as Mode) : 'seq',
+  )
+  const [order, setOrder] = useState<number[]>(() => {
+    const o = questions.map((_, i) => i)
+    return urlMode === 'rand' ? o.sort(() => Math.random() - 0.5) : o
+  })
   const [pos, setPos] = useState(0)
   const [flipped, setFlipped] = useState(false)
   const [feedback, setFeedback] = useState<string | null>(null)
@@ -128,6 +134,7 @@ export default function Flashcards() {
     setFlipped(false)
     setFeedback(null)
     clearTimer()
+    if (searchParams.get('m')) setSearchParams({}, { replace: true })
     if (m === 'rand') setOrder([...order].sort(() => Math.random() - 0.5))
     if (m === 'seq') setOrder(questions.map((_, i) => i))
   }
@@ -136,7 +143,7 @@ export default function Flashcards() {
     setFilter(t)
     setPos(0)
     setFlipped(false)
-    if (searchParams.get('f')) setSearchParams({}, { replace: true })
+    if (searchParams.get('f') || searchParams.get('m')) setSearchParams({}, { replace: true })
   }
 
   const grade = useCallback(

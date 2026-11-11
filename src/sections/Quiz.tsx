@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router'
 import { questions } from '@/data/questions'
 import { useMastered } from '@/hooks/useMastered'
 import { Button } from '@/components/ui/button'
@@ -9,7 +10,16 @@ type Phase = 'recall' | 'revealed' | 'finished'
 
 export default function Quiz() {
   const { toggle, reset, count } = useMastered(questions.length)
-  const [order, setOrder] = useState<number[]>(() => questions.map((_, i) => i).sort(() => Math.random() - 0.5))
+  const [searchParams] = useSearchParams()
+  // 支持 ?n=10 快测模式：本轮只抽 n 题
+  const nParam = Number(searchParams.get('n'))
+  const limit = Number.isInteger(nParam) && nParam > 0 ? Math.min(nParam, questions.length) : questions.length
+  const newOrder = () =>
+    questions
+      .map((_, i) => i)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, limit)
+  const [order, setOrder] = useState<number[]>(newOrder)
   const [pos, setPos] = useState(0)
   const [phase, setPhase] = useState<Phase>('recall')
   const [sessionHits, setSessionHits] = useState(0)
@@ -33,7 +43,7 @@ export default function Quiz() {
   }
 
   const restart = () => {
-    setOrder(questions.map((_, i) => i).sort(() => Math.random() - 0.5))
+    setOrder(newOrder())
     setPos(0)
     setPhase('recall')
     setSessionHits(0)
@@ -46,6 +56,7 @@ export default function Quiz() {
         <h2 className="text-title">自测刷题</h2>
         <p className="text-body mt-3">
           随机顺序出题。先在心中默答，再揭晓答案并诚实自评——标记结果与闪卡进度互通。
+          {limit < questions.length && <span className="ml-1 font-medium text-neutral-900">本轮为 {limit} 题快测。</span>}
         </p>
 
         <div className="card mt-8 p-6">

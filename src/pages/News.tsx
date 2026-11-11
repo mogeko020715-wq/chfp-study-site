@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { ArrowLeft, BookOpenCheck, ExternalLink, Newspaper, AlertTriangle } from 'lucide-react'
 import { useFeed, flashGroupForPoint, type FeedDaily, type FeedWeekly, type FeedQuarterly, type FeedPractice } from '@/data/feed'
@@ -276,6 +276,15 @@ export default function NewsPage() {
   const { count } = useMastered(questions.length)
   const [tab, setTab] = useState<Tab>('daily')
 
+  const [staleDays, setStaleDays] = useState(0)
+  useEffect(() => {
+    if (!feed) return
+    // 进页面时计算一次数据陈旧天数，属于一次性同步外部时间，豁免级联渲染告警
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setStaleDays(Math.max(0, Math.floor((Date.now() - new Date(feed.meta.updatedAt).getTime()) / 86400000)))
+  }, [feed])
+  const staleDate = feed?.meta.updatedAt.slice(0, 10) ?? ''
+
   const dailyByDate = useMemo(() => {
     const groups = new Map<string, FeedDaily[]>()
     for (const d of feed?.daily ?? []) {
@@ -303,8 +312,15 @@ export default function NewsPage() {
           {feed && <span className="shrink-0 text-sm text-neutral-400">更新于 {feed.meta.updatedAt.slice(0, 16).replace('T', ' ')}</span>}
         </div>
         <p className="text-body mt-3">
-          每天扫一眼政策与市场动态，每条都挂上对应的课程板块——新闻即教材。板块标签可直接点进导学页。
+          市场动态与考情复盘：每条资讯都挂上对应的课程板块——新闻即教材。板块标签可直接点进导学页。
         </p>
+
+        {feed && staleDays >= 3 && (
+          <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+            资讯数据停在 {staleDate}（已 {staleDays} 天未更新）——以下内容请作为考情复盘样本使用，
+            新闻与考点、闪卡的关联仍然有效。
+          </div>
+        )}
 
         <div className="mt-6 flex gap-2 border-b border-neutral-200">
           {TABS.map((t) => (
@@ -387,7 +403,7 @@ export default function NewsPage() {
         </div>
 
         <p className="mt-10 text-center text-sm text-neutral-400">
-          💡 资讯卡片上的「🃏 相关闪卡」可直接跳到对应考点的闪卡筛选；每个交易日还会生成 2-3 道用真实行情的实战题。
+          💡 资讯卡片上的「🃏 相关闪卡」可直接跳到对应考点的闪卡筛选；标注「示例数据」的条目用于演示排版与考点关联方式。
         </p>
       </main>
       <Footer />
