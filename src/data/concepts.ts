@@ -7,6 +7,10 @@ export type DemoKind =
   | 'optionPayoff'
   | 'optionExercise'
   | 'deposit'
+  | 'maturityLiquidity'
+  | 'convertible'
+  | 'forwardFutures'
+  | 'agentBroker'
 
 export interface Concept {
   id: string
@@ -15,16 +19,18 @@ export interface Concept {
   cat: string
   /** 考生常问的原话 */
   quote: string
-  /** 一句话解答 */
+  /** 白话说清：一句话解答 */
   answer: string
-  /** 考点提示 */
+  /** 易错点 / 考点提示 */
   point: string
   demo: DemoKind
   /** 关联闪卡筛选（对应题库 theme） */
   flashFilter?: string
+  /** 反向匹配：哪些章节/主题的闪卡应链回本概念（对应题库 chapter/theme） */
+  match: string[]
 }
 
-export const conceptCategories = ['基础概念', '债券', '股票', '基金', '衍生品', '银行']
+export const conceptCategories = ['基础概念', '债券', '股票', '基金', '衍生品', '银行', '保险']
 
 export const concepts: Concept[] = [
   {
@@ -36,6 +42,7 @@ export const concepts: Concept[] = [
     answer: '高收益、低风险、高流动性三者不可兼得，最多只能占两样。',
     point: '金融工具四大特征是「还、流、险、收」——没有便捷性，也没有保本性。',
     demo: 'triangle',
+    match: [],
   },
   {
     id: 'compound-interest',
@@ -46,6 +53,18 @@ export const concepts: Concept[] = [
     answer: '利息会再生利息：10% 复利十年约 2.59 倍，比单利多出一截，时间越长差距越夸张。',
     point: '72 法则：72 ÷ 年收益率 ≈ 本金翻倍所需年数。',
     demo: 'compound',
+    match: [],
+  },
+  {
+    id: 'maturity-vs-liquidity',
+    name: '偿还期 vs 流动性',
+    en: 'Maturity vs Liquidity',
+    cat: '基础概念',
+    quote: '3 年定期还没到期，急用钱怎么办？这和股票随时能卖差在哪？',
+    answer: '偿还期是「多久到期」的时间概念；流动性是「能否马上变现」的能力概念。定期未到期也能提前取，只是损失利息——所以流动性打折。',
+    point: '口诀「还、流、险、收」；偿还期由合同定死，流动性随市场冷热变化。',
+    demo: 'maturityLiquidity',
+    match: ['概述', '综合'],
   },
   {
     id: 'bond-price-rate',
@@ -57,6 +76,19 @@ export const concepts: Concept[] = [
     point: '反向关系是债券第一考点；期限越长，价格波动越大。',
     demo: 'bondRate',
     flashFilter: '债券',
+    match: ['债券'],
+  },
+  {
+    id: 'convertible-vs-exchangeable',
+    name: '可转债 vs 可交换债',
+    en: 'Convertible vs Exchangeable',
+    cat: '债券',
+    quote: '可转债和可交换债，不都能换成股票吗，差在哪？',
+    answer: '可转债转成「发行人自己」的股票；可交换债换成的是发行人持有的「别家公司」的股票。',
+    point: '盯住「转谁的股」：自己 = 可转债，别人 = 可交换。',
+    demo: 'convertible',
+    flashFilter: '债券',
+    match: ['债券'],
   },
   {
     id: 'share-classes',
@@ -68,6 +100,7 @@ export const concepts: Concept[] = [
     point: 'B 股面值仍是人民币，只是用外币认购——最容易记反的一点。',
     demo: 'shares',
     flashFilter: '股票',
+    match: ['股票'],
   },
   {
     id: 'fund-80-rule',
@@ -79,6 +112,19 @@ export const concepts: Concept[] = [
     point: '混合型基金的关键：各项比例均不超过 80%，而不是「什么都买点」。',
     demo: 'fund80',
     flashFilter: '证券投资基金',
+    match: ['证券投资基金'],
+  },
+  {
+    id: 'forward-vs-futures',
+    name: '远期 vs 期货',
+    en: 'Forward vs Futures',
+    cat: '衍生品',
+    quote: '远期和期货都是约定未来交易，为什么还要分两个？',
+    answer: '远期是场外一对一定制的，到期必须交割；期货是交易所标准化合约，每日结算、大多平仓了结。',
+    point: '别称坑：「合约现货外汇交易」说的是外汇期货，不是远期。',
+    demo: 'forwardFutures',
+    flashFilter: '期货和衍生品',
+    match: ['期货和衍生品', '外汇'],
   },
   {
     id: 'option-payoff',
@@ -90,6 +136,7 @@ export const concepts: Concept[] = [
     point: '期权费（Premium）无论是否行权都不退还。',
     demo: 'optionPayoff',
     flashFilter: '期货和衍生品',
+    match: ['期货和衍生品'],
   },
   {
     id: 'option-exercise',
@@ -101,6 +148,7 @@ export const concepts: Concept[] = [
     point: '「美式 / 欧式」与地理无关，只表示行权时间规则。',
     demo: 'optionExercise',
     flashFilter: '期货和衍生品',
+    match: ['期货和衍生品'],
   },
   {
     id: 'deposit-insurance',
@@ -111,5 +159,24 @@ export const concepts: Concept[] = [
     answer: '同一存款人在同一家银行，本息合计最高偿付 50 万；超出部分从银行清算财产中受偿。',
     point: '保费由投保机构缴纳，储户不出钱；注意是「同一家银行」合并计算。',
     demo: 'deposit',
+    match: [],
+  },
+  {
+    id: 'agent-vs-broker',
+    name: '代理人 vs 经纪人',
+    en: 'Agent vs Broker',
+    cat: '保险',
+    quote: '保险代理人和经纪人，到底谁替我说话？',
+    answer: '代理人代表保险公司（卖方），经纪人代表投保人（买方）；公估人是查勘定损的中立第三方。',
+    point: '「经纪人代表谁」是高频考点：代表投保人，不是保险公司。',
+    demo: 'agentBroker',
+    match: [],
   },
 ]
+
+/** 根据闪卡的章节/主题找到应链回的概念（最多 2 个） */
+export function conceptsForQuestion(chapter: string, theme: string): Concept[] {
+  return concepts
+    .filter((c) => c.match.length > 0 && c.match.some((m) => m === theme || m === chapter))
+    .slice(0, 2)
+}

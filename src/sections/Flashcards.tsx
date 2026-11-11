@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router'
+import { Link } from 'react-router'
 import { questions } from '@/data/questions'
+import { conceptsForQuestion } from '@/data/concepts'
 import { useMastered } from '@/hooks/useMastered'
 import { useCardStore } from '@/hooks/useCardStore'
 import {
@@ -292,6 +294,24 @@ export default function Flashcards() {
                 <p className="mt-4 overflow-y-auto whitespace-pre-line leading-relaxed text-neutral-800">
                   {q.answer || '（答案待补充，可回到 Notion 题库完善）'}
                 </p>
+                {(() => {
+                  const related = conceptsForQuestion(q.chapter, q.theme)
+                  if (related.length === 0) return null
+                  return (
+                    <p className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+                      <span className="text-neutral-400">没搞懂？去图鉴看演示：</span>
+                      {related.map((c) => (
+                        <Link
+                          key={c.id}
+                          to={`/concepts?c=${c.id}`}
+                          className="rounded-full border border-neutral-300 bg-white px-2.5 py-0.5 text-xs text-neutral-600 transition-colors hover:border-neutral-500 hover:text-neutral-900"
+                        >
+                          {c.name} →
+                        </Link>
+                      ))}
+                    </p>
+                  )
+                })()}
                 <span className="mt-auto pt-4 text-sm text-neutral-400">
                   {[q.chapter, q.theme].filter(Boolean).join(' · ') || '投资规划'}
                   {q.date ? ` · 掌握日期：${q.date}` : ''} · 按 1-4 评分

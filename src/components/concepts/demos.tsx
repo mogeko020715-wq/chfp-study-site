@@ -316,6 +316,180 @@ function DepositDemo() {
   )
 }
 
+/* 偿还期 vs 流动性：点资产看两个维度 */
+const ASSETS: Record<string, { maturity: string; maturityW: number; liquidity: string; liquidityW: number }> = {
+  活期存款: { maturity: '无（随取随用）', maturityW: 4, liquidity: '极高', liquidityW: 100 },
+  三年定期: { maturity: '3 年（提前取损失利息）', maturityW: 60, liquidity: '较低', liquidityW: 35 },
+  股票: { maturity: '无（永不到期）', maturityW: 4, liquidity: '极高（随时可卖）', liquidityW: 95 },
+  房产: { maturity: '无（无到期日）', maturityW: 4, liquidity: '低（变现数月）', liquidityW: 15 },
+}
+function MaturityLiquidityDemo() {
+  const [cur, setCur] = useState<keyof typeof ASSETS>('三年定期')
+  const a = ASSETS[cur]
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex flex-wrap justify-center gap-2">
+        {(Object.keys(ASSETS) as (keyof typeof ASSETS)[]).map((k) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setCur(k)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              cur === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+      {(
+        [
+          ['偿还期（时间）', a.maturity, a.maturityW, 'bg-neutral-400'],
+          ['流动性（变现）', a.liquidity, a.liquidityW, 'bg-neutral-900'],
+        ] as const
+      ).map(([name, val, w, cls]) => (
+        <div key={name} className="flex items-center gap-2 text-xs">
+          <span className="w-24 shrink-0 text-neutral-500">{name}</span>
+          <div className="h-4 flex-1 overflow-hidden rounded bg-neutral-100">
+            <div className={`h-full rounded transition-all duration-300 ${cls}`} style={{ width: `${w}%` }} />
+          </div>
+          <span className="w-32 shrink-0 font-medium text-neutral-900">{val}</span>
+        </div>
+      ))}
+      <p className="text-center text-xs text-neutral-400">一个是「多久到期」，一个是「能否马上卖」——两回事</p>
+    </div>
+  )
+}
+
+/* 可转债 vs 可交换债：转谁的股 */
+function ConvertibleDemo() {
+  const [kind, setKind] = useState<'cb' | 'eb'>('cb')
+  const target = kind === 'cb' ? 'A 公司（发行人自己）的股票' : 'B 公司（别家）的股票'
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {([
+          ['cb', '可转债'],
+          ['eb', '可交换债'],
+        ] as const).map(([k, label]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setKind(k)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              kind === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="flex items-center justify-center gap-2 text-sm">
+        <span className="rounded-lg border border-neutral-300 px-3 py-1.5 text-neutral-700">A 公司发的债</span>
+        <span className="text-neutral-400">{kind === 'cb' ? '转换 →' : '交换 →'}</span>
+        <span className={`rounded-lg px-3 py-1.5 font-medium transition-colors ${
+          kind === 'cb' ? 'bg-neutral-900 text-white' : 'border border-amber-400 bg-amber-50 text-amber-900'
+        }`}>
+          {target}
+        </span>
+      </div>
+      <p className="text-center text-xs text-neutral-400">盯住「转谁的股」：自己 = 可转债，别人 = 可交换</p>
+    </div>
+  )
+}
+
+/* 远期 vs 期货：特征归类，点开看归属 */
+const FF_FEATURES: Record<string, '远期' | '期货'> = {
+  场外一对一定制: '远期',
+  到期必须交割: '远期',
+  到期一次性结算: '远期',
+  标准化合约: '期货',
+  '每日结算（Mark-to-Market）': '期货',
+  可反向平仓了结: '期货',
+  交易所集中撮合: '期货',
+  缴纳保证金: '期货',
+}
+function ForwardFuturesDemo() {
+  const [picked, setPicked] = useState<string | null>(null)
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex flex-wrap justify-center gap-2">
+        {Object.keys(FF_FEATURES).map((f) => {
+          const side = picked === f ? FF_FEATURES[f] : null
+          return (
+            <button
+              key={f}
+              type="button"
+              onClick={() => setPicked(picked === f ? null : f)}
+              className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                side === '远期'
+                  ? 'border-neutral-900 bg-neutral-900 text-white'
+                  : side === '期货'
+                    ? 'border-amber-400 bg-amber-100 text-amber-900'
+                    : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+              }`}
+            >
+              {f}
+              {side && <span className="ml-1 opacity-70">· {side}</span>}
+            </button>
+          )
+        })}
+      </div>
+      <div className="flex justify-center gap-6 text-xs">
+        <span className="flex items-center gap-1.5 text-neutral-600">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-neutral-900" /> 远期：场外定制，到期交割
+        </span>
+        <span className="flex items-center gap-1.5 text-neutral-600">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-400" /> 期货：标准化，每日结算
+        </span>
+      </div>
+      <p className="text-center text-xs text-neutral-400">点特征看归属——「合约现货外汇交易」说的是外汇期货</p>
+    </div>
+  )
+}
+
+/* 代理人 vs 经纪人：代表谁 */
+function AgentBrokerDemo() {
+  const ROLES = {
+    代理人: { who: '代表保险公司', side: '卖方', note: '帮保险公司卖产品' },
+    经纪人: { who: '代表投保人', side: '买方', note: '帮客户挑产品——高频考点' },
+    公估人: { who: '中立第三方', side: '—', note: '查勘、定损、理赔' },
+  } as const
+  const [cur, setCur] = useState<keyof typeof ROLES>('经纪人')
+  const r = ROLES[cur]
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {(Object.keys(ROLES) as (keyof typeof ROLES)[]).map((k) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setCur(k)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              cur === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+      <div className="mx-auto w-full max-w-60 rounded-lg border border-neutral-200 px-4 py-3 text-center">
+        <p className="text-sm font-semibold text-neutral-900">{r.who}</p>
+        <p className="mt-0.5 text-xs text-neutral-500">
+          {r.side !== '—' && `立场：${r.side} · `}
+          {r.note}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -325,4 +499,8 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   optionPayoff: OptionPayoffDemo,
   optionExercise: OptionExerciseDemo,
   deposit: DepositDemo,
+  maturityLiquidity: MaturityLiquidityDemo,
+  convertible: ConvertibleDemo,
+  forwardFutures: ForwardFuturesDemo,
+  agentBroker: AgentBrokerDemo,
 }
