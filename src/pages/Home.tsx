@@ -1,8 +1,7 @@
 import { useMastered } from '@/hooks/useMastered'
 import Nav from '@/sections/Nav'
 import Hero from '@/sections/Hero'
-import Framework from '@/sections/Framework'
-import Storyline from '@/sections/Storyline'
+import Curriculum from '@/sections/Curriculum'
 import NewsTicker from '@/components/NewsTicker'
 import Footer from '@/sections/Footer'
 
@@ -17,8 +16,7 @@ export default function Home() {
           <NewsTicker />
         </div>
         <Hero />
-        <Storyline />
-        <Framework />
+        <Curriculum />
       </main>
       <Footer />
     </div>
