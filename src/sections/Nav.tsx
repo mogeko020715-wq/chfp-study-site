@@ -1,18 +1,28 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink } from 'react-router'
-import { Menu, Moon, Sun, UserRound, X } from 'lucide-react'
+import { Link, NavLink, useLocation } from 'react-router'
+import { ChevronDown, Menu, Moon, Sun, UserRound, X } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
 import { useAccount } from '@/hooks/useAccount'
 import AccountDialog from '@/components/AccountDialog'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
+// 桌面导航：4 个主入口 +「更多」下拉；移动端菜单仍是完整列表
 const links = [
   { to: '/', label: '学习框架' },
-  { to: '/news', label: '行业资讯' },
-  { to: '/analysis', label: '数据复盘' },
   { to: '/concepts', label: '概念图鉴' },
   { to: '/flashcards', label: '闪卡记忆' },
   { to: '/quiz', label: '自测刷题' },
 ]
+const moreLinks = [
+  { to: '/news', label: '行业资讯' },
+  { to: '/analysis', label: '数据复盘' },
+]
+const allLinks = [links[0], ...moreLinks, ...links.slice(1)]
 
 export default function Nav({ masteredCount }: { masteredCount: number }) {
   const [scrolled, setScrolled] = useState(() => window.scrollY > 12)
@@ -20,6 +30,7 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
   const { theme, toggle } = useTheme()
   const { user } = useAccount()
   const [dialog, setDialog] = useState<'login' | 'manage' | null>(null)
+  const location = useLocation()
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -45,7 +56,7 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
         <Link to="/" className="text-sm font-semibold text-neutral-900">
           CHFP 学习站
         </Link>
-        <nav className="hidden items-center gap-4 sm:flex">
+        <nav className="hidden items-center gap-5 sm:flex">
           {links.map((l) => (
             <NavLink
               key={l.to}
@@ -60,6 +71,25 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
               {l.label}
             </NavLink>
           ))}
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={`flex items-center gap-0.5 text-sm transition-colors outline-none ${
+                moreLinks.some((l) => l.to === location.pathname)
+                  ? 'font-medium text-neutral-900'
+                  : 'text-neutral-500 hover:text-neutral-900'
+              }`}
+            >
+              更多
+              <ChevronDown className="h-3.5 w-3.5" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="min-w-32">
+              {moreLinks.map((l) => (
+                <DropdownMenuItem key={l.to} asChild>
+                  <Link to={l.to}>{l.label}</Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
         <div className="flex items-center gap-3">
           <button
@@ -100,7 +130,7 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
             aria-hidden="true"
           />
           <nav className="relative border-t border-neutral-200 bg-white px-4 py-2 sm:hidden">
-          {links.map((l) => (
+          {allLinks.map((l) => (
             <NavLink
               key={l.to}
               to={l.to}

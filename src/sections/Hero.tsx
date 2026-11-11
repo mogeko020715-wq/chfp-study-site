@@ -17,8 +17,8 @@ export default function Hero() {
   const hasProgress = Object.keys(state).length > 0 || count > 0
 
   return (
-    <section id="top" className="border-b border-neutral-200 pt-14">
-      <div className="mx-auto max-w-3xl px-4 pb-14 pt-14 sm:px-6">
+    <section id="top" className="border-b border-neutral-200 pt-12">
+      <div className="mx-auto max-w-3xl px-4 pb-10 pt-10 sm:px-6">
         <h1 className="text-display">CHFP 二级理财规划师 · 知识学习站</h1>
         <p className="text-body mt-4">
           六大课程板块搭骨架，章节笔记填血肉，闪卡与自测巩固记忆。内容同步自 Notion 学习库，打开即学。

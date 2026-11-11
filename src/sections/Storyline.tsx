@@ -5,7 +5,7 @@ import { curriculumStoryline } from '@/data/guides'
 /** 全课主线：把六大板块串成一个理财规划师服务一家人的流程 */
 export default function Storyline() {
   return (
-    <section className="mx-auto max-w-3xl scroll-mt-16 px-4 py-14 sm:px-6">
+    <section className="mx-auto max-w-3xl scroll-mt-16 px-4 py-10 sm:px-6">
       <h2 className="text-title flex items-center gap-2">
         <Route className="h-5 w-5" />
         先把六大板块串成一条线
