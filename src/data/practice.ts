@@ -22,7 +22,7 @@ export const practiceItems: PracticeItem[] = [
     conceptId: 'fx-quotation',
     cat: '外汇',
     title:
-      '财经 App 弹出快讯：「在岸人民币 USDCNY 报 6.85，昨日为 6.70」。小白惊呼「数字涨了，人民币升值了！」他的判断：',
+      '财经 App 弹出快讯：「在岸人民币 USDCNY 报 6.85，昨日为 6.70」。小白惊呼「数字涨了，人民币升值了！」ta 的判断：',
     options: [
       {
         id: 'depreciate',
@@ -110,7 +110,7 @@ export const practiceItems: PracticeItem[] = [
     id: 'bond-rate-hike',
     conceptId: 'bond-price-rate',
     cat: '债券',
-    title: '新闻说央行加息 0.25%，债券基金经理却说「今天组合亏钱了」。他并不慌，因为：',
+    title: '新闻说央行加息 0.25%，债券基金经理却说「今天组合亏钱了」。ta 并不慌，因为：',
     options: [
       {
         id: 'inverse',
@@ -121,14 +121,14 @@ export const practiceItems: PracticeItem[] = [
       },
       {
         id: 'fake-loss',
-        label: '加息利好债券，他在假装亏钱',
+        label: '加息利好债券，ta 在假装亏钱',
         feedback:
           '还不对。加息对存量债券是利空：新债利息更高，旧债只能降价才卖得动。',
         correct: false,
       },
       {
         id: 'default',
-        label: '说明他买的债券违约了',
+        label: '说明 ta 买的债券违约了',
         feedback:
           '还不对。违约是信用风险，和央行加息没有必然关系；利率上行引起的普跌不等于违约。',
         correct: false,
@@ -288,7 +288,7 @@ export const practiceItems: PracticeItem[] = [
     conceptId: 'hammer-vs-hanging',
     cat: '股票',
     title:
-      '小王复盘时发现一根 K 线：小实体在顶部、下影线很长。他直接判断「这是锤子线，要涨了」。他漏看了什么？',
+      '小王复盘时发现一根 K 线：小实体在顶部、下影线很长。ta 直接判断「这是锤子线，要涨了」。ta 漏看了什么？',
     options: [
       {
         id: 'position',
