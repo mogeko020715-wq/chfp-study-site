@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router'
 import { ArrowLeft, BookOpenCheck, ExternalLink, Newspaper, AlertTriangle } from 'lucide-react'
 import { useFeed, flashGroupForPoint, type FeedDaily, type FeedWeekly, type FeedQuarterly, type FeedPractice } from '@/data/feed'
+import { concepts } from '@/data/concepts'
 import Nav from '@/sections/Nav'
 import Footer from '@/sections/Footer'
 import { useMastered } from '@/hooks/useMastered'
@@ -86,28 +87,61 @@ function DailyCard({ d }: { d: FeedDaily }) {
 }
 
 function PracticeCard({ p }: { p: FeedPractice }) {
+  const [picked, setPicked] = useState<number | null>(null)
   const gs = flashGroupForPoint(p.point)
+  const correctIdx = p.options.findIndex((o) =>
+    o.trimStart().startsWith(p.answer.trim().charAt(0)),
+  )
+  const answered = picked !== null
+  const isRight = answered && picked === correctIdx
+  // 答错时链回概念图鉴（按考点的章节/主题匹配概念）
+  const related = concepts
+    .filter((c) => c.match.length > 0 && c.match.some((m) => p.point.includes(m)))
+    .slice(0, 1)
+
   return (
     <div className="rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3">
       <p className="text-xs text-neutral-400">实战题 · {p.point}</p>
       <p className="mt-1.5 text-[0.9375rem] leading-relaxed text-neutral-800">{p.question}</p>
-      <ul className="mt-2 space-y-1">
-        {p.options.map((o) => (
-          <li key={o} className="text-sm text-neutral-600">
-            {o}
-          </li>
-        ))}
-      </ul>
-      <details className="mt-2">
-        <summary className="text-caption cursor-pointer list-none hover:text-neutral-900 [&::-webkit-details-marker]:hidden">
-          查看答案与解析 →
-        </summary>
-        <p className="mt-2 text-sm leading-relaxed text-neutral-700">
-          <span className="font-medium text-neutral-900">答案：{p.answer}</span>
-          <br />
-          {p.explain}
-        </p>
-      </details>
+      <div className="mt-2 space-y-1.5" role="listbox" aria-label="选项">
+        {p.options.map((o, i) => {
+          let cls = 'border-neutral-200 bg-white text-neutral-700 hover:border-neutral-400'
+          if (answered) {
+            if (i === correctIdx) cls = 'border-emerald-500 bg-emerald-50 text-emerald-900'
+            else if (i === picked) cls = 'border-rose-400 bg-rose-50 text-rose-900'
+            else cls = 'border-neutral-200 bg-white text-neutral-400'
+          }
+          return (
+            <button
+              key={o}
+              type="button"
+              disabled={answered}
+              onClick={() => setPicked(i)}
+              className={`block w-full rounded-lg border px-3 py-2 text-left text-sm transition-colors ${cls}`}
+            >
+              {o}
+            </button>
+          )
+        })}
+      </div>
+      {answered && (
+        <div className="mt-3">
+          <p className={`text-sm font-medium ${isRight ? 'text-emerald-700' : 'text-rose-600'}`}>
+            {isRight ? '答对了 ✓' : `答错了，正确答案是 ${p.answer}`}
+          </p>
+          <p className="mt-1.5 text-sm leading-relaxed text-neutral-700">{p.explain}</p>
+          {!isRight && related.length > 0 && (
+            <p className="mt-2">
+              <Link
+                to={`/concepts?c=${related[0].id}`}
+                className="inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-900 transition-colors hover:border-amber-500"
+              >
+                💡 去看「{related[0].name}」演示 →
+              </Link>
+            </p>
+          )}
+        </div>
+      )}
       {gs && (
         <p className="mt-2">
           <Link
