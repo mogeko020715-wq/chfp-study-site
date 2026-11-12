@@ -11,19 +11,28 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 
-// 桌面导航：4 个主入口 +「更多」下拉；移动端菜单仍是完整列表
+// 桌面导航：主入口 +「概念图鉴」分组下拉（卡片/实战）+「更多」下拉；移动端菜单仍是完整列表
 const links = [
   { to: '/', label: '学习框架' },
-  { to: '/concepts', label: '概念图鉴' },
-  { to: '/practice', label: '实战练习' },
   { to: '/flashcards', label: '闪卡记忆' },
   { to: '/quiz', label: '自测刷题' },
+]
+const conceptLinks = [
+  { to: '/concepts', label: '概念卡片' },
+  { to: '/practice', label: '实战练习' },
 ]
 const moreLinks = [
   { to: '/news', label: '行业资讯' },
   { to: '/analysis', label: '数据复盘' },
 ]
-const allLinks = [links[0], ...moreLinks, ...links.slice(1)]
+const allLinks = [
+  links[0],
+  { to: '/concepts', label: '概念图鉴' },
+  conceptLinks[1],
+  links[1],
+  links[2],
+  ...moreLinks,
+]
 
 export default function Nav({ masteredCount }: { masteredCount: number }) {
   const [scrolled, setScrolled] = useState(() => window.scrollY > 12)
@@ -58,11 +67,40 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
           CHFP 学习站
         </Link>
         <nav className="hidden items-center gap-5 sm:flex">
-          {links.map((l) => (
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              `text-sm transition-colors ${
+                isActive ? 'font-medium text-neutral-900' : 'text-neutral-500 hover:text-neutral-900'
+              }`
+            }
+          >
+            学习框架
+          </NavLink>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={`flex items-center gap-0.5 text-sm transition-colors outline-none ${
+                conceptLinks.some((l) => l.to === location.pathname)
+                  ? 'font-medium text-neutral-900'
+                  : 'text-neutral-500 hover:text-neutral-900'
+              }`}
+            >
+              概念图鉴
+              <ChevronDown className="h-3.5 w-3.5" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="min-w-32">
+              {conceptLinks.map((l) => (
+                <DropdownMenuItem key={l.to} asChild>
+                  <Link to={l.to}>{l.label}</Link>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          {links.slice(1).map((l) => (
             <NavLink
               key={l.to}
               to={l.to}
-              end={l.to === '/'}
               className={({ isActive }) =>
                 `text-sm transition-colors ${
                   isActive ? 'font-medium text-neutral-900' : 'text-neutral-500 hover:text-neutral-900'
