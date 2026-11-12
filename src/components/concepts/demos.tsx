@@ -1055,6 +1055,116 @@ function HammerHangingDemo() {
   )
 }
 
+/* 纸黄金 vs 实物黄金：你买到的到底是什么 */
+function PaperGoldDemo() {
+  const [kind, setKind] = useState<'paper' | 'physical'>('paper')
+  const paper = kind === 'paper'
+  const rows: [string, string, string][] = [
+    ['你拿到的是', '账户里一行数字', '沉甸甸的金条/金币'],
+    ['能提取实物吗', '不能，永远只是账面', '能，但回购有折价'],
+    ['交易成本', '低（买卖个点差）', '高（保管 + 鉴定 + 回购折价）'],
+    ['适合谁', '短线交易赚差价', '长期保值、压箱底'],
+  ]
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {([
+          ['paper', '纸黄金'],
+          ['physical', '实物黄金'],
+        ] as const).map(([k, label]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setKind(k)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              kind === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="mx-auto flex w-full max-w-64 items-center justify-center gap-3 rounded-lg border border-neutral-200 px-4 py-3">
+        <span aria-hidden="true" className={`text-3xl transition-all duration-300 ${paper ? '' : 'scale-110'}`}>
+          {paper ? '📄' : '🧈'}
+        </span>
+        <p className="text-sm">
+          <span className="font-semibold text-neutral-900">{paper ? '一条账面记录' : '一块真金'}</span>
+          <span className="block text-xs text-neutral-400">{paper ? '跟着报价涨跌，不能交割' : '拿在手里，也要操心保管'}</span>
+        </p>
+      </div>
+      <div className="mx-auto w-full max-w-64 divide-y divide-neutral-100 rounded-lg border border-neutral-200 text-xs">
+        {rows.map(([label, pv, fv]) => (
+          <div key={label} className="flex items-center justify-between px-3 py-1.5">
+            <span className="text-neutral-500">{label}</span>
+            <span className={`text-right font-medium ${label === '能提取实物吗' ? (paper ? 'text-rose-600' : 'text-emerald-700') : 'text-neutral-900'}`}>
+              {paper ? pv : fv}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* 贵金属三大交易所：产品归哪家 */
+const EXCHANGES: Record<string, string> = {
+  '黄金 T+D': '上海黄金交易所',
+  '白银 T+D': '上海黄金交易所',
+  黄金期货: '上海期货交易所',
+  白银期货: '上海期货交易所',
+  天通金: '天津贵金属交易所',
+  天通银: '天津贵金属交易所',
+}
+function GoldExchangesDemo() {
+  const [picked, setPicked] = useState<string | null>(null)
+  const badgeCls = (ex: string) =>
+    ex === '上海黄金交易所' ? 'bg-amber-500' : ex === '上海期货交易所' ? 'bg-neutral-900' : 'bg-neutral-400'
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex flex-wrap justify-center gap-2">
+        {Object.keys(EXCHANGES).map((f) => {
+          const ex = picked === f ? EXCHANGES[f] : null
+          return (
+            <button
+              key={f}
+              type="button"
+              onClick={() => setPicked(picked === f ? null : f)}
+              className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                ex
+                  ? 'border-neutral-900 bg-neutral-900 text-white'
+                  : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+              }`}
+            >
+              {f}
+            </button>
+          )
+        })}
+      </div>
+      <div className="mx-auto w-full max-w-64 rounded-lg border border-neutral-200 px-4 py-3 text-center text-sm">
+        {picked ? (
+          <>
+            <span className={`mr-1.5 inline-block h-2.5 w-2.5 rounded-full ${badgeCls(EXCHANGES[picked])}`} />
+            <span className="font-medium text-neutral-900">{picked}</span>
+            <span className="text-neutral-500"> 在 </span>
+            <span className="font-semibold text-neutral-900">{EXCHANGES[picked]}</span>
+            <span className="text-neutral-500"> 交易</span>
+          </>
+        ) : (
+          <span className="text-neutral-400">点一个产品，看它归哪家交易所</span>
+        )}
+      </div>
+      <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-neutral-500">
+        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-500" /> 上金所：现货 T+D</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full bg-neutral-900" /> 上期所：期货</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full bg-neutral-400" /> 天贵所：天通金/银</span>
+      </div>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -1076,4 +1186,6 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   moneyFund: MoneyFundDemo,
   candleBasic: CandleBasicDemo,
   hammerHanging: HammerHangingDemo,
+  paperGold: PaperGoldDemo,
+  goldExchanges: GoldExchangesDemo,
 }

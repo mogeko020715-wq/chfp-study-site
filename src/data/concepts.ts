@@ -19,6 +19,8 @@ export type DemoKind =
   | 'moneyFund'
   | 'candleBasic'
   | 'hammerHanging'
+  | 'paperGold'
+  | 'goldExchanges'
 
 export interface Concept {
   id: string
@@ -38,7 +40,7 @@ export interface Concept {
   match: string[]
 }
 
-export const conceptCategories = ['基础概念', '债券', '股票', '基金', '外汇', '衍生品', '银行', '保险']
+export const conceptCategories = ['基础概念', '债券', '股票', '基金', '外汇', '衍生品', '贵金属', '银行', '保险']
 
 export const concepts: Concept[] = [
   {
@@ -253,6 +255,30 @@ export const concepts: Concept[] = [
     demo: 'optionExercise',
     flashFilter: '期货和衍生品',
     match: ['期货和衍生品'],
+  },
+  {
+    id: 'paper-vs-physical-gold',
+    name: '纸黄金 vs 实物黄金',
+    en: 'Paper vs Physical Gold',
+    cat: '贵金属',
+    quote: '我在银行 App 买的纸黄金，能去柜台换成金条吗？',
+    answer: '不能。纸黄金只是账面上的买卖记录，跟着报价涨跌赚差价，全程不涉及实物交割；想拿真金得买实物黄金，但要承担保管、鉴定和回购折价的成本。',
+    point: '纸黄金 = 个人凭证式黄金，「账面买卖、不能提取实物」是考点原话；黄金不产生利息，持有成本别忘算。',
+    demo: 'paperGold',
+    flashFilter: '黄金',
+    match: ['黄金'],
+  },
+  {
+    id: 'gold-exchanges',
+    name: '贵金属三大交易所',
+    en: 'The Three Exchanges',
+    cat: '贵金属',
+    quote: '黄金 T+D、黄金期货、天通金，分别在哪个交易所交易？',
+    answer: '国务院批准的就三家：上海黄金交易所做现货延期（黄金/白银 T+D），上海期货交易所做期货（黄金/白银期货），天津贵金属交易所做天通金、天通银。',
+    point: '高频考点是「T+D 归上金所、期货归上期所」——两家名字都带「上海」，最容易记串。',
+    demo: 'goldExchanges',
+    flashFilter: '黄金',
+    match: ['黄金'],
   },
   {
     id: 'deposit-insurance',
