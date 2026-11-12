@@ -13,6 +13,8 @@ export type DemoKind =
   | 'agentBroker'
   | 'fxQuotation'
   | 'closedOpenFund'
+  | 'etfLof'
+  | 'fourStrategies'
 
 export interface Concept {
   id: string
@@ -105,6 +107,18 @@ export const concepts: Concept[] = [
     match: ['股票'],
   },
   {
+    id: 'four-strategies',
+    name: '四种投资策略',
+    en: 'Long / Long-Short / Neutral / CTA',
+    cat: '股票',
+    quote: '多头、多空、中性、CTA——行情下跌的时候，谁能赚钱？',
+    answer: '多头只能涨了才赚；多空对冲后涨跌都只剩小波动；中性几乎不看大盘脸色；CTA 跟踪期货趋势，涨也赚跌也赚，就怕横盘。',
+    point: 'CTA = 管理期货策略，赌「有趋势」；中性策略赚的是选股能力，不是行情。',
+    demo: 'fourStrategies',
+    flashFilter: '股票',
+    match: ['股票'],
+  },
+  {
     id: 'fund-80-rule',
     name: '基金 80% 规则',
     en: 'The 80% Rule',
@@ -125,6 +139,18 @@ export const concepts: Concept[] = [
     answer: '那是封闭式基金：到期前不能找基金公司赎回，只能在二级市场转手，价格由供求决定，经常低于净值——这就是「封基折价」。',
     point: '折价率 = 市价 ÷ 净值 − 1；折价不是「捡便宜」，要等基金到期或转型时才收敛回净值。',
     demo: 'closedOpenFund',
+    flashFilter: '证券投资基金',
+    match: ['证券投资基金', '公募基金'],
+  },
+  {
+    id: 'etf-vs-lof',
+    name: 'ETF vs LOF',
+    en: 'ETF vs LOF',
+    cat: '基金',
+    quote: 'ETF 和 LOF 不都能在交易所买卖吗？为什么 ETF 几乎不折价，LOF 却经常偏离净值？',
+    answer: '关键在申赎机制：ETF 用一篮子股票实物申赎、门槛高，套利者随时把价差抹平；LOF 用现金申赎、门槛低，套利慢，折溢价就可能拖很久。',
+    point: '两者都是「上市交易的开放式基金」；考差别就考申赎方式（实物 vs 现金）和折溢价幅度。',
+    demo: 'etfLof',
     flashFilter: '证券投资基金',
     match: ['证券投资基金', '公募基金'],
   },

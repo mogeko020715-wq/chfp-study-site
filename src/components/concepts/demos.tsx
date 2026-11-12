@@ -635,6 +635,152 @@ function ClosedOpenFundDemo() {
   )
 }
 
+/* ETF vs LOF：申赎机制决定折溢价 */
+function EtfLofDemo() {
+  const [kind, setKind] = useState<'etf' | 'lof'>('etf')
+  const etf = kind === 'etf'
+  const rows: [string, string, string][] = [
+    ['申赎用什么', '一篮子股票（实物）', '现金'],
+    ['申赎门槛', '高（机构/大户为主）', '低（散户可参与）'],
+    ['折溢价表现', '极小——套利者随时抹平', '可能持续偏离净值'],
+  ]
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {([
+          ['etf', 'ETF'],
+          ['lof', 'LOF'],
+        ] as const).map(([k, label]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setKind(k)}
+            className={`rounded-full border px-4 py-1 text-sm transition-colors ${
+              kind === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="mx-auto w-full max-w-64 divide-y divide-neutral-100 rounded-lg border border-neutral-200 text-xs">
+        {rows.map(([label, etfVal, lofVal]) => (
+          <div key={label} className="flex items-center justify-between px-3 py-1.5">
+            <span className="text-neutral-500">{label}</span>
+            <span className={`text-right font-medium ${(label === '折溢价表现' || label === '申赎用什么') ? (etf ? 'text-emerald-700' : 'text-amber-700') : 'text-neutral-900'}`}>
+              {etf ? etfVal : lofVal}
+            </span>
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center gap-2 text-xs">
+        <span className="w-16 text-neutral-500">折溢价幅度</span>
+        <div className="relative h-4 flex-1 rounded bg-neutral-100">
+          <div className="absolute top-[-3px] left-1/2 h-[22px] w-px bg-neutral-400" />
+          <div
+            className={`absolute top-0 h-full rounded transition-all duration-300 ${etf ? 'bg-emerald-600' : 'bg-amber-500'}`}
+            style={{ left: '50%', width: etf ? '3%' : '22%' }}
+          />
+        </div>
+        <span className="w-14 text-right font-medium text-neutral-900">{etf ? '±0.1%' : '±2%'}</span>
+      </div>
+      <p className="text-center text-xs text-neutral-400">套利速度决定折溢价：实物申赎快，现金申赎慢</p>
+    </div>
+  )
+}
+
+/* 四种投资策略：不同行情下的盈亏 */
+type Market = 'up' | 'down' | 'flat'
+const STRATEGY_OUTCOMES: Record<string, { desc: string; o: Record<Market, { v: number; t: string }> }> = {
+  多头: {
+    desc: '低价买入高价卖出',
+    o: {
+      up: { v: 1, t: '盈利' },
+      down: { v: -1, t: '亏损' },
+      flat: { v: 0, t: '白忙' },
+    },
+  },
+  多空: {
+    desc: '同时做多做空，对冲风险',
+    o: {
+      up: { v: 0.35, t: '小幅盈利' },
+      down: { v: -0.35, t: '小幅亏损' },
+      flat: { v: 0.1, t: '看选股' },
+    },
+  },
+  中性: {
+    desc: '对冲掉大盘，只赚选股的钱',
+    o: {
+      up: { v: 0.15, t: '持平微赚' },
+      down: { v: 0.15, t: '持平微赚' },
+      flat: { v: 0.15, t: '持平微赚' },
+    },
+  },
+  CTA: {
+    desc: '跟踪期货趋势，可多可空',
+    o: {
+      up: { v: 0.8, t: '盈利' },
+      down: { v: 0.8, t: '盈利（做空）' },
+      flat: { v: -0.5, t: '亏损' },
+    },
+  },
+}
+function FourStrategiesDemo() {
+  const [mkt, setMkt] = useState<Market>('down')
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {(
+          [
+            ['up', '上涨行情'],
+            ['down', '下跌行情'],
+            ['flat', '横盘震荡'],
+          ] as const
+        ).map(([k, label]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setMkt(k)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              mkt === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {Object.entries(STRATEGY_OUTCOMES).map(([name, s]) => {
+        const o = s.o[mkt]
+        return (
+          <div key={name} className="flex items-center gap-2 text-xs">
+            <span className="w-10 shrink-0 font-medium text-neutral-900">{name}</span>
+            <div className="relative h-4 flex-1 rounded bg-neutral-100">
+              <div className="absolute top-[-3px] left-1/2 h-[22px] w-px bg-neutral-400" />
+              <div
+                className={`absolute top-0 h-full rounded transition-all duration-300 ${o.v > 0.05 ? 'bg-emerald-600' : o.v < -0.05 ? 'bg-rose-500' : 'bg-neutral-400'}`}
+                style={{
+                  left: o.v >= 0 ? '50%' : `${50 + o.v * 50}%`,
+                  width: `${Math.abs(o.v) * 50}%`,
+                }}
+              />
+            </div>
+            <span className="w-20 shrink-0 text-right text-neutral-600" title={s.desc}>
+              {o.t}
+            </span>
+          </div>
+        )
+      })}
+      <p className="text-center text-xs text-neutral-400">
+        {mkt === 'down' ? '下跌时 CTA 做空也盈利——这就是「管理期货」的价值' : mkt === 'flat' ? '震荡市是 CTA 的天敌，中性策略最稳' : '上涨时人人赚钱，差别在牛市之外'}
+      </p>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -650,4 +796,6 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   agentBroker: AgentBrokerDemo,
   fxQuotation: FxQuotationDemo,
   closedOpenFund: ClosedOpenFundDemo,
+  etfLof: EtfLofDemo,
+  fourStrategies: FourStrategiesDemo,
 }
