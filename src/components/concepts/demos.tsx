@@ -1165,6 +1165,110 @@ function GoldExchangesDemo() {
   )
 }
 
+/* M0/M1/M2：货币分层套娃，点资产看归哪层 */
+const M_LAYERS: Record<string, { layer: string; note: string }> = {
+  流通中的现金: { layer: 'M0', note: '拿在手里的钱，最活' },
+  活期存款: { layer: 'M1', note: 'M1 = M0 + 活期存款（狭义货币）' },
+  定期存款: { layer: 'M2', note: 'M2 = M1 + 定期等（广义货币）' },
+}
+function M012Demo() {
+  const [picked, setPicked] = useState<string | null>('定期存款')
+  const layer = picked ? M_LAYERS[picked].layer : null
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {Object.keys(M_LAYERS).map((k) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setPicked(k)}
+            className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+              picked === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+      {/* 嵌套套娃：M0 ⊂ M1 ⊂ M2 */}
+      <div className={`mx-auto w-full max-w-56 rounded-xl border-2 p-1.5 transition-colors ${layer === 'M2' ? 'border-neutral-900' : 'border-neutral-300'}`}>
+        <p className="px-1 text-[10px] text-neutral-400">M2 广义货币（最宽）</p>
+        <div className={`rounded-lg border-2 p-1.5 transition-colors ${layer === 'M1' ? 'border-neutral-900' : 'border-neutral-300'}`}>
+          <p className="px-1 text-[10px] text-neutral-400">M1 狭义货币</p>
+          <div className={`flex items-center justify-center rounded-md border-2 py-2 text-xs font-medium transition-colors ${
+            layer === 'M0' ? 'border-neutral-900 bg-neutral-900 text-white' : 'border-neutral-300 text-neutral-500'
+          }`}>
+            M0 现金
+          </div>
+        </div>
+      </div>
+      <p className="text-center text-xs text-neutral-500">
+        {picked ? (
+          <>
+            <span className="font-medium text-neutral-900">{picked}</span> 属于{' '}
+            <span className="font-semibold text-neutral-900">{layer}</span> 层——{M_LAYERS[picked].note}
+          </>
+        ) : (
+          '点一种钱，看它落在哪一层'
+        )}
+      </p>
+    </div>
+  )
+}
+
+/* 央行/商行/政策性银行：职能归谁 */
+const BANK_FN: Record<string, string> = {
+  发行货币: '央行',
+  定货币政策: '央行',
+  吸收存款放贷: '商业银行',
+  '创造信用（派生存款）': '商业银行',
+  贯彻政策放贷款: '政策性银行',
+}
+function BankTrioDemo() {
+  const [picked, setPicked] = useState<string | null>(null)
+  const badgeCls = (b: string) =>
+    b === '央行' ? 'bg-neutral-900' : b === '商业银行' ? 'bg-neutral-500' : 'bg-amber-500'
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex flex-wrap justify-center gap-2">
+        {Object.keys(BANK_FN).map((f) => (
+          <button
+            key={f}
+            type="button"
+            onClick={() => setPicked(picked === f ? null : f)}
+            className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+              picked === f
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+      <div className="mx-auto w-full max-w-60 rounded-lg border border-neutral-200 px-4 py-3 text-center text-sm">
+        {picked ? (
+          <>
+            <span className={`mr-1.5 inline-block h-2.5 w-2.5 rounded-full ${badgeCls(BANK_FN[picked])}`} />
+            <span className="font-medium text-neutral-900">{picked}</span>
+            <span className="text-neutral-500"> 归 </span>
+            <span className="font-semibold text-neutral-900">{BANK_FN[picked]}</span>
+          </>
+        ) : (
+          <span className="text-neutral-400">点一项职能，看它归谁</span>
+        )}
+      </div>
+      <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-neutral-500">
+        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full bg-neutral-900" /> 央行：银行的银行</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full bg-neutral-500" /> 商行：营利 + 创造信用</span>
+        <span className="flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-500" /> 政策性：国开行等，不计利润</span>
+      </div>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -1188,4 +1292,6 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   hammerHanging: HammerHangingDemo,
   paperGold: PaperGoldDemo,
   goldExchanges: GoldExchangesDemo,
+  m012: M012Demo,
+  bankTrio: BankTrioDemo,
 }

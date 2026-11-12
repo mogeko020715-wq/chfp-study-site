@@ -21,6 +21,8 @@ export type DemoKind =
   | 'hammerHanging'
   | 'paperGold'
   | 'goldExchanges'
+  | 'm012'
+  | 'bankTrio'
 
 export interface Concept {
   id: string
@@ -279,6 +281,28 @@ export const concepts: Concept[] = [
     demo: 'goldExchanges',
     flashFilter: '黄金',
     match: ['黄金'],
+  },
+  {
+    id: 'm0-m1-m2',
+    name: 'M0 / M1 / M2 货币层次',
+    en: 'Money Supply Layers',
+    cat: '基础概念',
+    quote: '新闻里说「M2 增长 8%」，这个 M2 到底是什么？和 M0、M1 什么关系？',
+    answer: '货币按流动性分三层、层层嵌套：M0 = 流通中的现金；M1 = M0 + 活期存款（狭义货币，最活跃）；M2 = M1 + 定期存款等（广义货币，口径最宽）。',
+    point: '记「M1 活、M2 宽」；M1 与 M2 的增速差（剪刀差）常被用来观察资金活化的程度。',
+    demo: 'm012',
+    match: [],
+  },
+  {
+    id: 'bank-trio',
+    name: '央行 vs 商行 vs 政策性银行',
+    en: 'Central / Commercial / Policy Banks',
+    cat: '银行',
+    quote: '央行、商业银行、政策性银行，名字都带「银行」，干的活一样吗？',
+    answer: '完全不同：央行是「银行的银行」，发货币、定政策、不管个人业务；商业银行吸收存款、发放贷款、创造信用，以营利为目的；政策性银行（国开行等）为贯彻国家政策放贷，不追求利润最大化。',
+    point: '政策性金融债是「准国债」，信用仅次于国债；能创造信用的是商业银行，证券公司不能。',
+    demo: 'bankTrio',
+    match: [],
   },
   {
     id: 'deposit-insurance',
