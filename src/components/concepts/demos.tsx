@@ -128,34 +128,91 @@ const SHARES: Record<string, { rows: [string, string][] }> = {
   B股: { rows: [['面值货币', '人民币'], ['认购货币', '外币'], ['上市地点', '上海 / 深圳']] },
   H股: { rows: [['面值货币', '港币'], ['认购货币', '港币'], ['上市地点', '香港联交所']] },
 }
+/* 股票的族谱：按上市地点 / 按股东权利 两套分法 */
 function SharesDemo() {
+  const [dim, setDim] = useState<'place' | 'right'>('place')
   const [cur, setCur] = useState<keyof typeof SHARES>('B股')
+  const [cls, setCls] = useState<'普通股' | '优先股'>('优先股')
+  const RIGHTS: Record<string, [string, string][]> = {
+    普通股: [['分红', '后分，看盈利'], ['清偿顺序', '最后'], ['投票权', '有'], ['收益', '浮动，弹性大']],
+    优先股: [['分红', '先分，相对固定'], ['清偿顺序', '优先于普通股'], ['投票权', '一般没有'], ['收益', '相对固定']],
+  }
   return (
     <div className="w-full space-y-3">
       <div className="flex justify-center gap-2">
-        {(Object.keys(SHARES) as (keyof typeof SHARES)[]).map((k) => (
+        {([
+          ['place', '按上市地点'],
+          ['right', '按股东权利'],
+        ] as const).map(([k, label]) => (
           <button
             key={k}
             type="button"
-            onClick={() => setCur(k)}
+            onClick={() => setDim(k)}
             className={`rounded-full border px-3 py-1 text-sm transition-colors ${
-              cur === k
+              dim === k
                 ? 'border-neutral-900 bg-neutral-900 text-white'
                 : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
             }`}
           >
-            {k}
+            {label}
           </button>
         ))}
       </div>
-      <div className="mx-auto w-full max-w-60 divide-y divide-neutral-100 rounded-lg border border-neutral-200 text-sm">
-        {SHARES[cur].rows.map(([k, v]) => (
-          <div key={k} className="flex justify-between px-3 py-1.5">
-            <span className="text-neutral-500">{k}</span>
-            <span className="font-medium text-neutral-900">{v}</span>
+      {dim === 'place' ? (
+        <>
+          <div className="flex justify-center gap-2">
+            {(Object.keys(SHARES) as (keyof typeof SHARES)[]).map((k) => (
+              <button
+                key={k}
+                type="button"
+                onClick={() => setCur(k)}
+                className={`rounded-full border px-3 py-0.5 text-xs transition-colors ${
+                  cur === k
+                    ? 'border-neutral-900 bg-neutral-900 text-white'
+                    : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+                }`}
+              >
+                {k}
+              </button>
+            ))}
           </div>
-        ))}
-      </div>
+          <div className="mx-auto w-full max-w-60 divide-y divide-neutral-100 rounded-lg border border-neutral-200 text-sm">
+            {SHARES[cur].rows.map(([k, v]) => (
+              <div key={k} className="flex justify-between px-3 py-1.5">
+                <span className="text-neutral-500">{k}</span>
+                <span className="font-medium text-neutral-900">{v}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex justify-center gap-2">
+            {(['普通股', '优先股'] as const).map((k) => (
+              <button
+                key={k}
+                type="button"
+                onClick={() => setCls(k)}
+                className={`rounded-full border px-3 py-0.5 text-xs transition-colors ${
+                  cls === k
+                    ? 'border-neutral-900 bg-neutral-900 text-white'
+                    : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+                }`}
+              >
+                {k}
+              </button>
+            ))}
+          </div>
+          <div className="mx-auto w-full max-w-60 divide-y divide-neutral-100 rounded-lg border border-neutral-200 text-sm">
+            {RIGHTS[cls].map(([k, v]) => (
+              <div key={k} className="flex justify-between px-3 py-1.5">
+                <span className="text-neutral-500">{k}</span>
+                <span className={`font-medium ${cls === '优先股' && (k === '分红' || k === '清偿顺序') ? 'text-amber-700' : 'text-neutral-900'}`}>{v}</span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   )
 }
@@ -781,6 +838,223 @@ function FourStrategiesDemo() {
   )
 }
 
+/* PE vs PB：股价本身不代表贵贱 */
+function PePbDemo() {
+  const [kind, setKind] = useState<'pe' | 'pb'>('pe')
+  const [price, setPrice] = useState(30)
+  const [eps, setEps] = useState(1.5)
+  const [bps, setBps] = useState(20)
+  const pe = price / eps
+  const pb = price / bps
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {([
+          ['pe', 'PE 市盈率'],
+          ['pb', 'PB 市净率'],
+        ] as const).map(([k, label]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setKind(k)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              kind === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <label className="block">
+        <span className={labelCls}>股价 ¥{price}</span>
+        <input type="range" min={10} max={100} value={price} onChange={(e) => setPrice(+e.target.value)} className={sliderCls} />
+      </label>
+      {kind === 'pe' ? (
+        <label className="block">
+          <span className={labelCls}>每股收益 ¥{eps.toFixed(1)}</span>
+          <input type="range" min={0.5} max={5} step={0.1} value={eps} onChange={(e) => setEps(+e.target.value)} className={sliderCls} />
+        </label>
+      ) : (
+        <label className="block">
+          <span className={labelCls}>每股净资产 ¥{bps}</span>
+          <input type="range" min={5} max={50} value={bps} onChange={(e) => setBps(+e.target.value)} className={sliderCls} />
+        </label>
+      )}
+      <p className="text-center text-sm">
+        <span className="text-neutral-500">{kind === 'pe' ? 'PE' : 'PB'} =</span>{' '}
+        <span className="text-lg font-bold text-neutral-900">{kind === 'pe' ? pe.toFixed(1) : pb.toFixed(2)}</span>
+      </p>
+      <p className="text-center text-xs text-neutral-400">
+        {kind === 'pe'
+          ? `按当前盈利，约 ${pe.toFixed(0)} 年回本——PE 看的是赚钱能力`
+          : `为每 1 元账面净资产付了 ${pb.toFixed(2)} 元——PB 看的是家底`}
+      </p>
+    </div>
+  )
+}
+
+/* 货基可投/不可投：点资产看答案 */
+const MF_RULES: Record<string, boolean> = {
+  现金: true,
+  '1 年内存款': true,
+  '397 天内债券': true,
+  央行票据: true,
+  同业存单: true,
+  债券回购: true,
+  股票: false,
+  可转债: false,
+  '2 年以上存款': false,
+}
+function MoneyFundDemo() {
+  const [picked, setPicked] = useState<string | null>(null)
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex flex-wrap justify-center gap-2">
+        {Object.keys(MF_RULES).map((f) => {
+          const on = picked === f ? MF_RULES[f] : null
+          return (
+            <button
+              key={f}
+              type="button"
+              onClick={() => setPicked(picked === f ? null : f)}
+              className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+                on === true
+                  ? 'border-emerald-600 bg-emerald-600 text-white'
+                  : on === false
+                    ? 'border-rose-500 bg-rose-500 text-white'
+                    : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+              }`}
+            >
+              {f}
+              {on !== null && <span className="ml-1 opacity-80">{on ? '可投' : '禁投'}</span>}
+            </button>
+          )
+        })}
+      </div>
+      <div className="flex justify-center gap-6 text-xs">
+        <span className="flex items-center gap-1.5 text-neutral-600">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-600" /> 可投：短、稳、高流动
+        </span>
+        <span className="flex items-center gap-1.5 text-neutral-600">
+          <span className="inline-block h-2.5 w-2.5 rounded-full bg-rose-500" /> 禁投：风险超标
+        </span>
+      </div>
+      <p className="text-center text-xs text-neutral-400">记住「397 天」；股票和可转债是货基的绝对禁区</p>
+    </div>
+  )
+}
+
+/* K 线基础：拖开盘/收盘价，看阴阳翻转 */
+function CandleBasicDemo() {
+  const [open, setOpen] = useState(8)
+  const [close, setClose] = useState(11)
+  const high = Math.max(open, close) + 2
+  const low = Math.min(open, close) - 2
+  const pct = (p: number) => ((high - p) / (high - low)) * 100
+  const yang = close > open
+  const flat = close === open
+  return (
+    <div className="w-full space-y-3">
+      <div className="grid grid-cols-2 gap-3">
+        <label className="block">
+          <span className={labelCls}>开盘价 {open.toFixed(1)}</span>
+          <input type="range" min={5} max={15} step={0.5} value={open} onChange={(e) => setOpen(+e.target.value)} className={sliderCls} />
+        </label>
+        <label className="block">
+          <span className={labelCls}>收盘价 {close.toFixed(1)}</span>
+          <input type="range" min={5} max={15} step={0.5} value={close} onChange={(e) => setClose(+e.target.value)} className={sliderCls} />
+        </label>
+      </div>
+      <div className="flex items-center justify-center gap-6">
+        <div className="relative h-28 w-10">
+          {/* 影线：最高到最低 */}
+          <div className="absolute left-1/2 w-0.5 -translate-x-1/2 bg-neutral-500" style={{ top: 0, bottom: 0 }} />
+          {/* 实体：开盘到收盘 */}
+          <div
+            className={`absolute left-1/2 w-7 -translate-x-1/2 rounded-sm transition-all duration-200 ${
+              flat ? 'bg-neutral-400' : yang ? 'bg-rose-500' : 'bg-emerald-600'
+            }`}
+            style={{
+              top: `${pct(Math.max(open, close))}%`,
+              height: `${Math.max(pct(Math.min(open, close)) - pct(Math.max(open, close)), 3)}%`,
+            }}
+          />
+          <span className="absolute -top-1 -right-7 text-[10px] text-neutral-400">高 {high.toFixed(1)}</span>
+          <span className="absolute -bottom-1 -right-7 text-[10px] text-neutral-400">低 {low.toFixed(1)}</span>
+        </div>
+        <div className="space-y-1 text-xs text-neutral-500">
+          <p>
+            实体两端 = <span className="text-neutral-900">开盘 {open.toFixed(1)}</span> 与{' '}
+            <span className="text-neutral-900">收盘 {close.toFixed(1)}</span>
+          </p>
+          <p>细线（影线）指向最高 / 最低价</p>
+          <p>
+            这是一根
+            <span className={`font-semibold ${flat ? 'text-neutral-900' : yang ? 'text-rose-600' : 'text-emerald-700'}`}>
+              {flat ? ' 十字星（收 = 开）' : yang ? ' 阳线（收 > 开，红色）' : ' 阴线（收 < 开，绿色）'}
+            </span>
+          </p>
+        </div>
+      </div>
+      <p className="text-center text-xs text-neutral-400">中国盘面红涨绿跌，和欧美正好相反</p>
+    </div>
+  )
+}
+
+/* 锤子线 vs 上吊线：同形不同位 */
+function HammerHangingDemo() {
+  const [pos, setPos] = useState<'bottom' | 'top'>('bottom')
+  const bottom = pos === 'bottom'
+  // 趋势点：bottom 模式下跌（值递减），top 模式上涨
+  const dots = bottom ? [11, 10, 9, 8] : [8, 9, 10, 11]
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex justify-center gap-2">
+        {([
+          ['bottom', '出现在下跌趋势末端'],
+          ['top', '出现在上涨趋势末端'],
+        ] as const).map(([k, label]) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setPos(k)}
+            className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+              pos === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="flex items-end justify-center gap-3">
+        {dots.map((v, i) => (
+          <span
+            key={i}
+            className="w-2.5 rounded-full bg-neutral-300 transition-all duration-300"
+            style={{ height: `${v * 5}px` }}
+          />
+        ))}
+        {/* 同一根 K 线：小实体在顶部，下影线很长 */}
+        <div className="relative h-16 w-8">
+          <div className="absolute left-1/2 top-1 w-0.5 -translate-x-1/2 bg-rose-500" style={{ height: '88%' }} />
+          <div className="absolute left-1/2 top-0 h-3.5 w-6 -translate-x-1/2 rounded-sm bg-rose-500" />
+        </div>
+      </div>
+      <p className="text-center text-sm">
+        <span className="text-neutral-500">同一形态，这里叫</span>{' '}
+        <span className={`font-semibold ${bottom ? 'text-emerald-700' : 'text-rose-600'}`}>
+          {bottom ? '锤子线 · 见底信号 ↗' : '上吊线 · 见顶预警 ↘'}
+        </span>
+      </p>
+      <p className="text-center text-xs text-neutral-400">形态不决定含义，位置决定含义；还需次日 K 线确认</p>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -798,4 +1072,8 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   closedOpenFund: ClosedOpenFundDemo,
   etfLof: EtfLofDemo,
   fourStrategies: FourStrategiesDemo,
+  pePb: PePbDemo,
+  moneyFund: MoneyFundDemo,
+  candleBasic: CandleBasicDemo,
+  hammerHanging: HammerHangingDemo,
 }

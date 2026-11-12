@@ -15,6 +15,10 @@ export type DemoKind =
   | 'closedOpenFund'
   | 'etfLof'
   | 'fourStrategies'
+  | 'pePb'
+  | 'moneyFund'
+  | 'candleBasic'
+  | 'hammerHanging'
 
 export interface Concept {
   id: string
@@ -96,13 +100,49 @@ export const concepts: Concept[] = [
   },
   {
     id: 'share-classes',
-    name: 'A股 / B股 / H股',
+    name: '股票的族谱',
     en: 'Share Classes',
     cat: '股票',
-    quote: 'A股、B股、H股，到底谁用什么钱买、在哪上市？',
-    answer: 'A股用人民币在沪深买卖；B股人民币面值、外币认购；H股在香港上市。',
-    point: 'B 股面值仍是人民币，只是用外币认购——最容易记反的一点。',
+    quote: 'A股B股H股、普通股优先股，股票到底有多少种分法？',
+    answer: '两套分法别搞混：按上市地点分 A/B/H 股（在哪买、用什么钱买）；按股东权利分普通股/优先股（优先股先分红、先清偿，但一般没有投票权）。',
+    point: '优先股的「优先」= 分红和清偿顺序优先，不是「更好」；B 股面值仍是人民币，只是用外币认购。',
     demo: 'shares',
+    flashFilter: '股票',
+    match: ['股票'],
+  },
+  {
+    id: 'pe-vs-pb',
+    name: 'PE vs PB',
+    en: 'P/E vs P/B',
+    cat: '股票',
+    quote: '同样是 20 块的股票，为什么有的算贵有的算便宜？',
+    answer: '单看股价没意义。PE = 股价 ÷ 每股收益，看赚钱能力（按当前盈利几年回本）；PB = 股价 ÷ 每股净资产，看家底（为每 1 元账面资产付了几块钱）。',
+    point: '亏损公司 PE 无意义，要看 PB；银行、地产等重资产行业习惯用 PB 估值。',
+    demo: 'pePb',
+    flashFilter: '股票',
+    match: ['股票'],
+  },
+  {
+    id: 'candle-basic',
+    name: 'K 线基础',
+    en: 'Candlestick Basics',
+    cat: '股票',
+    quote: 'K 线图上红红绿绿的柱子，到底哪头是开盘价？',
+    answer: '每根 K 线记录四个价：开盘、收盘、最高、最低。收盘高于开盘是阳线（红色），实体两端分别是开盘和收盘，细细的影线指向当天的最高和最低价。',
+    point: '中国盘面红涨绿跌，和欧美正好相反；影线越长，说明盘中多空博弈越激烈。',
+    demo: 'candleBasic',
+    flashFilter: '股票',
+    match: ['股票'],
+  },
+  {
+    id: 'hammer-vs-hanging',
+    name: '锤子线 vs 上吊线',
+    en: 'Hammer vs Hanging Man',
+    cat: '股票',
+    quote: '锤子线和上吊线长得一模一样，怎么一个是好事一个是坏事？',
+    answer: '它们确实是同一种形态：小实体在顶部、下影线很长。区别只在位置——出现在下跌趋势末端叫锤子线（见底信号），出现在上涨趋势末端叫上吊线（见顶预警）。',
+    point: '形态不决定含义，位置决定含义；而且要等次日 K 线确认才算数。',
+    demo: 'hammerHanging',
     flashFilter: '股票',
     match: ['股票'],
   },
@@ -129,6 +169,18 @@ export const concepts: Concept[] = [
     demo: 'fund80',
     flashFilter: '证券投资基金',
     match: ['证券投资基金'],
+  },
+  {
+    id: 'money-fund-rules',
+    name: '货基可投 / 不可投',
+    en: 'Money Fund Rules',
+    cat: '基金',
+    quote: '货币基金这么稳，是不是什么都能买一点？',
+    answer: '恰恰相反。货基的投资范围严格受限：只能买现金、1 年内存款、397 天内债券、央票、同业存单这些；股票、可转债、长期存款一概不能碰。',
+    point: '记住「397 天」这个奇怪的数字；股票和可转债是货基的绝对禁区。',
+    demo: 'moneyFund',
+    flashFilter: '证券投资基金',
+    match: ['证券投资基金', '公募基金'],
   },
   {
     id: 'closed-vs-open-fund',
