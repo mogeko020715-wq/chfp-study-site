@@ -15,6 +15,7 @@ import {
 const links = [
   { to: '/', label: '学习框架' },
   { to: '/concepts', label: '概念图鉴' },
+  { to: '/practice', label: '实战练习' },
   { to: '/flashcards', label: '闪卡记忆' },
   { to: '/quiz', label: '自测刷题' },
 ]
