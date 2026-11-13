@@ -7,6 +7,7 @@ const ChapterPage = lazy(() => import('./pages/Chapter'))
 const PointPage = lazy(() => import('./pages/Point'))
 const ConceptsPage = lazy(() => import('./pages/Concepts'))
 const PracticePage = lazy(() => import('./pages/Practice'))
+const ExamsPage = lazy(() => import('./pages/Exams'))
 const FlashcardsPage = lazy(() => import('./pages/FlashcardsPage'))
 const QuizPage = lazy(() => import('./pages/QuizPage'))
 const NewsPage = lazy(() => import('./pages/News'))
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/module/:name/chapter/:title/point/:idx" element={<PointPage />} />
         <Route path="/concepts" element={<ConceptsPage />} />
         <Route path="/practice" element={<PracticePage />} />
+        <Route path="/exams" element={<ExamsPage />} />
         <Route path="/flashcards" element={<FlashcardsPage />} />
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/news" element={<NewsPage />} />

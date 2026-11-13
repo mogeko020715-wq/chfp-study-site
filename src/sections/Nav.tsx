@@ -23,6 +23,7 @@ const conceptLinks = [
 ]
 const moreLinks = [
   { to: '/news', label: '行业资讯' },
+  { to: '/exams', label: '真题试卷' },
   { to: '/analysis', label: '数据复盘' },
 ]
 const allLinks = [
