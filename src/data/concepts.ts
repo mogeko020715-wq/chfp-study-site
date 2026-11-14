@@ -29,6 +29,9 @@ export type DemoKind =
   | 'pensionPillars'
   | 'bonusTax'
   | 'educationFund'
+  | 'propertyVsLife'
+  | 'ciVsMedical'
+  | 'lifeCycle'
 
 export interface Concept {
   id: string
@@ -385,6 +388,39 @@ export const concepts: Concept[] = [
     answer: '同一存款人在同一家银行，本息合计最高偿付 50 万；超出部分从银行清算财产中受偿。',
     point: '保费由投保机构缴纳，储户不出钱；注意是「同一家银行」合并计算。',
     demo: 'deposit',
+    match: [],
+  },
+  {
+    id: 'property-vs-life-insurance',
+    name: '财产险 vs 人身险',
+    en: 'Property vs Life Insurance',
+    cat: '保险',
+    quote: '车险赔多少看修车发票，重疾险赔多少看合同保额——都是保险，赔法怎么不一样？',
+    answer: '财产险走「损失补偿」：按实际损失赔，不能超过保额，更不能让你赚钱；人身险多走「定额给付」：买多少保额就赔多少，跟实际花了多少无关。',
+    point: '同一份财产买两份财产险也不能重复获赔（损失补偿）；买两份重疾险可以叠加赔付（定额给付）。',
+    demo: 'propertyVsLife',
+    match: [],
+  },
+  {
+    id: 'ci-vs-medical',
+    name: '重疾险 vs 医疗险',
+    en: 'Critical Illness vs Medical',
+    cat: '保险',
+    quote: '有了百万医疗险，为什么还要买重疾险？不是都能报医药费吗？',
+    answer: '医疗险是报销型：花多少、按发票报多少，先垫付再报销；重疾险是给付型：确诊约定疾病就一次性赔保额，不管实际花了多少——这笔钱是用来养病和补收入缺口的。',
+    point: '两者互补不替代：医疗险管「治病钱」，重疾险管「养病期间的生活费」。',
+    demo: 'ciVsMedical',
+    match: [],
+  },
+  {
+    id: 'financial-life-cycle',
+    name: '财务生命周期',
+    en: 'Financial Life Cycle',
+    cat: '家庭财务',
+    quote: '单身、刚成家、孩子上学、快退休——每个阶段该怎么理钱，是一套路数吗？',
+    answer: '不是。财务生命周期分五段：单身期（攒经验攒本金）、家庭形成期（买房结婚，负债高峰）、家庭成长期（子女教育金是主线）、家庭成熟期（还清负债，加速养老储备）、退休期（防守为主，保住现金流）。',
+    point: '阶段决定策略：能承受的风险随年龄下降，「先负债后积累再防守」是标准节奏。',
+    demo: 'lifeCycle',
     match: [],
   },
   {

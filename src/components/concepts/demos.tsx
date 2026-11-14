@@ -1564,6 +1564,128 @@ function EducationFundDemo() {
   )
 }
 
+/* 财产险 vs 人身险：同一件事，两种赔法 */
+function PropertyVsLifeDemo() {
+  const [cost, setCost] = useState(8)
+  return (
+    <div className="w-full space-y-3">
+      <label className="block">
+        <span className={labelCls}>实际损失（如修车费）{cost} 万</span>
+        <input type="range" min={1} max={30} value={cost} onChange={(e) => setCost(+e.target.value)} className={sliderCls} />
+      </label>
+      {(
+        [
+          ['财产险（车损险，保额 20 万）', Math.min(cost, 20)],
+          ['人身险（重疾险，保额 50 万）', 50],
+        ] as const
+      ).map(([name, payout], i) => (
+        <div key={name} className="flex items-center gap-2 text-xs">
+          <span className="w-36 shrink-0 text-neutral-500">{name}</span>
+          <div className="h-4 flex-1 overflow-hidden rounded bg-neutral-100">
+            <div
+              className={`h-full rounded transition-all duration-300 ${i === 0 ? 'bg-neutral-900' : 'bg-emerald-600'}`}
+              style={{ width: `${(payout / 50) * 100}%` }}
+            />
+          </div>
+          <span className="w-20 shrink-0 text-right">
+            <span className="font-medium text-neutral-900">{payout} 万</span>
+          </span>
+        </div>
+      ))}
+      <p className="text-center text-xs text-neutral-400">拖损失金额看两种赔法：补偿型跟花费走，给付型只看保额</p>
+    </div>
+  )
+}
+
+/* 重疾险 vs 医疗险：治病的钱 vs 养病的钱 */
+function CiVsMedicalDemo() {
+  const [cost, setCost] = useState(12)
+  const [days, setDays] = useState(180)
+  const ciPayout = 50
+  const medPayout = Math.min(cost, 100) * 0.9
+  const livingGap = (days / 30) * 1.5
+  return (
+    <div className="w-full space-y-3">
+      <div className="grid grid-cols-2 gap-3">
+        <label className="block">
+          <span className={labelCls}>医疗费 {cost} 万</span>
+          <input type="range" min={2} max={50} value={cost} onChange={(e) => setCost(+e.target.value)} className={sliderCls} />
+        </label>
+        <label className="block">
+          <span className={labelCls}>休养 {days} 天</span>
+          <input type="range" min={30} max={720} step={30} value={days} onChange={(e) => setDays(+e.target.value)} className={sliderCls} />
+        </label>
+      </div>
+      {(
+        [
+          ['医疗险（报销型）', `按发票报 ¥${medPayout.toFixed(1)} 万`, '管治病钱，先垫付后报销'],
+          ['重疾险（给付型）', `一次赔 ¥${ciPayout} 万`, `养病期间生活费缺口约 ¥${livingGap.toFixed(1)} 万也由它覆盖`],
+        ] as const
+      ).map(([name, payout, note], i) => (
+        <div key={name} className="rounded-lg border border-neutral-200 px-3 py-2">
+          <div className="flex items-center justify-between text-sm">
+            <span className="font-medium text-neutral-900">{name}</span>
+            <span className={`font-semibold ${i === 0 ? 'text-neutral-900' : 'text-emerald-700'}`}>{payout}</span>
+          </div>
+          <p className="mt-0.5 text-xs text-neutral-400">{note}</p>
+        </div>
+      ))}
+      <p className="text-center text-xs text-neutral-400">互补不替代：医疗险管治病，重疾险管养病期间的收入断档</p>
+    </div>
+  )
+}
+
+/* 财务生命周期：点阶段看该阶段的主线任务 */
+const LIFE_STAGES: Record<string, { span: string; note: string }> = {
+  单身期: { span: '毕业 → 结婚前', note: '攒经验攒本金，风险承受力最高，可适度激进' },
+  家庭形成期: { span: '结婚 → 子女出生', note: '买房结婚负债高峰，先配足保险再谈投资' },
+  家庭成长期: { span: '子女出生 → 完成大学', note: '教育金是主线，收支渐稳，稳健增值' },
+  家庭成熟期: { span: '子女独立 → 退休', note: '还清负债，加速养老储备，逐步降风险' },
+  退休期: { span: '退休后', note: '防守为主，保住现金流，流动性优先' },
+}
+function LifeCycleDemo() {
+  const [picked, setPicked] = useState<string>('家庭成长期')
+  const keys = Object.keys(LIFE_STAGES)
+  const idx = keys.indexOf(picked)
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex items-center gap-1">
+        {keys.map((k, i) => (
+          <div key={k} className="flex flex-1 items-center gap-1">
+            <button
+              type="button"
+              onClick={() => setPicked(k)}
+              className={`h-2.5 flex-1 rounded-full transition-colors ${
+                i <= idx ? 'bg-neutral-900' : 'bg-neutral-200'
+              } ${picked === k ? 'ring-2 ring-neutral-900 ring-offset-1' : ''}`}
+              aria-label={k}
+            />
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between text-[10px] text-neutral-400">
+        {keys.map((k) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setPicked(k)}
+            className={`text-center transition-colors ${picked === k ? 'font-semibold text-neutral-900' : ''}`}
+            style={{ width: '20%' }}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+      <div className="mx-auto w-full max-w-64 rounded-lg border border-neutral-200 px-4 py-3 text-center">
+        <p className="text-sm font-semibold text-neutral-900">{picked}</p>
+        <p className="text-xs text-neutral-400">{LIFE_STAGES[picked].span}</p>
+        <p className="mt-1.5 text-xs leading-relaxed text-neutral-600">{LIFE_STAGES[picked].note}</p>
+      </div>
+      <p className="text-center text-xs text-neutral-400">阶段决定策略：先负债、后积累、再防守</p>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -1595,4 +1717,7 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   pensionPillars: PensionPillarsDemo,
   bonusTax: BonusTaxDemo,
   educationFund: EducationFundDemo,
+  propertyVsLife: PropertyVsLifeDemo,
+  ciVsMedical: CiVsMedicalDemo,
+  lifeCycle: LifeCycleDemo,
 }
