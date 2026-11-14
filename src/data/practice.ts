@@ -663,6 +663,297 @@ export const practiceItems: PracticeItem[] = [
       },
     ],
   },
+  {
+    id: 'family-ratios-checkup',
+    conceptId: 'family-ratios',
+    cat: '家庭财务',
+    title:
+      '客户家庭：流动资产 6 万，月支出 2 万；年税后收入 30 万，年支出 24 万。理财师看完直摇头，因为：',
+    options: [
+      {
+        id: 'both-bad',
+        label: '流动性比率只有 3（偏低），结余比率 20%（低于 30% 健康线）——两个指标都不健康',
+        feedback:
+          '答对了。6÷2=3 刚到流动性下限，结余比率 (30−24)÷30=20% 不达标——先攒备用金再谈投资。',
+        correct: true,
+      },
+      {
+        id: 'both-good',
+        label: '流动资产够 3 个月支出，结余也有 6 万，挺健康的',
+        feedback:
+          '还不对。流动性 3 是最低门槛，结余比率 20% 低于 30% 的健康线——两个都不算好。',
+        correct: false,
+      },
+      {
+        id: 'liquidity-ok',
+        label: '流动性比率 3 很健康，只是结余略低而已',
+        feedback:
+          '还不对。3 是健康区间的下沿，不是「很健康」；何况结余比率 20% 已经亮红灯了。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'emergency-fund-freelancer',
+    conceptId: 'emergency-fund',
+    cat: '家庭财务',
+    title: '自由职业的小李每月固定支出 1.2 万，收入波动很大。ta 的紧急备用金应该留多少、放哪里？',
+    options: [
+      {
+        id: 'six-twelve',
+        label: '留 7.2–14.4 万（6–12 个月支出），放在活期存款或货币基金里',
+        feedback:
+          '答对了。收入不稳定就往 6–12 个月留；备用金求安全和流动，不追求收益。',
+        correct: true,
+      },
+      {
+        id: 'three-six',
+        label: '留 3.6–7.2 万（3–6 个月），拿去投股票型基金赚收益',
+        feedback:
+          '还不对。收入不稳定要留 6–12 个月，而且备用金放股票基金是典型错误——要用钱时可能正跌着。',
+        correct: false,
+      },
+      {
+        id: 'one-month',
+        label: '留 1–2 个月就够，反正随时可以借',
+        feedback:
+          '还不对。1–2 个月连常规下限都不够；「随时能借」是信用额度，不是流动性储备。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'insurance-principles-case',
+    conceptId: 'insurance-principles',
+    cat: '保险',
+    title: '客户给借钱的邻居的房子买了财产险，邻居失火烧毁了房子。保险公司应该赔付吗？',
+    options: [
+      {
+        id: 'no-interest',
+        label: '不赔。客户对邻居的房子没有保险利益，合同本身无效',
+        feedback:
+          '答对了。保险利益原则：你对保的东西必须有法律认可的利益，否则合同无效——判案四步的第一步就出局了。',
+        correct: true,
+      },
+      {
+        id: 'pay-fire',
+        label: '赔，火灾是承保风险，按实际损失赔付',
+        feedback:
+          '还不对。先有保险利益才谈得到近因和赔付——没有保险利益，合同从一开始就不成立。',
+        correct: false,
+      },
+      {
+        id: 'pay-half',
+        label: '赔一半，毕竟客户出了保费',
+        feedback:
+          '还不对。保险不是「交多少赔多少比例」的储蓄；没有保险利益的合同无效，保费应予退还而非赔付。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'pension-pillars-sort',
+    conceptId: 'pension-pillars',
+    cat: '保险',
+    title: '小张的养老钱：工资里扣的养老保险、公司给缴的企业年金、自己存的个人养老金。按支柱分：',
+    options: [
+      {
+        id: 'correct-sort',
+        label: '分别是第一、第二、第三支柱——国家主导、单位主导、个人主导',
+        feedback:
+          '答对了。记「谁主导」：一靠国家、二靠单位、三靠自己；个人养老金年缴上限 1.2 万，有税收优惠。',
+        correct: true,
+      },
+      {
+        id: 'wrong-sort',
+        label: '企业年金是第一支柱，因为是企业给缴的',
+        feedback:
+          '还不对。支柱按主导方分：国家（基本养老）→ 单位（企业/职业年金）→ 个人（个人养老金）。',
+        correct: false,
+      },
+      {
+        id: 'all-first',
+        label: '都是社保第一支柱，都是国家强制的',
+        feedback:
+          '还不对。只有基本养老保险是强制的；企业年金是单位自愿，个人养老金是个人自愿。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'bonus-tax-compare',
+    conceptId: 'bonus-tax',
+    cat: '税收',
+    title: '陈先生年终奖 20 万。人力问他选单独计税还是并入综合所得。理财师的正确做法是：',
+    options: [
+      {
+        id: 'calculate-both',
+        label: '两种方式各算一遍税额再比——单独计税与综合计税哪个省要看具体数字，没有铁律',
+        feedback:
+          '答对了。考试套路就是各算一次：差额就是「少缴纳 X 元」的答案。一般工资高、年终奖占比小时单独计税更省。',
+        correct: true,
+      },
+      {
+        id: 'always-separate',
+        label: '一律选单独计税，单独计税总是更省',
+        feedback:
+          '还不对。没有「总是」：当年终奖占收入比重大时，并入综合可能反而更省——必须实际算一遍。',
+        correct: false,
+      },
+      {
+        id: 'always-combined',
+        label: '一律并入综合所得，合并起来级距更平滑',
+        feedback:
+          '还不对。对多数中高收入者是单独计税更省；「并入更平滑」不是普遍结论。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'education-fund-pv',
+    conceptId: 'education-fund',
+    cat: '家庭财务',
+    title: '林女士的女儿 8 年后上大学，预计每月生活费 2000 元（读 4 年），投资收益率 3%。现在最该做的是：',
+    options: [
+      {
+        id: 'pv-calc',
+        label: '按 3% 把四年费用折现到今天，一次性或分期投入稳健工具——约 7.2 万起步',
+        feedback:
+          '答对了。教育金是刚性支出：年金现值 ÷ (1+3%)⁸，工具选国债/教育金保险这类稳健品种。',
+        correct: true,
+      },
+      {
+        id: 'lump-later',
+        label: '到时候再说，8 年后的事不急',
+        feedback:
+          '还不对。教育金有时间刚性，越早准备复利越帮忙——拖到临头只能靠大额储蓄硬扛。',
+        correct: false,
+      },
+      {
+        id: 'all-stock',
+        label: '全部买成股票，8 年够长，肯定跑赢通胀',
+        feedback:
+          '还不对。教育金刚性支出不能赌——股票的波动可能在用钱那年来个下跌，教科书建议稳健工具。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'property-life-payout',
+    conceptId: 'property-vs-life-insurance',
+    cat: '保险',
+    title: '同一场车祸：车修了 8 万（车损险保额 20 万），人确诊重疾（重疾险保额 50 万）。两份保险各赔多少？',
+    options: [
+      {
+        id: 'eight-fifty',
+        label: '车损险赔 8 万（按实际损失），重疾险赔 50 万（按约定保额）',
+        feedback:
+          '答对了。财产险走损失补偿、跟实际花费走；人身险走定额给付、买多少赔多少。',
+        correct: true,
+      },
+      {
+        id: 'both-full',
+        label: '都按保额赔：20 万 + 50 万',
+        feedback:
+          '还不对。车损险是补偿型，损失 8 万只赔 8 万——多赔你就「因祸得福」了，损失补偿原则不允许。',
+        correct: false,
+      },
+      {
+        id: 'both-actual',
+        label: '都按实际花费赔：8 万 + 医药费',
+        feedback:
+          '还不对。重疾险是给付型，确诊约定疾病即按保额赔，与实际医疗费无关。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'ci-medical-complement',
+    conceptId: 'ci-vs-medical',
+    cat: '保险',
+    title: '客户问：「我有百万医疗险了，重疾的医药费都能报，还要重疾险干嘛？」最合适的回答是：',
+    options: [
+      {
+        id: 'living-gap',
+        label: '医疗险管治病的钱，重疾险赔的保额管养病期间的收入断档——互补不替代',
+        feedback:
+          '答对了。医疗险先垫付后报销；重疾险确诊即给付，钱到账就能覆盖生活费、房贷、康复开支。',
+        correct: true,
+      },
+      {
+        id: 'redundant',
+        label: '说得对，重复了，退掉重疾险',
+        feedback:
+          '还不对。医疗险只覆盖医疗费；休养半年没收入这件事，只有给付型重疾险能兜住。',
+        correct: false,
+      },
+      {
+        id: 'reverse',
+        label: '正好相反：医疗险管养病，重疾险管治病',
+        feedback:
+          '还不对。两者恰好反过来：医疗险报销治疗费用，重疾险的保额自由支配。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'life-cycle-strategy',
+    conceptId: 'financial-life-cycle',
+    cat: '家庭财务',
+    title: '四位客户都要理财建议：单身小张、新婚小王、孩子上小学的老李、刚退休的老周。谁的组合最适合重仓股票？',
+    options: [
+      {
+        id: 'single-zhang',
+        label: '单身期的小张——没家庭负担、时间最长，风险承受力最高',
+        feedback:
+          '答对了。生命周期节奏：单身期可适度激进，形成期负债高峰先配保险，成长期抓教育金，成熟期降风险，退休期防守。',
+        correct: true,
+      },
+      {
+        id: 'retired-zhou',
+        label: '刚退休的老周——有的是时间，可以放开了投',
+        feedback:
+          '还不对。退休期恰恰是防守期：保住现金流、流动性优先，重仓股票是大忌。',
+        correct: false,
+      },
+      {
+        id: 'growing-li',
+        label: '孩子上小学的老李——教育金要增值，必须重仓股票',
+        feedback:
+          '还不对。成长期的教育金是刚性支出，要用稳健工具；重仓股票可能在孩子要用钱那年赶上大跌。',
+        correct: false,
+      },
+    ],
+  },
+  {
+    id: 'bank-trio-who',
+    conceptId: 'bank-trio',
+    cat: '银行',
+    title: '三类机构都带「银行」二字：能直接吸收我们存款的是哪家？能发行货币的是哪家？',
+    options: [
+      {
+        id: 'right',
+        label: '吸收存款的是商业银行，发行货币的是央行——政策性银行只做政策性放贷',
+        feedback:
+          '答对了。央行是「银行的银行」不管个人业务；政策性银行（国开行等）贯彻政策、不计利润。',
+        correct: true,
+      },
+      {
+        id: 'wrong-central',
+        label: '吸收存款的是央行——它名字最大',
+        feedback:
+          '还不对。央行不对个人开门：它的客户是商业银行和政府，存贷款业务是商业银行的事。',
+        correct: false,
+      },
+      {
+        id: 'wrong-policy',
+        label: '都能吸收存款也都能发行货币，只是分工不同',
+        feedback:
+          '还不对。发行货币是央行的专属权力；政策性银行不吸收公众存款，只做政策性放贷。',
+        correct: false,
+      },
+    ],
+  },
 ]
 
 /** 按方向（分类）筛选后的列表 */
