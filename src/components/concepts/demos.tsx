@@ -1269,6 +1269,301 @@ function BankTrioDemo() {
   )
 }
 
+/* 家庭财务三比率：三条带健康区间的比率条 */
+function FamilyRatiosDemo() {
+  const [liquid, setLiquid] = useState(15)
+  const [monthly, setMonthly] = useState(2.5)
+  const ratio = liquid / monthly
+  const rows = [
+    {
+      name: '流动性比率',
+      value: ratio.toFixed(1),
+      pct: Math.min(ratio / 10, 1) * 100,
+      zone: [30, 60],
+      ok: ratio >= 3 && ratio <= 6,
+      note: '健康区间 3–6',
+    },
+    {
+      name: '结余比率',
+      value: '35%',
+      pct: 35,
+      zone: [30, 100],
+      ok: true,
+      note: '≥30% 为好',
+    },
+    {
+      name: '投资与净资产比率',
+      value: '55%',
+      pct: 55,
+      zone: [50, 100],
+      ok: true,
+      note: '≥50% 为好',
+    },
+  ]
+  return (
+    <div className="w-full space-y-3">
+      <div className="grid grid-cols-2 gap-3">
+        <label className="block">
+          <span className={labelCls}>流动资产 {liquid} 万</span>
+          <input type="range" min={5} max={60} value={liquid} onChange={(e) => setLiquid(+e.target.value)} className={sliderCls} />
+        </label>
+        <label className="block">
+          <span className={labelCls}>月支出 {monthly.toFixed(1)} 万</span>
+          <input type="range" min={0.5} max={3} step={0.1} value={monthly} onChange={(e) => setMonthly(+e.target.value)} className={sliderCls} />
+        </label>
+      </div>
+      {rows.map((r) => (
+        <div key={r.name} className="flex items-center gap-2 text-xs">
+          <span className="w-24 shrink-0 text-neutral-500">{r.name}</span>
+          <div className="relative h-4 flex-1 rounded bg-neutral-100">
+            <div className="absolute top-0 h-full rounded bg-neutral-300/60" style={{ left: `${r.zone[0]}%`, width: `${r.zone[1] - r.zone[0]}%` }} />
+            <div
+              className={`absolute top-0 h-full rounded transition-all duration-300 ${r.ok ? 'bg-emerald-600' : 'bg-amber-500'}`}
+              style={{ width: `${r.pct}%` }}
+            />
+          </div>
+          <span className="w-20 shrink-0 text-right text-neutral-600">
+            <span className="font-medium text-neutral-900">{r.value}</span> {r.note}
+          </span>
+        </div>
+      ))}
+      <p className="text-center text-xs text-neutral-400">
+        {ratio < 3 ? '备用金偏少，扛风险能力弱' : ratio > 6 ? '备用金过多，资金在睡大觉' : '流动性刚刚好'}
+      </p>
+    </div>
+  )
+}
+
+/* 紧急备用金：月支出 × 3–6 个月 */
+function EmergencyFundDemo() {
+  const [monthly, setMonthly] = useState(1.5)
+  const [stable, setStable] = useState(true)
+  const lo = stable ? 3 : 6
+  const hi = stable ? 6 : 12
+  return (
+    <div className="w-full space-y-3">
+      <label className="block">
+        <span className={labelCls}>每月固定支出 {monthly.toFixed(1)} 万</span>
+        <input type="range" min={0.5} max={3} step={0.1} value={monthly} onChange={(e) => setMonthly(+e.target.value)} className={sliderCls} />
+      </label>
+      <div className="flex justify-center gap-2">
+        {([
+          [true, '收入稳定'],
+          [false, '收入不稳定'],
+        ] as const).map(([v, label]) => (
+          <button
+            key={label}
+            type="button"
+            onClick={() => setStable(v)}
+            className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+              stable === v
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <div className="relative h-6 rounded bg-neutral-100">
+        <div
+          className="absolute top-0 h-full rounded bg-emerald-600/80 transition-all duration-300"
+          style={{ left: `${(lo / 12) * 100}%`, width: `${((hi - lo) / 12) * 100}%` }}
+        />
+      </div>
+      <p className="text-center text-sm">
+        建议储备{' '}
+        <span className="font-semibold text-emerald-700">
+          {(monthly * lo).toFixed(1)} – {(monthly * hi).toFixed(1)} 万
+        </span>
+        <span className="ml-1 text-xs text-neutral-400">（{lo}–{hi} 个月支出）</span>
+      </p>
+      <p className="text-center text-xs text-neutral-400">放活期存款 / 货币基金：求安全和流动，不求收益</p>
+    </div>
+  )
+}
+
+/* 保险四大原则：看场景认原则 */
+const IP_CASES: Record<string, { principle: string; note: string }> = {
+  '雷击引发火灾烧毁房屋': { principle: '近因原则', note: '直接原因是雷击（承保风险）→ 赔' },
+  '给邻居的房子买财产险': { principle: '保险利益原则', note: '你对邻居的房子没有法律认可的利益 → 合同无效' },
+  '隐瞒甲状腺结节买重疾险': { principle: '最大诚信原则', note: '未如实告知 → 保险公司可拒赔解约' },
+  '100 万车险，修车只花 8 万': { principle: '损失补偿原则', note: '按实际损失赔，不超过保额，也不能获利' },
+}
+function InsurancePrinciplesDemo() {
+  const [picked, setPicked] = useState<string | null>(null)
+  return (
+    <div className="w-full space-y-3">
+      <div className="flex flex-wrap justify-center gap-2">
+        {Object.keys(IP_CASES).map((k) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setPicked(picked === k ? null : k)}
+            className={`rounded-full border px-3 py-1 text-xs transition-colors ${
+              picked === k
+                ? 'border-neutral-900 bg-neutral-900 text-white'
+                : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+            }`}
+          >
+            {k}
+          </button>
+        ))}
+      </div>
+      <div className="mx-auto w-full max-w-64 rounded-lg border border-neutral-200 px-4 py-3 text-center">
+        {picked ? (
+          <>
+            <p className="text-sm font-semibold text-neutral-900">{IP_CASES[picked].principle}</p>
+            <p className="mt-1 text-xs leading-relaxed text-neutral-500">{IP_CASES[picked].note}</p>
+          </>
+        ) : (
+          <p className="text-xs text-neutral-400">点一个场景，看它对应哪条原则</p>
+        )}
+      </div>
+      <p className="text-center text-xs text-neutral-400">判案顺序：保险利益 → 诚信告知 → 近因 → 按实际损失赔</p>
+    </div>
+  )
+}
+
+/* 社保三支柱：点支柱看是谁的钱 */
+const PILLARS: Record<string, { who: string; note: string }> = {
+  '第一支柱 · 基本养老保险': { who: '国家主导', note: '强制参保，统筹账户 + 个人账户，覆盖面最广' },
+  '第二支柱 · 企业/职业年金': { who: '单位主导', note: '单位自愿建立的补充养老，单位和个人共同缴费' },
+  '第三支柱 · 个人养老金': { who: '个人主导', note: '自愿参加、税收优惠，年缴上限 1.2 万，退休前一般不能取' },
+}
+function PensionPillarsDemo() {
+  const [picked, setPicked] = useState<string>('第三支柱 · 个人养老金')
+  return (
+    <div className="w-full space-y-2.5">
+      {Object.keys(PILLARS).map((k, i) => (
+        <button
+          key={k}
+          type="button"
+          onClick={() => setPicked(k)}
+          className={`block w-full rounded-lg border px-4 py-2 text-left text-sm transition-colors ${
+            picked === k
+              ? 'border-neutral-900 bg-neutral-900 text-white'
+              : 'border-neutral-300 bg-white text-neutral-700 hover:border-neutral-500'
+          }`}
+          style={{ marginLeft: `${i * 10}%`, width: `${100 - i * 10}%` }}
+        >
+          <span className="font-medium">{k}</span>
+          <span className={`ml-2 text-xs ${picked === k ? 'text-neutral-300' : 'text-neutral-400'}`}>
+            {PILLARS[k].who}
+          </span>
+        </button>
+      ))}
+      <p className="pt-1 text-center text-xs leading-relaxed text-neutral-500">{PILLARS[picked].note}</p>
+    </div>
+  )
+}
+
+/* 年终奖：单独 vs 综合计税对比 */
+const ANNUAL_BRACKETS: [number, number, number][] = [
+  [36000, 0.03, 0],
+  [144000, 0.1, 2520],
+  [300000, 0.2, 16920],
+  [420000, 0.25, 31920],
+  [660000, 0.3, 52920],
+  [960000, 0.35, 85920],
+  [Infinity, 0.45, 181920],
+]
+function taxOf(taxable: number, brackets: [number, number, number][]) {
+  for (const [cap, rate, ded] of brackets) {
+    if (taxable <= cap) return taxable * rate - ded
+  }
+  return 0
+}
+function BonusTaxDemo() {
+  const [bonus, setBonus] = useState(20)
+  const [salary, setSalary] = useState(2)
+  // 单独计税：年终奖按月换算税率表（年度档 ÷ 12）
+  const monthlyBrackets: [number, number, number][] = ANNUAL_BRACKETS.map(
+    ([c, r, d]) => [c / 12, r, d / 12] as [number, number, number],
+  )
+  const bonusSeparate = taxOf(bonus * 10000, monthlyBrackets)
+  const salaryTaxBase = salary * 120000 - 60000 - 12000
+  const salaryTax = taxOf(Math.max(salaryTaxBase, 0), ANNUAL_BRACKETS)
+  const separateTotal = salaryTax + Math.max(bonusSeparate, 0)
+  const combinedTax = taxOf(Math.max(salaryTaxBase + bonus * 10000, 0), ANNUAL_BRACKETS)
+  const diff = Math.round(Math.abs(combinedTax - separateTotal))
+  const separateBetter = separateTotal < combinedTax
+  return (
+    <div className="w-full space-y-3">
+      <div className="grid grid-cols-2 gap-3">
+        <label className="block">
+          <span className={labelCls}>年终奖 {bonus} 万</span>
+          <input type="range" min={1} max={40} value={bonus} onChange={(e) => setBonus(+e.target.value)} className={sliderCls} />
+        </label>
+        <label className="block">
+          <span className={labelCls}>月工资 {salary.toFixed(1)} 万</span>
+          <input type="range" min={0.5} max={3} step={0.1} value={salary} onChange={(e) => setSalary(+e.target.value)} className={sliderCls} />
+        </label>
+      </div>
+      {([
+        ['单独计税', separateTotal],
+        ['并入综合', combinedTax],
+      ] as const).map(([name, tax]) => {
+        const max = Math.max(separateTotal, combinedTax, 1)
+        const better = (name === '单独计税') === separateBetter
+        return (
+          <div key={name} className="flex items-center gap-2 text-xs">
+            <span className="w-16 text-neutral-500">{name}</span>
+            <div className="h-4 flex-1 overflow-hidden rounded bg-neutral-100">
+              <div
+                className={`h-full rounded transition-all duration-300 ${better ? 'bg-emerald-600' : 'bg-neutral-400'}`}
+                style={{ width: `${(tax / max) * 100}%` }}
+              />
+            </div>
+            <span className="w-24 text-right font-medium text-neutral-900">¥{Math.round(tax).toLocaleString()}</span>
+          </div>
+        )
+      })}
+      <p className="text-center text-xs text-neutral-500">
+        <span className={`font-medium ${separateBetter ? 'text-emerald-700' : 'text-amber-700'}`}>
+          {separateBetter ? '单独计税' : '并入综合'}更划算，省 ¥{diff.toLocaleString()}
+        </span>
+        <span className="ml-1 text-neutral-400">（含 6 万免征 + 1.2 万专项附加，简化演示）</span>
+      </p>
+    </div>
+  )
+}
+
+/* 教育金现值：现在该存多少 */
+function EducationFundDemo() {
+  const [years, setYears] = useState(8)
+  const [monthly, setMonthly] = useState(2000)
+  const [rate, setRate] = useState(3)
+  const r = rate / 100
+  const annuityFactor = (1 - Math.pow(1 + r, -4)) / r
+  const pv = ((monthly * 12 * annuityFactor) / Math.pow(1 + r, years)) / 10000
+  return (
+    <div className="w-full space-y-3">
+      <label className="block">
+        <span className={labelCls}>{years} 年后上大学</span>
+        <input type="range" min={4} max={15} value={years} onChange={(e) => setYears(+e.target.value)} className={sliderCls} />
+      </label>
+      <div className="grid grid-cols-2 gap-3">
+        <label className="block">
+          <span className={labelCls}>每月生活费 {monthly} 元</span>
+          <input type="range" min={1500} max={3500} step={100} value={monthly} onChange={(e) => setMonthly(+e.target.value)} className={sliderCls} />
+        </label>
+        <label className="block">
+          <span className={labelCls}>年收益率 {rate}%</span>
+          <input type="range" min={2} max={6} step={0.5} value={rate} onChange={(e) => setRate(+e.target.value)} className={sliderCls} />
+        </label>
+      </div>
+      <p className="text-center text-sm">
+        现在需要一次性存入{' '}
+        <span className="text-xl font-bold text-neutral-900">{pv.toFixed(1)} 万</span>
+      </p>
+      <p className="text-center text-xs text-neutral-400">
+        四年费用按 {rate}% 折现到现在——教育金求稳：国债、教育金保险优先，不宜重仓股票
+      </p>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -1294,4 +1589,10 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   goldExchanges: GoldExchangesDemo,
   m012: M012Demo,
   bankTrio: BankTrioDemo,
+  familyRatios: FamilyRatiosDemo,
+  emergencyFund: EmergencyFundDemo,
+  insurancePrinciples: InsurancePrinciplesDemo,
+  pensionPillars: PensionPillarsDemo,
+  bonusTax: BonusTaxDemo,
+  educationFund: EducationFundDemo,
 }

@@ -23,6 +23,12 @@ export type DemoKind =
   | 'goldExchanges'
   | 'm012'
   | 'bankTrio'
+  | 'familyRatios'
+  | 'emergencyFund'
+  | 'insurancePrinciples'
+  | 'pensionPillars'
+  | 'bonusTax'
+  | 'educationFund'
 
 export interface Concept {
   id: string
@@ -42,7 +48,7 @@ export interface Concept {
   match: string[]
 }
 
-export const conceptCategories = ['基础概念', '债券', '股票', '基金', '外汇', '衍生品', '贵金属', '银行', '保险']
+export const conceptCategories = ['基础概念', '家庭财务', '债券', '股票', '基金', '外汇', '衍生品', '贵金属', '银行', '保险', '税收']
 
 export const concepts: Concept[] = [
   {
@@ -281,6 +287,72 @@ export const concepts: Concept[] = [
     demo: 'goldExchanges',
     flashFilter: '黄金',
     match: ['黄金'],
+  },
+  {
+    id: 'family-ratios',
+    name: '家庭财务三比率',
+    en: 'Key Family Ratios',
+    cat: '家庭财务',
+    quote: '体检报告能看懂，家庭财务的「体检指标」怎么看？',
+    answer: '三个最常用的：流动性比率 = 流动资产 ÷ 月支出（健康区间 3–6）；结余比率 = 年结余 ÷ 税后年收入（≥30% 为好）；投资与净资产比率 = 投资资产 ÷ 净资产（≥50% 为好）。',
+    point: '流动性比率过高反而是资金闲置——不是越高越好；结余比率为负说明入不敷出。',
+    demo: 'familyRatios',
+    match: [],
+  },
+  {
+    id: 'emergency-fund',
+    name: '紧急备用金',
+    en: 'Emergency Fund',
+    cat: '家庭财务',
+    quote: '「留几个月生活费」到底怎么算？留多了浪费收益，留少了心里没底。',
+    answer: '一般保留相当于家庭 3–6 个月固定支出的金额，放在活期存款、货币基金这类高流动性资产里；收入越不稳定，越要往 6 个月甚至更多留。',
+    point: '备用金追求安全和流动，不追求收益；全部拿去投股票型基金是典型错误。',
+    demo: 'emergencyFund',
+    match: [],
+  },
+  {
+    id: 'insurance-principles',
+    name: '保险四大原则',
+    en: 'Four Insurance Principles',
+    cat: '保险',
+    quote: '损失补偿、最大诚信、保险利益、近因——四个词都会背，一做题就混。',
+    answer: '损失补偿：赔不超过实际损失；最大诚信：如实告知，隐瞒可拒赔；保险利益：你对保的东西要有法律认可的利益；近因：赔不赔看损失的直接原因属不属于承保范围。',
+    point: '案例题就按这四步判断：有没有保险利益 → 告知是否诚信 → 近因是否承保 → 按实际损失赔。',
+    demo: 'insurancePrinciples',
+    match: [],
+  },
+  {
+    id: 'pension-pillars',
+    name: '社保三支柱',
+    en: 'Three Pension Pillars',
+    cat: '保险',
+    quote: '基本养老保险、企业年金、个人养老金，都是养老钱，谁给谁交？',
+    answer: '第一支柱：基本养老保险（国家强制，统筹 + 个人账户）；第二支柱：企业/职业年金（单位自愿建立的补充养老）；第三支柱：个人养老金（个人自愿、有税收优惠，年缴上限 1.2 万）。',
+    point: '支柱按「谁主导」分：国家、单位、个人；个人养老金账户退休前一般不能提前取。',
+    demo: 'pensionPillars',
+    match: [],
+  },
+  {
+    id: 'bonus-tax',
+    name: '年终奖单独 vs 综合计税',
+    en: 'Bonus Tax Methods',
+    cat: '税收',
+    quote: '年终奖 20 万，单独计税和并入综合所得，哪个更划算？',
+    answer: '单独计税：年终奖单独按月换算税率表计税；并入综合：和全年工资合并按年税率表计税。工资高、年终奖占比小时往往单独计税更省，要实际算一遍才知道。',
+    point: '考试套路：两种方式各算一次税额，差额就是「少缴纳 X 元」的答案。',
+    demo: 'bonusTax',
+    match: [],
+  },
+  {
+    id: 'education-fund',
+    name: '教育金现值计算',
+    en: 'Education Fund PV',
+    cat: '家庭财务',
+    quote: '孩子 8 年后上大学，每月生活费 2000 元，现在一次性要存多少钱？',
+    answer: '把未来四年的生活费按投资收益率折现到现在：先算四年费用的年金现值，再除以 (1+r)ⁿ。收益率越高，现在要准备的本金越少。',
+    point: '教育金是刚性支出，投资工具以稳健为先（国债、教育金保险），不宜重仓股票。',
+    demo: 'educationFund',
+    match: [],
   },
   {
     id: 'm0-m1-m2',
