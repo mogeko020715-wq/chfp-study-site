@@ -153,6 +153,10 @@ def main() -> None:
                 scenario, blocks = split_questions(ctext)
                 if not ctitle:
                     scenario = ""  # 无案例的板块不带情景文字
+                # 题型按板块标题判定：多项/不定项板块全是多选（不看答案长度）
+                # 科目三的大题节标题没有「一、」前缀，sec_title 为空时用板块开头文本兜底
+                header_candidates = [sec_title, title, sec[:200]]
+                multi = any(("多项" in h) or ("不定项" in h) for h in header_candidates if h)
                 qs = []
                 for b in blocks:
                     q = parse_question(b)
@@ -162,7 +166,7 @@ def main() -> None:
                     q["correct"] = a.get("correct", "")
                     q["explain"] = a.get("explain", "")
                     qs.append(q)
-                cases.append({"title": title, "scenario": scenario, "questions": qs})
+                cases.append({"title": title, "scenario": scenario, "multi": multi, "questions": qs})
         total = sum(len(c["questions"]) for c in cases)
         print(f"{name}: {len(cases)} 案例 · {total} 题")
         for c in cases:

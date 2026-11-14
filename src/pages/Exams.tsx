@@ -30,6 +30,7 @@ function ExamQuestionCard({
   q,
   uid,
   points,
+  multi,
   record,
   loggedIn,
   onLogin,
@@ -39,6 +40,7 @@ function ExamQuestionCard({
   q: ExamQuestion
   uid: string
   points: number
+  multi: boolean
   record?: { picked: string[]; correct: boolean }
   loggedIn: boolean
   onLogin: () => void
@@ -47,7 +49,6 @@ function ExamQuestionCard({
 }) {
   const [picked, setPicked] = useState<string[]>(record?.picked ?? [])
   const submitted = !!record
-  const multi = q.correct.length > 1
 
   useEffect(() => {
     setPicked(record?.picked ?? [])
@@ -163,6 +164,17 @@ export default function ExamsPage() {
 
   const subject = examSubjects.find((s) => s.id === subjectId)!
   const currentCase = subject.cases[caseIdx] ?? subject.cases[0]
+  const [wrongOnly, setWrongOnly] = useState(false)
+
+  // 本板块答错的题数与筛选后的题目列表
+  const wrongCount = currentCase.questions.filter(
+    (q) => state[questionUid(subjectId, caseIdx, q.no)]?.correct === false,
+  ).length
+  const shownQuestions = wrongOnly
+    ? currentCase.questions.filter(
+        (q) => state[questionUid(subjectId, caseIdx, q.no)]?.correct === false,
+      )
+    : currentCase.questions
 
   const score = useMemo(() => {
     const pts = pointsFor(subjectId)
@@ -235,12 +247,22 @@ export default function ExamsPage() {
             </span>
           </div>
 
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap items-center gap-2">
             {subject.cases.map((c, i) => (
-              <button key={i} type="button" aria-pressed={caseIdx === i} onClick={() => setCaseIdx(i)} className={chipCls(caseIdx === i)}>
+              <button key={i} type="button" aria-pressed={caseIdx === i} onClick={() => { setCaseIdx(i); setWrongOnly(false) }} className={chipCls(caseIdx === i)}>
                 {c.title || `第 ${i + 1} 部分`}
               </button>
             ))}
+            <button
+              type="button"
+              aria-pressed={wrongOnly}
+              onClick={() => setWrongOnly((w) => !w)}
+              disabled={wrongCount === 0 && !wrongOnly}
+              className={`${chipCls(wrongOnly)} disabled:opacity-50`}
+              title={wrongCount === 0 ? '本板块还没有答错的题' : '只看答错的题'}
+            >
+              只看错题{wrongCount > 0 && `（${wrongCount}）`}
+            </button>
           </div>
 
           {currentCase.scenario && (
@@ -264,22 +286,29 @@ export default function ExamsPage() {
           )}
 
           <div className="mt-5 space-y-4">
-            {currentCase.questions.map((q) => {
-              const uid = questionUid(subjectId, caseIdx, q.no)
-              return (
-                <ExamQuestionCard
-                  key={uid}
-                  q={q}
-                  uid={uid}
-                  points={pointsFor(subjectId)}
-                  record={state[uid]}
-                  loggedIn={!!user}
-                  onLogin={() => setDialog(true)}
-                  onSubmit={submit}
-                  onReset={resetQuestion}
-                />
-              )
-            })}
+            {shownQuestions.length === 0 ? (
+              <p className="py-12 text-center text-neutral-500">
+                {wrongOnly ? '本板块没有答错的题——保持住 🎉' : '暂无题目'}
+              </p>
+            ) : (
+              shownQuestions.map((q) => {
+                const uid = questionUid(subjectId, caseIdx, q.no)
+                return (
+                  <ExamQuestionCard
+                    key={uid}
+                    q={q}
+                    uid={uid}
+                    points={pointsFor(subjectId)}
+                    multi={currentCase.multi}
+                    record={state[uid]}
+                    loggedIn={!!user}
+                    onLogin={() => setDialog(true)}
+                    onSubmit={submit}
+                    onReset={resetQuestion}
+                  />
+                )
+              })
+            )}
           </div>
         </section>
       </main>

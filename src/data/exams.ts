@@ -15,6 +15,8 @@ export interface ExamQuestion {
 export interface ExamCase {
   title: string
   scenario: string
+  /** 题型按板块判定：多项/不定项板块为 true（全部多选） */
+  multi: boolean
   questions: ExamQuestion[]
 }
 export interface ExamSubject {
