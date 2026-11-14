@@ -123,7 +123,11 @@ function ExamQuestionCard({
           <p className={`text-sm font-medium ${record!.correct ? 'text-emerald-700' : 'text-rose-600'}`}>
             {record!.correct ? `答对了，+${points} 分` : '答错了，不得分'}
           </p>
-          <p className="mt-1.5 text-sm leading-relaxed text-neutral-600">{q.explain}</p>
+          {q.explain ? (
+            <p className="mt-1.5 text-sm leading-relaxed text-neutral-600">{q.explain}</p>
+          ) : (
+            <p className="mt-1.5 text-sm text-neutral-400">（原卷未附解析）</p>
+          )}
           <button
             type="button"
             onClick={() => onReset(uid)}

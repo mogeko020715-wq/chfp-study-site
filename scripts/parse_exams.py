@@ -29,14 +29,17 @@ OPT_RE = re.compile(r"^([A-E])\.$")
 def read_pdf(path: Path) -> str:
     doc = fitz.open(path)
     lines = []
+    prev = ""
     for pg in doc:
         for ln in pg.get_text().split("\n"):
             ln = ln.strip()
             if not ln:
                 continue
-            if re.fullmatch(r"\d{1,2}", ln):  # 页码
+            # 页码剥离：纯数字行才算，但上一行是选项字母时，这个数字是选项内容（如 A.\n10）
+            if re.fullmatch(r"\d{1,2}", ln) and not re.fullmatch(r"[A-E]\.", prev):
                 continue
             lines.append(ln)
+            prev = ln
     return "\n".join(lines)
 
 
@@ -77,9 +80,11 @@ def parse_question(block: str) -> dict | None:
             cur_letter = om.group(1)
             cur_text = []
             continue
-        # 兼容 A.内容同行（少见）
+        # 兼容 A.内容同行（如「A. 协商」整行选项）
         om2 = re.match(r"^([A-E])\.\s*(\S.*)$", ln)
-        if om2 and not cur_letter:
+        if om2:
+            if cur_letter:
+                options.append({"letter": cur_letter, "text": "".join(cur_text)})
             cur_letter = om2.group(1)
             cur_text = [om2.group(2)]
             continue
@@ -110,15 +115,18 @@ def parse_answers(text: str) -> dict:
             end = case_starts[ci + 1][0] if ci + 1 < len(case_starts) else len(sec)
             seg = sec[start:end]
             qdict = {}
-            for m in re.finditer(r"(\d+)\.正确答案：([A-E]+)\s*\n答案解析：", seg):
+            for m in re.finditer(r"(\d+)[.．]?\s*正确答案：([A-E]+)([^\n]*)", seg):
                 qno = int(m.group(1))
                 correct = m.group(2)
                 exp_start = m.end()
-                # 解析到下一题或段尾
-                nxt = re.search(r"\n\d+\.正确答案：", seg[exp_start:])
-                exp_end = exp_start + nxt.start() if nxt else len(seg)
-                explain = seg[exp_start:exp_end]
-                explain = re.sub(r"\s+", "", explain)
+                # 解析可缺省；有解析则截到下一题或段尾
+                exp_match = re.match(r"\s*\n(?:答案)?解析：", seg[exp_start:])
+                explain = ""
+                if exp_match:
+                    exp_body = exp_start + exp_match.end()
+                    nxt = re.search(r"\n\d+[.．]?\s*正确答案：", seg[exp_body:])
+                    exp_end = exp_body + nxt.start() if nxt else len(seg)
+                    explain = re.sub(r"\s+", "", seg[exp_body:exp_end])
                 qdict[qno] = {"correct": correct, "explain": explain}
             sec_out[ci] = qdict
         out[si] = sec_out
