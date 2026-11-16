@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": 1,
-    "updatedAt": "2026-11-06T18:25:52+08:00"
+    "updatedAt": "2026-11-16T17:07:48+08:00"
   },
   "records": [
     {
@@ -275,6 +275,120 @@
       "fx": {
         "close": 6.6711,
         "pct": 0.26
+      }
+    },
+    {
+      "date": "2026-11-09",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3660.79,
+        "pct": 0.32
+      },
+      "gold": {
+        "close": 8.375,
+        "pct": 1.48
+      },
+      "fx": {
+        "close": 6.6721,
+        "pct": -0.01
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-11-10",
+      "boardsUp": [
+        "影视院线",
+        "照明设备Ⅱ",
+        "汽车服务"
+      ],
+      "boardsDown": [],
+      "index": {
+        "close": 3663.72,
+        "pct": 0.08
+      },
+      "gold": {
+        "close": 8.398,
+        "pct": 0.27
+      },
+      "fx": {
+        "close": 6.6678,
+        "pct": -0.03
+      }
+    },
+    {
+      "date": "2026-11-11",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3680.64,
+        "pct": 0.46
+      },
+      "gold": {
+        "close": 8.289,
+        "pct": -1.3
+      },
+      "fx": {
+        "close": 6.6715,
+        "pct": -0.05
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-11-12",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3655.83,
+        "pct": -0.67
+      },
+      "gold": {
+        "close": 8.085,
+        "pct": -2.46
+      },
+      "fx": {
+        "close": 6.6682,
+        "pct": -0.05
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-11-13",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3634.35,
+        "pct": -0.59
+      },
+      "gold": {
+        "close": 7.954,
+        "pct": -1.62
+      },
+      "fx": {
+        "close": 6.671,
+        "pct": 0.04
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-11-16",
+      "boardsUp": [
+        "元件",
+        "通信设备",
+        "航天装备Ⅱ"
+      ],
+      "boardsDown": [],
+      "index": {
+        "close": 3602.57,
+        "pct": -0.87
+      },
+      "gold": {
+        "close": 7.852,
+        "pct": -1.28
+      },
+      "fx": {
+        "close": 6.6658,
+        "pct": -0.09
       }
     }
   ]
