@@ -32,6 +32,8 @@ export type DemoKind =
   | 'propertyVsLife'
   | 'ciVsMedical'
   | 'lifeCycle'
+  | 'maCross'
+  | 'rsiZone'
 
 export interface Concept {
   id: string
@@ -422,6 +424,30 @@ export const concepts: Concept[] = [
     point: '阶段决定策略：能承受的风险随年龄下降，「先负债后积累再防守」是标准节奏。',
     demo: 'lifeCycle',
     match: [],
+  },
+  {
+    id: 'ma-golden-cross',
+    name: '均线金叉与死叉',
+    en: 'MA Golden/Death Cross',
+    cat: '股票',
+    quote: '「金叉买、死叉卖」——K 线图上两条线一交叉就该动手吗？',
+    answer: '金叉 = 短期均线上穿长期均线（如 MA5 上穿 MA20），视为买入信号；死叉相反。但均线是滞后指标，震荡市里会频繁发出假信号，只能当参考不能当圣旨。',
+    point: '金叉/死叉的有效性取决于趋势行情；参数越短越灵敏也越容易误判。',
+    demo: 'maCross',
+    flashFilter: '股票',
+    match: ['股票'],
+  },
+  {
+    id: 'rsi-overbought',
+    name: 'RSI 超买超卖',
+    en: 'RSI Zones',
+    cat: '股票',
+    quote: 'RSI 冲到 70 以上，是不是该立刻卖出？',
+    answer: 'RSI 在 0–100 之间摆动：>70 叫超买（可能回调）、<30 叫超卖（可能反弹）。但强趋势里 RSI 可以一直挂在超买区——超买是提醒，不是立刻卖出的命令。',
+    point: 'RSI 超买≠马上跌；钝化现象（长期停在超买/超卖区）恰恰是趋势强的表现。',
+    demo: 'rsiZone',
+    flashFilter: '股票',
+    match: ['股票'],
   },
   {
     id: 'agent-vs-broker',

@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useState, type ComponentType } from 'react'
 import type { DemoKind } from '@/data/concepts'
+import { klineData } from '@/data/kline'
 
 const sliderCls = 'w-full accent-neutral-900'
 const labelCls = 'text-xs text-neutral-500'
@@ -1686,6 +1687,123 @@ function LifeCycleDemo() {
   )
 }
 
+/* 均线金叉/死叉：真实上证指数日线 + MA5/MA20 */
+function MaCrossDemo() {
+  const [day, setDay] = useState(klineData.length - 1)
+  const W = 300
+  const H = 100
+  const pad = 4
+  const prices = klineData.map((r) => r.c)
+  const min = Math.min(...prices)
+  const max = Math.max(...prices)
+  const x = (i: number) => pad + (i / (klineData.length - 1)) * (W - pad * 2)
+  const y = (v: number) => pad + (1 - (v - min) / (max - min)) * (H - pad * 2)
+  const path = (key: 'c' | 'ma5' | 'ma20') =>
+    klineData
+      .map((r, i) => (r[key] == null ? '' : `${i === 0 || klineData[i - 1][key] == null ? 'M' : 'L'}${x(i).toFixed(1)},${y(r[key]!).toFixed(1)}`))
+      .filter(Boolean)
+      .join(' ')
+  // 金叉死叉检测：MA5 与 MA20 的差变号
+  const crosses: { i: number; golden: boolean }[] = []
+  for (let i = 1; i < klineData.length; i += 1) {
+    const a = klineData[i - 1], b = klineData[i]
+    if (a.ma5 == null || a.ma20 == null || b.ma5 == null || b.ma20 == null) continue
+    const prevDiff = a.ma5 - a.ma20
+    const diff = b.ma5 - b.ma20
+    if (prevDiff <= 0 && diff > 0) crosses.push({ i, golden: true })
+    if (prevDiff >= 0 && diff < 0) crosses.push({ i, golden: false })
+  }
+  const cur = klineData[day]
+  return (
+    <div className="w-full space-y-2">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="上证指数与 MA5/MA20 均线">
+        <path d={path('c')} fill="none" stroke="rgb(115 115 115)" strokeWidth="0.8" />
+        <path d={path('ma5')} fill="none" stroke="rgb(244 63 94)" strokeWidth="1" />
+        <path d={path('ma20')} fill="none" stroke="rgb(5 150 105)" strokeWidth="1" />
+        {crosses.map((c) => (
+          <g key={c.i}>
+            <circle cx={x(c.i)} cy={y(klineData[c.i].c)} r="2.6" fill={c.golden ? 'rgb(5 150 105)' : 'rgb(244 63 94)'} />
+            <text x={x(c.i)} y={y(klineData[c.i].c) - 5} textAnchor="middle" fontSize="7" fill={c.golden ? 'rgb(5 150 105)' : 'rgb(244 63 94)'}>
+              {c.golden ? '金叉' : '死叉'}
+            </text>
+          </g>
+        ))}
+        <line x1={x(day)} x2={x(day)} y1={pad} y2={H - pad} stroke="rgb(163 163 163)" strokeWidth="0.5" strokeDasharray="2 2" />
+      </svg>
+      <input
+        type="range"
+        min={0}
+        max={klineData.length - 1}
+        value={day}
+        onChange={(e) => setDay(+e.target.value)}
+        className={sliderCls}
+        aria-label="拖动查看每一天"
+      />
+      <p className="text-center text-xs text-neutral-500">
+        {cur.d} · 收盘 <span className="font-medium text-neutral-900">{cur.c}</span>
+        {cur.ma5 != null && (
+          <>
+            {' · '}<span className="text-rose-500">MA5 {cur.ma5}</span>
+            {' · '}<span className="text-emerald-600">MA20 {cur.ma20}</span>
+            {' · '}
+            <span className="font-medium">{cur.ma5 >= (cur.ma20 ?? 0) ? '短期在上' : '短期在下'}</span>
+          </>
+        )}
+      </p>
+      <p className="text-center text-xs text-neutral-400">真实上证指数日线（近半年）· 金叉/死叉自动标记</p>
+    </div>
+  )
+}
+
+/* RSI 超买超卖：真实上证指数 RSI14 */
+function RsiZoneDemo() {
+  const [day, setDay] = useState(klineData.length - 1)
+  const W = 300
+  const H = 90
+  const pad = 4
+  const valid = klineData.filter((r) => r.rsi != null)
+  const offset = klineData.length - valid.length
+  const x = (i: number) => pad + ((i + offset) / (klineData.length - 1)) * (W - pad * 2)
+  const y = (v: number) => pad + (1 - v / 100) * (H - pad * 2)
+  const path = valid.map((r, i) => `${i === 0 ? 'M' : 'L'}${x(i).toFixed(1)},${y(r.rsi!).toFixed(1)}`).join(' ')
+  const cur = klineData[day]
+  const rsi = cur.rsi
+  const zone = rsi == null ? '' : rsi > 70 ? '超买（可能回调）' : rsi < 30 ? '超卖（可能反弹）' : '正常区间'
+  return (
+    <div className="w-full space-y-2">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="RSI14 指标">
+        <rect x={pad} y={y(100)} width={W - pad * 2} height={y(70) - y(100)} fill="rgb(244 63 94 / 0.08)" />
+        <rect x={pad} y={y(30)} width={W - pad * 2} height={y(0) - y(30)} fill="rgb(5 150 105 / 0.08)" />
+        <line x1={pad} x2={W - pad} y1={y(70)} y2={y(70)} stroke="rgb(244 63 94)" strokeWidth="0.5" strokeDasharray="3 2" />
+        <line x1={pad} x2={W - pad} y1={y(30)} y2={y(30)} stroke="rgb(5 150 105)" strokeWidth="0.5" strokeDasharray="3 2" />
+        <text x={W - pad - 2} y={y(70) - 2} textAnchor="end" fontSize="6" fill="rgb(244 63 94)">70 超买线</text>
+        <text x={W - pad - 2} y={y(30) + 7} textAnchor="end" fontSize="6" fill="rgb(5 150 105)">30 超卖线</text>
+        <path d={path} fill="none" stroke="rgb(64 64 64)" strokeWidth="1" />
+        {rsi != null && <line x1={x(day - offset)} x2={x(day - offset)} y1={pad} y2={H - pad} stroke="rgb(163 163 163)" strokeWidth="0.5" strokeDasharray="2 2" />}
+      </svg>
+      <input
+        type="range"
+        min={offset}
+        max={klineData.length - 1}
+        value={day}
+        onChange={(e) => setDay(+e.target.value)}
+        className={sliderCls}
+        aria-label="拖动查看每一天"
+      />
+      <p className="text-center text-xs text-neutral-500">
+        {cur.d} · RSI14 <span className="font-medium text-neutral-900">{rsi ?? '—'}</span>
+        {zone && (
+          <>
+            {' · '}
+            <span className={`font-medium ${rsi! > 70 ? 'text-rose-600' : rsi! < 30 ? 'text-emerald-700' : 'text-neutral-600'}`}>{zone}</span>
+          </>
+        )}
+      </p>
+      <p className="text-center text-xs text-neutral-400">超买 ≠ 立刻下跌——强趋势里 RSI 可以一直挂在超买区（钝化）</p>
+    </div>
+  )
+}
+
 export const demoComponents: Record<DemoKind, ComponentType> = {
   triangle: TriangleDemo,
   compound: CompoundDemo,
@@ -1720,4 +1838,6 @@ export const demoComponents: Record<DemoKind, ComponentType> = {
   propertyVsLife: PropertyVsLifeDemo,
   ciVsMedical: CiVsMedicalDemo,
   lifeCycle: LifeCycleDemo,
+  maCross: MaCrossDemo,
+  rsiZone: RsiZoneDemo,
 }
