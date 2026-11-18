@@ -169,16 +169,44 @@ export default function ExamsPage() {
   const subject = examSubjects.find((s) => s.id === subjectId)!
   const currentCase = subject.cases[caseIdx] ?? subject.cases[0]
   const [wrongOnly, setWrongOnly] = useState(false)
+  const [unDoneOnly, setUnDoneOnly] = useState(false)
+  const [wrongBook, setWrongBook] = useState(false)
+  const [jump, setJump] = useState('')
 
-  // 本板块答错的题数与筛选后的题目列表
+  // 本板块答错/未做的题数
   const wrongCount = currentCase.questions.filter(
     (q) => state[questionUid(subjectId, caseIdx, q.no)]?.correct === false,
+  ).length
+  const unDoneCount = currentCase.questions.filter(
+    (q) => !state[questionUid(subjectId, caseIdx, q.no)],
   ).length
   const shownQuestions = wrongOnly
     ? currentCase.questions.filter(
         (q) => state[questionUid(subjectId, caseIdx, q.no)]?.correct === false,
       )
-    : currentCase.questions
+    : unDoneOnly
+      ? currentCase.questions.filter((q) => !state[questionUid(subjectId, caseIdx, q.no)])
+      : currentCase.questions
+
+  // 错题本：本科目全部答错的题（跨板块汇总，带板块标签）
+  const wrongBookItems = useMemo(() => {
+    const out: { q: (typeof currentCase.questions)[number]; caseIdx: number; caseTitle: string }[] = []
+    subject.cases.forEach((c, ci) => {
+      c.questions.forEach((q) => {
+        if (state[questionUid(subjectId, ci, q.no)]?.correct === false) {
+          out.push({ q, caseIdx: ci, caseTitle: c.title })
+        }
+      })
+    })
+    return out
+  }, [state, subject, subjectId])
+
+  const jumpTo = () => {
+    const n = parseInt(jump, 10)
+    if (!n) return
+    document.getElementById(`q-${n}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    setJump('')
+  }
 
   const score = useMemo(() => {
     const pts = pointsFor(subjectId)
@@ -253,21 +281,65 @@ export default function ExamsPage() {
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
             {subject.cases.map((c, i) => (
-              <button key={i} type="button" aria-pressed={caseIdx === i} onClick={() => { setCaseIdx(i); setWrongOnly(false) }} className={chipCls(caseIdx === i)}>
+              <button key={i} type="button" aria-pressed={caseIdx === i && !wrongBook} onClick={() => { setCaseIdx(i); setWrongOnly(false); setUnDoneOnly(false); setWrongBook(false) }} className={chipCls(caseIdx === i && !wrongBook)}>
                 {c.title || `第 ${i + 1} 部分`}
               </button>
             ))}
             <button
               type="button"
-              aria-pressed={wrongOnly}
-              onClick={() => setWrongOnly((w) => !w)}
-              disabled={wrongCount === 0 && !wrongOnly}
-              className={`${chipCls(wrongOnly)} disabled:opacity-50`}
-              title={wrongCount === 0 ? '本板块还没有答错的题' : '只看答错的题'}
+              aria-pressed={wrongBook}
+              onClick={() => setWrongBook((w) => !w)}
+              disabled={wrongBookItems.length === 0 && !wrongBook}
+              className={`${chipCls(wrongBook)} disabled:opacity-50`}
+              title={wrongBookItems.length === 0 ? '本科目还没有答错的题' : '本科目全部答错的题（跨板块汇总）'}
             >
-              只看错题{wrongCount > 0 && `（${wrongCount}）`}
+              错题本{wrongBookItems.length > 0 && `（${wrongBookItems.length}）`}
             </button>
+            <span className="ml-auto flex items-center gap-1.5 text-sm">
+              <input
+                type="number"
+                min={1}
+                max={wrongBook ? 0 : currentCase.questions.length}
+                value={jump}
+                onChange={(e) => setJump(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && jumpTo()}
+                placeholder={`题号 1-${wrongBook ? wrongBookItems.length : currentCase.questions.length}`}
+                className="w-24 rounded-lg border border-neutral-300 bg-white px-2 py-1 text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-neutral-900 focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={jumpTo}
+                className="rounded-lg border border-neutral-300 px-2.5 py-1 text-sm text-neutral-600 transition-colors hover:border-neutral-500 hover:text-neutral-900"
+              >
+                跳转
+              </button>
+            </span>
           </div>
+
+          {!wrongBook && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                aria-pressed={wrongOnly}
+                onClick={() => { setWrongOnly((w) => !w); setUnDoneOnly(false) }}
+                disabled={wrongCount === 0 && !wrongOnly}
+                className={`${chipCls(wrongOnly)} disabled:opacity-50`}
+                title={wrongCount === 0 ? '本板块还没有答错的题' : '只看答错的题'}
+              >
+                只看错题{wrongCount > 0 && `（${wrongCount}）`}
+              </button>
+              <button
+                type="button"
+                aria-pressed={unDoneOnly}
+                onClick={() => { setUnDoneOnly((w) => !w); setWrongOnly(false) }}
+                disabled={unDoneCount === 0 && !unDoneOnly}
+                className={`${chipCls(unDoneOnly)} disabled:opacity-50`}
+                title={unDoneCount === 0 ? '本板块都答过了' : '只看还没作答的题'}
+              >
+                只看未做{unDoneCount > 0 && `（${unDoneCount}）`}
+              </button>
+            </div>
+          )}
 
           {currentCase.scenario && (
             <div className="card mt-5 bg-neutral-50 p-5">
@@ -289,31 +361,63 @@ export default function ExamsPage() {
             </div>
           )}
 
-          <div className="mt-5 space-y-4">
-            {shownQuestions.length === 0 ? (
-              <p className="py-12 text-center text-neutral-500">
-                {wrongOnly ? '本板块没有答错的题——保持住 🎉' : '暂无题目'}
-              </p>
-            ) : (
-              shownQuestions.map((q) => {
-                const uid = questionUid(subjectId, caseIdx, q.no)
-                return (
-                  <ExamQuestionCard
-                    key={uid}
-                    q={q}
-                    uid={uid}
-                    points={pointsFor(subjectId)}
-                    multi={currentCase.multi}
-                    record={state[uid]}
-                    loggedIn={!!user}
-                    onLogin={() => setDialog(true)}
-                    onSubmit={submit}
-                    onReset={resetQuestion}
-                  />
-                )
-              })
-            )}
-          </div>
+          {wrongBook ? (
+            <div className="mt-5 space-y-4">
+              {wrongBookItems.length === 0 ? (
+                <p className="py-12 text-center text-neutral-500">本科目还没有答错的题——保持住 🎉</p>
+              ) : (
+                wrongBookItems.map(({ q, caseIdx: ci, caseTitle }, i) => {
+                  const uid = questionUid(subjectId, ci, q.no)
+                  return (
+                    <div key={uid} id={`q-${i + 1}`} className="scroll-mt-20">
+                      <p className="mb-1.5 flex items-center gap-2 text-xs text-neutral-400">
+                        <span className="rounded bg-neutral-100 px-1.5 py-0.5 font-medium text-neutral-500">{caseTitle}</span>
+                        第 {i + 1} / {wrongBookItems.length} 题
+                      </p>
+                      <ExamQuestionCard
+                        q={q}
+                        uid={uid}
+                        points={pointsFor(subjectId)}
+                        multi={subject.cases[ci].multi}
+                        record={state[uid]}
+                        loggedIn={!!user}
+                        onLogin={() => setDialog(true)}
+                        onSubmit={submit}
+                        onReset={resetQuestion}
+                      />
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          ) : (
+            <div className="mt-5 space-y-4">
+              {shownQuestions.length === 0 ? (
+                <p className="py-12 text-center text-neutral-500">
+                  {wrongOnly ? '本板块没有答错的题——保持住 🎉' : unDoneOnly ? '本板块全部答过了 🎉' : '暂无题目'}
+                </p>
+              ) : (
+                shownQuestions.map((q) => {
+                  const uid = questionUid(subjectId, caseIdx, q.no)
+                  return (
+                    <div key={uid} id={`q-${q.no}`} className="scroll-mt-20">
+                      <ExamQuestionCard
+                        q={q}
+                        uid={uid}
+                        points={pointsFor(subjectId)}
+                        multi={currentCase.multi}
+                        record={state[uid]}
+                        loggedIn={!!user}
+                        onLogin={() => setDialog(true)}
+                        onSubmit={submit}
+                        onReset={resetQuestion}
+                      />
+                    </div>
+                  )
+                })
+              )}
+            </div>
+          )}
         </section>
       </main>
       <Footer />
