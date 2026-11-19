@@ -1,7 +1,7 @@
 {
   "meta": {
     "version": 1,
-    "updatedAt": "2026-11-17T17:07:12+08:00"
+    "updatedAt": "2026-11-19T17:07:55+08:00"
   },
   "records": [
     {
@@ -410,6 +410,45 @@
       "fx": {
         "close": 6.6653,
         "pct": -0.19
+      }
+    },
+    {
+      "date": "2026-11-18",
+      "boardsUp": [],
+      "boardsDown": [],
+      "index": {
+        "close": 3587.83,
+        "pct": 0.09
+      },
+      "gold": {
+        "close": 7.707,
+        "pct": -2.41
+      },
+      "fx": {
+        "close": 6.6675,
+        "pct": 0.02
+      },
+      "backfilled": true
+    },
+    {
+      "date": "2026-11-19",
+      "boardsUp": [
+        "数字媒体",
+        "厨卫电器",
+        "照明设备Ⅱ"
+      ],
+      "boardsDown": [],
+      "index": {
+        "close": 3577.62,
+        "pct": -0.28
+      },
+      "gold": {
+        "close": 7.612,
+        "pct": -1.23
+      },
+      "fx": {
+        "close": 6.6657,
+        "pct": -0.06
       }
     }
   ]
