@@ -169,7 +169,7 @@ export default function Nav({ masteredCount }: { masteredCount: number }) {
             onClick={() => setMenuOpen(false)}
             aria-hidden="true"
           />
-          <nav className="relative border-t border-neutral-200 bg-white px-4 py-2 sm:hidden">
+          <nav className="relative z-50 border-t border-neutral-200 bg-white px-4 py-2 sm:hidden">
           {allLinks.map((l) => (
             <NavLink
               key={l.to}
