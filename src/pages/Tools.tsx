@@ -12,12 +12,20 @@ type ToolInputs = {
   checkup: { income: number; expense: number; liquid: number; invest: number; networth: number; debt: number }
   bonus: { salary: number; bonus: number; deduct: number }
   education: { childAge: number; collegeAge: number; monthly: number; rate: number; saved: number }
+  pension: { age: number; retireAge: number; saved: number; monthlySave: number; rate: number; monthlyCost: number; yearsAfter: number }
+  emergency: { monthly: number; stable: boolean; saved: number }
+  deposit: { bankA: number; bankB: number; bankC: number }
+  dca: { monthly: number; rate: number; years: number }
 }
 
 const DEFAULTS: ToolInputs = {
   checkup: { income: 2, expense: 1.5, liquid: 6, invest: 20, networth: 80, debt: 0.4 },
   bonus: { salary: 2, bonus: 20, deduct: 1000 },
   education: { childAge: 8, collegeAge: 18, monthly: 2000, rate: 3, saved: 3 },
+  pension: { age: 35, retireAge: 60, saved: 30, monthlySave: 3000, rate: 4, monthlyCost: 8000, yearsAfter: 20 },
+  emergency: { monthly: 1.5, stable: true, saved: 3 },
+  deposit: { bankA: 80, bankB: 30, bankC: 0 },
+  dca: { monthly: 2000, rate: 5, years: 15 },
 }
 
 function toolsKey() {
@@ -268,6 +276,194 @@ function EducationTool({ v, set }: { v: ToolInputs['education']; set: (p: Partia
   )
 }
 
+/* ===== 工具 4：养老缺口测算 ===== */
+function PensionTool({ v, set }: { v: ToolInputs['pension']; set: (p: Partial<ToolInputs['pension']>) => void }) {
+  const n = Math.max(v.retireAge - v.age, 1)
+  const r = v.rate / 100
+  const fvSaved = v.saved * Math.pow(1 + r, n)
+  const fvMonthly = v.monthlySave > 0 && r > 0 ? ((v.monthlySave * 12) / 10000) * ((Math.pow(1 + r, n) - 1) / r) : 0
+  const total = fvSaved + fvMonthly
+  const annuityFactor = (1 - Math.pow(1 + r, -v.yearsAfter)) / r
+  const needed = (v.monthlyCost * 12 * annuityFactor) / 10000
+  const gap = needed - total
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <NumInput label="现在年龄" value={v.age} min={20} max={59} step={1} unit=" 岁" onChange={(x) => set({ age: x })} />
+        <NumInput label="退休年龄" value={v.retireAge} min={v.age + 1} max={70} step={1} unit=" 岁" onChange={(x) => set({ retireAge: x })} />
+        <NumInput label="目前养老储备" value={v.saved} min={0} max={500} step={5} unit=" 万" onChange={(x) => set({ saved: x })} />
+        <NumInput label="每月定投" value={v.monthlySave} min={0} max={20000} step={500} unit=" 元" onChange={(x) => set({ monthlySave: x })} />
+        <NumInput label="预期年收益率" value={v.rate} min={1} max={10} step={0.5} unit="%" onChange={(x) => set({ rate: x })} />
+        <NumInput label="退休后月支出预期" value={v.monthlyCost} min={2000} max={30000} step={500} unit=" 元" onChange={(x) => set({ monthlyCost: x })} />
+      </div>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <div className="rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3">
+          <p className="text-sm text-neutral-500">退休时预计储备</p>
+          <p className="mt-1 text-xl font-bold text-neutral-900">{total.toFixed(0)} 万</p>
+          <p className="mt-0.5 text-xs text-neutral-400">现有 {v.saved} 万滚存 + 定投累计</p>
+        </div>
+        <div className={`rounded-lg border px-4 py-3 ${gap <= 0 ? 'border-emerald-500 bg-emerald-50' : 'border-amber-300 bg-amber-50'}`}>
+          <p className="text-sm text-neutral-500">退休生活需要（{v.yearsAfter} 年折现）</p>
+          <p className="mt-1 text-xl font-bold text-neutral-900">{needed.toFixed(0)} 万</p>
+          <p className={`mt-0.5 text-xs font-medium ${gap <= 0 ? 'text-emerald-700' : 'text-amber-700'}`}>
+            {gap <= 0 ? `盈余 ${Math.abs(gap).toFixed(0)} 万，可以松口气 ✅` : `缺口 ${gap.toFixed(0)} 万 ⚠️`}
+          </p>
+        </div>
+      </div>
+      {gap > 0 && (
+        <p className="text-sm text-neutral-600">
+          要补上缺口：每月定投需增至约{' '}
+          <span className="font-semibold text-neutral-900">
+            ¥{Math.round(v.monthlySave + (gap * 10000 * r) / 12 / (Math.pow(1 + r, n) - 1)).toLocaleString()}
+          </span>
+          ，或退休后再工作 {Math.ceil(gap / ((v.monthlyCost * 12) / 10000))} 年。
+        </p>
+      )}
+    </div>
+  )
+}
+
+/* ===== 工具 5：紧急备用金配置单 ===== */
+function EmergencyTool({ v, set }: { v: ToolInputs['emergency']; set: (p: Partial<ToolInputs['emergency']>) => void }) {
+  const lo = v.stable ? 3 : 6
+  const hi = v.stable ? 6 : 12
+  const loAmt = v.monthly * lo
+  const hiAmt = v.monthly * hi
+  const status = v.saved < loAmt ? 'short' : v.saved > hiAmt ? 'over' : 'ok'
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <NumInput label="月固定支出" value={v.monthly} min={0.3} max={5} step={0.1} unit=" 万" onChange={(x) => set({ monthly: x })} />
+        <NumInput label="已有流动储备" value={v.saved} min={0} max={60} step={1} unit=" 万" onChange={(x) => set({ saved: x })} />
+        <div>
+          <span className={labelCls}>收入稳定度</span>
+          <div className="mt-1.5 flex gap-2">
+            {([
+              [true, '稳定'],
+              [false, '不稳定'],
+            ] as const).map(([val, label]) => (
+              <button
+                key={label}
+                type="button"
+                onClick={() => set({ stable: val })}
+                className={`rounded-full border px-3 py-1 text-sm transition-colors ${
+                  v.stable === val
+                    ? 'border-neutral-900 bg-neutral-900 text-white'
+                    : 'border-neutral-300 bg-white text-neutral-600 hover:border-neutral-500'
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="rounded-lg border border-neutral-200 bg-neutral-50 px-4 py-3">
+        <p className="text-sm">
+          建议储备{' '}
+          <span className="font-semibold text-neutral-900">
+            {loAmt.toFixed(1)} – {hiAmt.toFixed(1)} 万
+          </span>
+          <span className="ml-1 text-xs text-neutral-400">（{lo}–{hi} 个月支出）</span>
+        </p>
+        <p className={`mt-1.5 text-sm font-medium ${status === 'ok' ? 'text-emerald-700' : 'text-amber-700'}`}>
+          {status === 'short' && `目前 ${v.saved} 万，还差 ${(loAmt - v.saved).toFixed(1)} 万才到下限`}
+          {status === 'ok' && `目前 ${v.saved} 万，在建议区间内 ✅`}
+          {status === 'over' && `目前 ${v.saved} 万，超出上限 ${(v.saved - hiAmt).toFixed(1)} 万可考虑转投`}
+        </p>
+        <p className="mt-2 text-xs leading-relaxed text-neutral-500">
+          配置建议：1 个月放活期存款，2–3 个月放货币基金，其余可放短债基金——求安全和流动，不追求收益。
+        </p>
+      </div>
+    </div>
+  )
+}
+
+/* ===== 工具 6：存款保险检查器 ===== */
+function DepositTool({ v, set }: { v: ToolInputs['deposit']; set: (p: Partial<ToolInputs['deposit']>) => void }) {
+  const banks = (
+    [
+      ['A 行', v.bankA, 'bankA'],
+      ['B 行', v.bankB, 'bankB'],
+      ['C 行', v.bankC, 'bankC'],
+    ] as const
+  ).filter(([, amt]) => amt > 0)
+  const totalCovered = banks.reduce((s, [, amt]) => s + Math.min(amt, 50), 0)
+  const totalUncovered = banks.reduce((s, [, amt]) => s + Math.max(amt - 50, 0), 0)
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <NumInput label="A 行存款" value={v.bankA} min={0} max={200} step={5} unit=" 万" onChange={(x) => set({ bankA: x })} />
+        <NumInput label="B 行存款" value={v.bankB} min={0} max={200} step={5} unit=" 万" onChange={(x) => set({ bankB: x })} />
+        <NumInput label="C 行存款" value={v.bankC} min={0} max={200} step={5} unit=" 万" onChange={(x) => set({ bankC: x })} />
+      </div>
+      <div className="space-y-2">
+        {banks.map(([name, amt]) => {
+          const covered = Math.min(amt, 50)
+          const over = amt - covered
+          return (
+            <div key={name} className="flex items-center gap-2 text-xs">
+              <span className="w-12 shrink-0 text-neutral-500">{name}</span>
+              <div className="flex h-4 flex-1 overflow-hidden rounded bg-neutral-100">
+                <div className="h-full bg-emerald-600 transition-all duration-300" style={{ width: `${(covered / 200) * 100}%` }} />
+                <div className="h-full bg-rose-500 transition-all duration-300" style={{ width: `${(over / 200) * 100}%` }} />
+              </div>
+              <span className="w-36 shrink-0 text-right text-neutral-600">
+                {amt} 万{over > 0 && <span className="text-rose-600">（{over} 万不保）</span>}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+      <p className="text-sm text-neutral-600">
+        受保障合计 <span className="font-semibold text-emerald-700">{totalCovered} 万</span>
+        {totalUncovered > 0 && (
+          <>
+            {' · '}<span className="font-semibold text-rose-600">{totalUncovered} 万超出 50 万上限</span>
+            ——把超出的部分转到还没用的那家银行，就全额在保障内了
+          </>
+        )}
+      </p>
+    </div>
+  )
+}
+
+/* ===== 工具 7：定投复利计算器 ===== */
+function DcaTool({ v, set }: { v: ToolInputs['dca']; set: (p: Partial<ToolInputs['dca']>) => void }) {
+  const r = v.rate / 100 / 12
+  const months = v.years * 12
+  const fv = r > 0 ? v.monthly * ((Math.pow(1 + r, months) - 1) / r) : v.monthly * months
+  const invested = v.monthly * months
+  const earnings = fv - invested
+  const invW = (invested / fv) * 100
+  return (
+    <div className="space-y-4">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <NumInput label="每月定投" value={v.monthly} min={100} max={20000} step={100} unit=" 元" onChange={(x) => set({ monthly: x })} />
+        <NumInput label="预期年收益率" value={v.rate} min={0} max={15} step={0.5} unit="%" onChange={(x) => set({ rate: x })} />
+        <NumInput label="坚持" value={v.years} min={1} max={40} step={1} unit=" 年" onChange={(x) => set({ years: x })} />
+      </div>
+      <p className="text-center text-sm">
+        {v.years} 年后约{' '}
+        <span className="text-xl font-bold text-neutral-900">{(fv / 10000).toFixed(1)} 万</span>
+      </p>
+      <div>
+        <div className="flex h-5 overflow-hidden rounded text-[10px] leading-5 text-white">
+          <div className="bg-neutral-900 transition-all duration-300" style={{ width: `${invW}%` }}>
+            <span className="px-2">本金 {(invested / 10000).toFixed(1)} 万</span>
+          </div>
+          <div className="bg-emerald-600 transition-all duration-300" style={{ width: `${100 - invW}%` }}>
+            <span className="px-2">收益 {(earnings / 10000).toFixed(1)} 万</span>
+          </div>
+        </div>
+      </div>
+      <p className="text-center text-xs text-neutral-400">
+        复利效应：{Math.round((earnings / invested) * 100)}% 的钱是「利滚利」赚出来的
+      </p>
+    </div>
+  )
+}
+
 export default function ToolsPage() {
   const { count } = useMastered()
   const [inputs, setInputs] = useState<ToolInputs>(loadInputs)
@@ -303,6 +499,22 @@ export default function ToolsPage() {
 
           <ToolSection title="教育金规划器" subtitle="孩子几年后上大学，现在该一次性存多少、每月投多少" conceptId="education-fund">
             <EducationTool v={inputs.education} set={patch('education')} />
+          </ToolSection>
+
+          <ToolSection title="养老缺口测算" subtitle="按现在的储备和定投速度，退休时够不够花" conceptId="pension-pillars">
+            <PensionTool v={inputs.pension} set={patch('pension')} />
+          </ToolSection>
+
+          <ToolSection title="紧急备用金配置单" subtitle="月支出 × 3–6 个月，算你该留多少、差多少" conceptId="emergency-fund">
+            <EmergencyTool v={inputs.emergency} set={patch('emergency')} />
+          </ToolSection>
+
+          <ToolSection title="存款保险检查器" subtitle="各行存款对照 50 万上限，看有没有裸奔的部分" conceptId="deposit-insurance">
+            <DepositTool v={inputs.deposit} set={patch('deposit')} />
+          </ToolSection>
+
+          <ToolSection title="定投复利计算器" subtitle="每月定投 × 收益率 × 年数，看复利能滚多大" conceptId="compound-interest">
+            <DcaTool v={inputs.dca} set={patch('dca')} />
           </ToolSection>
         </section>
       </main>
