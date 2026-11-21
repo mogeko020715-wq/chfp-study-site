@@ -50,9 +50,11 @@ function ExamQuestionCard({
   const [picked, setPicked] = useState<string[]>(record?.picked ?? [])
   const submitted = !!record
 
-  useEffect(() => {
+  const [prevRecord, setPrevRecord] = useState(record)
+  if (prevRecord !== record) {
+    setPrevRecord(record)
     setPicked(record?.picked ?? [])
-  }, [uid, record?.picked])
+  }
 
   const toggle = (letter: string) => {
     if (submitted || !loggedIn) return
