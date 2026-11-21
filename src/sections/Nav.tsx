@@ -14,6 +14,7 @@ import {
 // 桌面导航：主入口 +「概念图鉴」分组下拉（卡片/实战）+「更多」下拉；移动端菜单仍是完整列表
 const links = [
   { to: '/', label: '学习框架' },
+  { to: '/tools', label: '工具箱' },
   { to: '/flashcards', label: '闪卡记忆' },
   { to: '/quiz', label: '自测刷题' },
 ]
@@ -32,6 +33,7 @@ const allLinks = [
   conceptLinks[1],
   links[1],
   links[2],
+  links[3],
   ...moreLinks,
 ]
 
